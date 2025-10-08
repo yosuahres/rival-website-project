@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --phamily-green: #1e5f4e;
+  --phamily-green-dark: #16473a;
+  --background: #1e5f4e;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -12,15 +14,87 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  background: #f5f5f5;
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+/* Green rounded container */
+.green-container {
+  background: linear-gradient(135deg, #1e5f4e 0%, #2a7d63 50%, #1e5f4e 100%);
+  border-radius: 2rem;
+  margin: 1rem;
+}
+
+/* Gradient text effects */
+.gradient-text {
+  background: linear-gradient(180deg, #ff9ed8 0%, #d946b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.gradient-text-2 {
+  background: linear-gradient(180deg, #be4a9a 0%, #7d2654 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Logo styling with dots */
+.logo-text {
+  position: relative;
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+.logo-text::before {
+  content: '••••••';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.5em;
+  letter-spacing: 0.2em;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(-5deg);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translateY(0px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(5deg);
+  }
 }
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 3s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+/* Button hover effects */
+button, a[class*="bg-"] {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:hover, a[class*="bg-"]:hover {
+  transform: translateY(-2px);
+}
+
