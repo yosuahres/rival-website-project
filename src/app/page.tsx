@@ -1,5 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description: "Welcome to RIVAL ITS - Indonesia's premier robotic team pushing boundaries in technology and innovation.",
+};
 
 export default function Home() {
   return (

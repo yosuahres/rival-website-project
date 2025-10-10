@@ -14,8 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Phamily - La pharmacie sans les maux de tête",
-  description: "Phamily fait plus que vous aider à trouver LA bonne pharmacie. On vous accompagne aussi à vous lancer en toute autonomie.",
+  title: {
+    template: "%s | RIVAL ITS",
+    default: "RIVAL ITS - Indonesia Robotic Team Official Website"
+  },
+  description: "RIVAL ITS - Indonesia Robotic Team Official Website",
 };
 
 export default function RootLayout({

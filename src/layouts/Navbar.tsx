@@ -7,13 +7,13 @@ export default function Navbar() {
       <div className="max-w-[1400px] mx-auto flex items-center justify-between">
         {/* Left Navigation */}
         <div className="flex items-center gap-8">
-          <Link href="/acheter" className="text-white hover:opacity-80 transition-opacity font-medium">
+          <Link href="/" className="text-white hover:opacity-80 transition-opacity font-medium">
             Home
           </Link>
-          <Link href="/vendre" className="text-white hover:opacity-80 transition-opacity font-medium">
+          <Link href="/about" className="text-white hover:opacity-80 transition-opacity font-medium">
             About
           </Link>
-          <Link href="/ressources" className="text-white hover:opacity-80 transition-opacity font-medium">
+          <Link href="/teams" className="text-white hover:opacity-80 transition-opacity font-medium">
             Teams
           </Link>
         </div>
@@ -22,7 +22,7 @@ export default function Navbar() {
         <Link href="/" className="hover:opacity-80 transition-opacity">
           <Image 
             src="/images/vertical.png" 
-            alt="Phamily Logo" 
+            alt="RIVAL ITS Logo" 
             width={90} 
             height={20}
             className="object-contain"
@@ -31,10 +31,10 @@ export default function Navbar() {
 
         {/* Right Navigation */}
         <div className="flex items-center gap-8">
-          <Link href="/a-propos" className="text-white hover:opacity-80 transition-opacity font-medium">
+          <Link href="/sponsor" className="text-white hover:opacity-80 transition-opacity font-medium">
             Sponsor
           </Link>
-          <Link href="/concept" className="text-white hover:opacity-80 transition-opacity font-medium">
+          <Link href="/activities" className="text-white hover:opacity-80 transition-opacity font-medium">
             Activities
           </Link>
           <Link href="/contact" className="text-white hover:opacity-80 transition-opacity font-medium">
