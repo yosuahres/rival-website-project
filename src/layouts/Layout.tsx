@@ -13,13 +13,13 @@ export default function Layout({ children }: LayoutProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsShrunk(true);
-    }, 500); // Delay for 500ms before starting the animation
+    }, 50); 
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100">
-      <div className={`green-container min-h-screen flex flex-col ${isShrunk ? 'animate-shrink' : ''}`}>
+    <div className="flex flex-col bg-gray-100">
+      <div className={`green-container flex flex-col ${isShrunk ? 'animate-shrink' : ''}`}>
         <Navbar />
         <main className="flex-1">
           {children}
