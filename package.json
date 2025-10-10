@@ -10,6 +10,7 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.75.0",
     "@types/js-cookie": "^3.0.6",
     "axios": "^1.12.2",
     "clsx": "^2.1.1",
