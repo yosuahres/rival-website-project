@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ApiResponse, PaginatedApiResponse, ApiError, UninterceptedApiError } from '../types/api';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api'; // Replace with your actual API base URL
 
@@ -24,41 +25,68 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  (response) => {
+  (response: AxiosResponse<ApiResponse<any> | PaginatedApiResponse<any>>) => {
     return response;
   },
   (error) => {
-    // Handle API errors globally
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      console.error('API Error:', error.response.data);
-      console.error('Status:', error.response.status);
-      console.error('Headers:', error.response.headers);
-    } else if (error.request) {
-      // The request was made but no response was received
-      console.error('No response received:', error.request);
+    if (axios.isAxiosError(error) && error.response) {
+      const apiError: ApiError = {
+        code: error.response.status,
+        status: false,
+        message:
+          typeof (error.response.data as UninterceptedApiError).message === 'string'
+            ? (error.response.data as UninterceptedApiError).message
+            : JSON.stringify((error.response.data as UninterceptedApiError).message) || error.message,
+      };
+      console.error('API Error:', apiError);
+      return Promise.reject(apiError);
+    } else if (axios.isAxiosError(error) && error.request) {
+      const apiError: ApiError = {
+        code: 0, // Or a specific code for no response
+        status: false,
+        message: 'No response received from server.',
+      };
+      console.error('No response received:', apiError);
+      return Promise.reject(apiError);
     } else {
-      // Something happened in setting up the request that triggered an Error
-      console.error('Error setting up request:', error.message);
+      const apiError: ApiError = {
+        code: -1, // Or a specific code for request setup error
+        status: false,
+        message: error.message || 'Error setting up request.',
+      };
+      console.error('Error setting up request:', apiError);
+      return Promise.reject(apiError);
     }
-    return Promise.reject(error);
   }
 );
 
 export const API = {
-  get: <T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> =>
-    api.get<T>(url, config),
-  post: <T = any>(
+  get: async <T = any>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
+    const response = await api.get<ApiResponse<T>>(url, config);
+    return response.data;
+  },
+  post: async <T = any>(
     url: string,
     data?: any,
     config?: AxiosRequestConfig
-  ): Promise<AxiosResponse<T>> => api.post<T>(url, data, config),
-  put: <T = any>(
+  ): Promise<ApiResponse<T>> => {
+    const response = await api.post<ApiResponse<T>>(url, data, config);
+    return response.data;
+  },
+  put: async <T = any>(
     url: string,
     data?: any,
     config?: AxiosRequestConfig
-  ): Promise<AxiosResponse<T>> => api.put<T>(url, data, config),
-  delete: <T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> =>
-    api.delete<T>(url, config),
+  ): Promise<ApiResponse<T>> => {
+    const response = await api.put<ApiResponse<T>>(url, data, config);
+    return response.data;
+  },
+  delete: async <T = any>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
+    const response = await api.delete<ApiResponse<T>>(url, config);
+    return response.data;
+  },
+  getPaginated: async <T = any>(url: string, config?: AxiosRequestConfig): Promise<PaginatedApiResponse<T>> => {
+    const response = await api.get<PaginatedApiResponse<T>>(url, config);
+    return response.data;
+  },
 };
