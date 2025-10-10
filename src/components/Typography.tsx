@@ -31,7 +31,7 @@ const Typography = <T extends React.ElementType = 'p'>({
 }: TypographyProps<T>) => {
   const Component = as || variant || 'p';
 
-  const baseStyle = 'text-gray-800 dark:text-gray-100'; // Base style for all typography
+  const baseStyle = 'text-gray-800 dark:text-gray-100'; 
 
   const variantStyles: Record<TypographyVariant, string> = {
     h1: 'text-4xl font-bold',
