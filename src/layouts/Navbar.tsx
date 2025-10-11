@@ -26,6 +26,7 @@ export default function Navbar() {
             width={90} 
             height={20}
             className="object-contain"
+            priority
           />
         </Link>
 
