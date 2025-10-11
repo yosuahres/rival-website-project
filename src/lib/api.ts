@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ApiResponse, PaginatedApiResponse, ApiError, UninterceptedApiError } from '../types/api';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api'; // Replace with your actual API base URL
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api'; 
 
 const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -42,7 +42,7 @@ api.interceptors.response.use(
       return Promise.reject(apiError);
     } else if (axios.isAxiosError(error) && error.request) {
       const apiError: ApiError = {
-        code: 0, // Or a specific code for no response
+        code: 0, 
         status: false,
         message: 'No response received from server.',
       };
@@ -50,7 +50,7 @@ api.interceptors.response.use(
       return Promise.reject(apiError);
     } else {
       const apiError: ApiError = {
-        code: -1, // Or a specific code for request setup error
+        code: -1, 
         status: false,
         message: error.message || 'Error setting up request.',
       };

@@ -4,7 +4,7 @@ import Typography from '@/components/Typography'; // Assuming this component exi
 
 const Footer = () => {
   return (
-    <footer className="bg-pink-500 text-white py-10">
+    <footer className="bg-[#4F4F4F] text-white py-10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center md:items-start">
           {/* Partners Section */}

@@ -15,34 +15,35 @@
 }
 
 body {
-  background: #f5f5f5;
+  background: #f3f4f6;
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   min-height: 100vh;
-  overflow-x: hidden; /* Prevent horizontal scroll during animation */
+  overflow-x: hidden; 
+  scroll-behavior: smooth;
 }
 
 .green-container {
   background: linear-gradient(135deg, #1e5f4e 0%, #2a7d63 50%, #1e5f4e 100%);
   border-radius: 0; 
-  position: relative; /* Changed from fixed to relative for proper scrolling */
+  position: relative; 
   width: 100vw;
-  min-height: 100vh; /* Use min-height to allow expansion */
-  overflow-y: visible; /* Allow content to flow normally */
+  min-height: 100vh;
+  overflow-y: visible; 
 }
 
 @keyframes shrinkEffect {
   from {
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
     margin: 0;
     border-radius: 0;
   }
   to {
-    width: calc(100vw - 2rem); 
-    min-height: calc(100vh - 2rem);
-    margin: 1rem; 
-    border-radius: 2rem;
+    width: calc(100vw - 3rem);
+    height: calc(100vh - 3rem);
+    margin: 1.5rem;
+    border-radius: 1.5rem;
   }
 }
 
@@ -51,7 +52,7 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(180deg, #ff9ed8 0%, #d946b8 100%);
+  background: linear-gradient(180deg, #A9A9A9 0%, #808080 100%);  
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -59,7 +60,7 @@ body {
 }
 
 .gradient-text-2 {
-  background: linear-gradient(180deg, #be4a9a 0%, #7d2654 100%);
+  background: linear-gradient(180deg, #696969 0%, #4F4F4F 100%); 
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
