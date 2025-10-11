@@ -8,21 +8,21 @@ export const metadata: Metadata = {
 
 export default function Teams() {
   const teamMembers = [
+    { name: 'dharma', image: '/personal-data/dharma.png', role: 'advisor' },
+    { name: 'Valencia Stevie F. H.', image: '/personal-data/stevie.png', role: 'electrical' },
+    { name: 'mely', image: '/personal-data/mely.png', role: 'electrical' },
+    { name: 'evan', image: '/personal-data/evan.png', role: 'electrical' },
     { name: 'ademas', image: '/personal-data/ademas.png', role: 'electrical' },
+    { name: 'atok', image: '/personal-data/atok.png', role: 'mechanical' },
     { name: 'anam', image: '/personal-data/anam.png', role: 'mechanical' },
     { name: 'andre', image: '/personal-data/andre.png', role: 'mechanical' },
-    { name: 'atok', image: '/personal-data/atok.png', role: 'mechanical' },
-    { name: 'dharma', image: '/personal-data/dharma.png', role: 'advisor' },
-    { name: 'evan', image: '/personal-data/evan.png', role: 'electrical' },
-    { name: 'gibran', image: '/personal-data/gibran.png', role: 'official' },
+    { name: 'rijal', image: '/personal-data/rijal.png', role: 'mechanical' },
     { name: 'karina', image: '/personal-data/karina.png', role: 'official' },
+    { name: 'gibran', image: '/personal-data/gibran.png', role: 'official' },
     { name: 'kaysa', image: '/personal-data/kaysa.png', role: 'official' },
-    { name: 'mely', image: '/personal-data/mely.png', role: 'electrical' },
+    { name: 'Wildan', image: '/personal-data/wildan.png', role: 'programming' },
     { name: 'naufal', image: '/personal-data/naufal.png', role: 'programming' },
     { name: 'radit', image: '/personal-data/radit.png', role: 'programming' },
-    { name: 'rijal', image: '/personal-data/rijal.png', role: 'mechanical' },
-    { name: 'Valencia Stevie Febriani Hendarin', image: '/personal-data/stevie.png', role: 'electrical' },
-    { name: 'Wildan', image: '/personal-data/wildan.png', role: 'programming' },
   ];
 
   const roles = ['advisor', 'electrical', 'mechanical', 'programming', 'official'];

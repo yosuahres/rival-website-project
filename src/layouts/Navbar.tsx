@@ -14,7 +14,7 @@ export default function Navbar() {
             About
           </Link>
           <Link href="/teams" className="text-white hover:opacity-80 transition-opacity font-medium">
-            Teams
+            Our Team
           </Link>
         </div>
 
@@ -33,10 +33,10 @@ export default function Navbar() {
         {/* Right Navigation */}
         <div className="flex items-center gap-8">
           <Link href="/sponsor" className="text-white hover:opacity-80 transition-opacity font-medium">
-            Sponsor
+            Partners
           </Link>
           <Link href="/activities" className="text-white hover:opacity-80 transition-opacity font-medium">
-            Activities
+            Competitions
           </Link>
           <Link href="/contact" className="text-white hover:opacity-80 transition-opacity font-medium">
             Contact
