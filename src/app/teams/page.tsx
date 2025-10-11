@@ -8,21 +8,21 @@ export const metadata: Metadata = {
 
 export default function Teams() {
   const teamMembers = [
-    { name: 'ademas', image: '/personal-data/ademas.png', role: 'advisor' },
-    { name: 'anam', image: '/personal-data/anam.png', role: 'advisor' },
-    { name: 'andre', image: '/personal-data/andre.png', role: 'electrical' },
-    { name: 'atok', image: '/personal-data/atok.png', role: 'electrical' },
-    { name: 'dharma', image: '/personal-data/dharma.png', role: 'electrical' },
-    { name: 'evan', image: '/personal-data/evan.png', role: 'mechanical' },
-    { name: 'gibran', image: '/personal-data/gibran.png', role: 'mechanical' },
-    { name: 'karina', image: '/personal-data/karina.png', role: 'mechanical' },
-    { name: 'kaysa', image: '/personal-data/kaysa.png', role: 'programming' },
-    { name: 'mely', image: '/personal-data/mely.png', role: 'programming' },
+    { name: 'ademas', image: '/personal-data/ademas.png', role: 'electrical' },
+    { name: 'anam', image: '/personal-data/anam.png', role: 'mechanical' },
+    { name: 'andre', image: '/personal-data/andre.png', role: 'mechanical' },
+    { name: 'atok', image: '/personal-data/atok.png', role: 'mechanical' },
+    { name: 'dharma', image: '/personal-data/dharma.png', role: 'advisor' },
+    { name: 'evan', image: '/personal-data/evan.png', role: 'electrical' },
+    { name: 'gibran', image: '/personal-data/gibran.png', role: 'official' },
+    { name: 'karina', image: '/personal-data/karina.png', role: 'official' },
+    { name: 'kaysa', image: '/personal-data/kaysa.png', role: 'official' },
+    { name: 'mely', image: '/personal-data/mely.png', role: 'electrical' },
     { name: 'naufal', image: '/personal-data/naufal.png', role: 'programming' },
-    { name: 'radit', image: '/personal-data/radit.png', role: 'official' },
-    { name: 'rijal', image: '/personal-data/rijal.png', role: 'official' },
-    { name: 'stevie', image: '/personal-data/stevie.png', role: 'official' },
-    { name: 'wildan', image: '/personal-data/wildan.png', role: 'official' },
+    { name: 'radit', image: '/personal-data/radit.png', role: 'programming' },
+    { name: 'rijal', image: '/personal-data/rijal.png', role: 'mechanical' },
+    { name: 'Valencia Stevie Febriani Hendarin', image: '/personal-data/stevie.png', role: 'electrical' },
+    { name: 'Wildan', image: '/personal-data/wildan.png', role: 'programming' },
   ];
 
   const roles = ['advisor', 'electrical', 'mechanical', 'programming', 'official'];
