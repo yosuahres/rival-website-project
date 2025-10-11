@@ -32,7 +32,7 @@ export default function Navbar() {
 
         {/* Right Navigation */}
         <div className="flex items-center gap-8">
-          <Link href="/sponsor" className="text-white hover:opacity-80 transition-opacity font-medium">
+          <Link href="/partners" className="text-white hover:opacity-80 transition-opacity font-medium">
             Partners
           </Link>
           <Link href="/activities" className="text-white hover:opacity-80 transition-opacity font-medium">
