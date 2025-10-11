@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { supabase } from '../../lib/supabase';
 import Image from 'next/image'; // Assuming NextImage is not used, using default next/image
 
 export const metadata: Metadata = {
@@ -7,28 +6,24 @@ export const metadata: Metadata = {
   description: "Meet the talented teams that make up RIVAL ITS - from mechanical design to software development, each team brings unique expertise.",
 };
 
-async function getTeamPhotos() {
-  const { data, error } = await supabase.storage.from('personal-image').list('', {
-    limit: 15,
-    offset: 0,
-    sortBy: { column: 'name', order: 'asc' },
-  });
-
-  if (error) {
-    console.error('Error fetching team photos:', error);
-    return [];
-  }
-
-  const photoUrls = data.map((file) => {
-    const { data: publicUrlData } = supabase.storage.from('personal-image').getPublicUrl(file.name);
-    return publicUrlData.publicUrl;
-  });
-
-  return photoUrls;
-}
-
-export default async function Teams() {
-  const teamPhotos = await getTeamPhotos();
+export default function Teams() {
+  const teamMembers = [
+    { name: 'ademas', image: '/personal-data/ademas.png' },
+    { name: 'anam', image: '/personal-data/anam.png' },
+    { name: 'andre', image: '/personal-data/andre.png' },
+    { name: 'atok', image: '/personal-data/atok.png' },
+    { name: 'dharma', image: '/personal-data/dharma.png' },
+    { name: 'evan', image: '/personal-data/evan.png' },
+    { name: 'gibran', image: '/personal-data/gibran.png' },
+    { name: 'karina', image: '/personal-data/karina.png' },
+    { name: 'kaysa', image: '/personal-data/kaysa.png' },
+    { name: 'mely', image: '/personal-data/mely.png' },
+    { name: 'naufal', image: '/personal-data/naufal.png' },
+    { name: 'radit', image: '/personal-data/radit.png' },
+    { name: 'rijal', image: '/personal-data/rijal.png' },
+    { name: 'stevie', image: '/personal-data/stevie.png' },
+    { name: 'wildan', image: '/personal-data/wildan.png' },
+  ];
 
   return (
     <div className="flex flex-col min-h-full">
@@ -38,11 +33,11 @@ export default async function Teams() {
             Our Teams
           </h1>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-            {teamPhotos.length > 0 ? (
-              teamPhotos.map((url, index) => (
+            {teamMembers.length > 0 ? (
+              teamMembers.map((member, index) => (
                 <div key={index} className="bg-white/10 rounded-2xl p-6 flex flex-col items-center">
-                  <Image src={url} alt={`Team member ${index + 1}`} width={200} height={200} className="rounded-full object-cover mb-4" />
-                  <p className="text-white/80">Team Member {index + 1}</p>
+                  <Image src={member.image} alt={`Team member ${member.name}`} width={200} height={200} className="rounded-full object-cover mb-4" />
+                  <p className="text-white/80">{member.name.charAt(0).toUpperCase() + member.name.slice(1)}</p>
                 </div>
               ))
             ) : (
