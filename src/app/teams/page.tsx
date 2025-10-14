@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from 'next/image'; // Assuming NextImage is not used, using default next/image
+import Image from 'next/image'; 
 
 export const metadata: Metadata = {
   title: "Our Teams",
@@ -8,31 +8,31 @@ export const metadata: Metadata = {
 
 export default function Teams() {
   const teamMembers = [
-    { name: 'dharma', image: '/personal-data/dharma.png', role: 'advisor' },
-    { name: 'Valencia Stevie F. H.', image: '/personal-data/stevie.png', role: 'electrical' },
-    { name: 'mely', image: '/personal-data/mely.png', role: 'electrical' },
-    { name: 'evan', image: '/personal-data/evan.png', role: 'electrical' },
-    { name: 'ademas', image: '/personal-data/ademas.png', role: 'electrical' },
-    { name: 'atok', image: '/personal-data/atok.png', role: 'mechanical' },
-    { name: 'anam', image: '/personal-data/anam.png', role: 'mechanical' },
-    { name: 'andre', image: '/personal-data/andre.png', role: 'mechanical' },
-    { name: 'rijal', image: '/personal-data/rijal.png', role: 'mechanical' },
-    { name: 'karina', image: '/personal-data/karina.png', role: 'official' },
-    { name: 'gibran', image: '/personal-data/gibran.png', role: 'official' },
-    { name: 'kaysa', image: '/personal-data/kaysa.png', role: 'official' },
-    { name: 'Wildan', image: '/personal-data/wildan.png', role: 'programming' },
-    { name: 'naufal', image: '/personal-data/naufal.png', role: 'programming' },
-    { name: 'radit', image: '/personal-data/radit.png', role: 'programming' },
+    { name: 'dharma', image: '/personal-data/dharma.png', role: 'advisor team' },
+    { name: 'Valencia Stevie F. H.', image: '/personal-data/stevie.png', role: 'electrical team' },
+    { name: 'mely', image: '/personal-data/mely.png', role: 'electrical team' },
+    { name: 'evan', image: '/personal-data/evan.png', role: 'electrical team' },
+    { name: 'ademas', image: '/personal-data/ademas.png', role: 'electrical team' },
+    { name: 'atok', image: '/personal-data/atok.png', role: 'mechanical team' },
+    { name: 'anam', image: '/personal-data/anam.png', role: 'mechanical team' },
+    { name: 'andre', image: '/personal-data/andre.png', role: 'mechanical team' },
+    { name: 'rijal', image: '/personal-data/rijal.png', role: 'mechanical team' },
+    { name: 'karina', image: '/personal-data/karina.png', role: 'outreach' },
+    { name: 'gibran', image: '/personal-data/gibran.png', role: 'outreach' },
+    { name: 'kaysa', image: '/personal-data/kaysa.png', role: 'outreach' },
+    { name: 'Wildan', image: '/personal-data/wildan.png', role: 'programming team' },
+    { name: 'naufal', image: '/personal-data/naufal.png', role: 'programming team' },
+    { name: 'radit', image: '/personal-data/radit.png', role: 'programming team' },
   ];
 
-  const roles = ['advisor', 'electrical', 'mechanical', 'programming', 'official'];
+  const roles = ['advisor team', 'electrical team', 'mechanical team', 'programming team', 'outreach'];
 
   return (
     <div className="flex flex-col min-h-full">
       <section className="flex-1 px-8 py-12">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-[#1e5f4e] font-black text-6xl mb-8">
-            Our Teams
+            Meet the Team
           </h1>
 
           {roles.map((role) => {

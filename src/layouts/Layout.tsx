@@ -26,6 +26,7 @@ export default function Layout({ children }: LayoutProps) {
   }, [pathname]); 
 
   const isHomePage = pathname === '/';
+  const isCompetitionPage = pathname.startsWith('/competitions/');
 
   return (
     <div className="flex flex-col bg-gray-100 min-h-screen">
@@ -67,6 +68,16 @@ export default function Layout({ children }: LayoutProps) {
           </div>
           <Footer />
         </>
+      ) : isCompetitionPage ? (
+        <div className="flex flex-col min-h-screen">
+          <div className="bg-[#1e5f4e] w-full">
+            <Navbar />
+          </div>
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </div>
       ) : (
         <div className="flex flex-col min-h-screen">
           <div className="bg-[#1e5f4e] rounded-2xl mx-4 mt-4 w-[calc(100%-2rem)]">

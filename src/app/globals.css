@@ -19,17 +19,17 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   min-height: 100vh;
-  overflow-x: hidden; 
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
 .green-container {
   background: linear-gradient(135deg, #1e5f4e 0%, #2a7d63 50%, #1e5f4e 100%);
-  border-radius: 0; 
-  position: relative; 
+  border-radius: 0;
+  position: relative;
   width: 100vw;
   min-height: 100vh;
-  overflow-y: visible; 
+  overflow-y: visible;
 }
 
 @keyframes shrinkEffect {
@@ -52,7 +52,7 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(180deg, #A9A9A9 0%, #808080 100%);  
+  background: linear-gradient(180deg, #A9A9A9 0%, #808080 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -60,7 +60,7 @@ body {
 }
 
 .gradient-text-2 {
-  background: linear-gradient(180deg, #696969 0%, #0b0b0b 100%); 
+  background: linear-gradient(180deg, #696969 0%, #0b0b0b 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -116,4 +116,50 @@ button, a[class*="bg-"] {
 
 button:hover, a[class*="bg-"]:hover {
   transform: translateY(-2px);
+}
+
+
+@keyframes slide-out-left {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-out-right {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%); 
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-out-left {
+  animation: slide-out-left 0.3s ease-in-out forwards;
+}
+
+.animate-slide-out-right {
+  animation: slide-out-right 0.3s ease-in-out forwards;
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-in-out forwards;
 }

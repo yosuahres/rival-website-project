@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Sponsors() {
   return (
     <>
-      <div className="min-h-screen">
+      <div>
         {/* Header Section */}
         <div className="text-[#1e5f4e] py-20 px-8">
           <div className="max-w-6xl mx-auto text-center">
@@ -28,7 +28,6 @@ export default function Sponsors() {
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 items-center justify-items-center">
               
-              {/* Existing Sponsor - Indah Puri */}
               <div className="flex justify-center">
                 <NextImage 
                   src="/sponsors/indahpuri.png" 
@@ -45,7 +44,7 @@ export default function Sponsors() {
       </div>
 
       {/* Contact text above footer */}
-      <div className="bg-black py-4 px-8">
+      <div className="bg-black py-4 px-8 mt-40">
         <p className="text-white text-sm">
           Please send any business and sponsorship related enquires to: 
           <span className="font-semibold"> official.krtmiits@gmail.com</span>
