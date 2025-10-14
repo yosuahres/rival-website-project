@@ -4,21 +4,15 @@ import CompetitionTasksCarousel from '@/components/CompetitionTasksCarousel';
 const indonesianRobotContestTasks = [
   {
     id: 1,
-    title: 'Autonomous Navigation',
-    description: 'Robots must navigate through a complex obstacle course autonomously, demonstrating advanced pathfinding and sensor integration capabilities.',
+    title: 'Autonomous Waste Sorting',
+    description: 'Robot 2 autonomously sorts waste items moving along the vibrating conveyor into five categories — ferro, nonferro, leaf, paper, and plastic. Each correctly sorted item earns 1 point.',
     image: '/images/foreground-kri.jpg', 
   },
   {
     id: 2,
-    title: 'Object Manipulation',
-    description: 'Teams design robots capable of precise object detection, grasping, and manipulation in various environmental conditions.',
-    image: '/images/foreground-kri2.JPG', 
-  },
-  {
-    id: 3,
-    title: 'Team Collaboration',
-    description: 'Multiple robots work together to solve complex tasks, requiring advanced communication and coordination protocols.',
-    image: '/images/foreground-kri.jpg', 
+    title: 'Trash Bin Transfer',
+      description: 'Teams design robots capable of precise object detection, grasping, and manipulation in various environmental conditions.',
+      image: '/images/foreground-kri2.JPG', 
   },
 ];
 
@@ -64,15 +58,20 @@ export default function IndonesianRobotContestPage() {
 
       {/* Stats Section */}
   <section className="relative w-full min-h-[300px] flex items-center justify-center py-14 overflow-hidden">
-        {/* Background image and overlay */}
-        <div className="absolute inset-0 w-full h-full">
-          <img
-            src="/images/foreground-kri2.JPG"
-            alt="Stats background"
-            className="w-full h-full object-cover object-center"
-            style={{ objectPosition: 'center 60%', opacity: 0.3, height: '300px' }}
-          />
-        </div>
+        <div className="absolute inset-0 bg-[#1e5f4e] opacity-70"></div>
+        <img
+          src="/images/foreground-kri2.JPG"
+          alt="Stats background"
+          className="absolute inset-0 mx-auto max-w-7xl w-full h-full object-cover object-center z-0"
+          style={{ objectPosition: 'center 60%', opacity: 0.3 }}
+        />
+
+        {/* <img
+          src="/images/foreground-kri2.JPG"
+          alt="Stats background"
+          className="absolute inset-0 w-full h-full max-w-8xl object-cover object-center z-0"
+          style={{ objectPosition: 'center 60%', opacity: 0.3 }}
+        /> */}
         <div className="relative z-10 w-full flex justify-center items-center">
           <div className="flex flex-row items-end gap-32 mx-auto" style={{ justifyContent: 'center', width: 'fit-content' }}>
             {/* 2025 stat */}
@@ -103,7 +102,11 @@ export default function IndonesianRobotContestPage() {
         </div>
       </section>
 
-      <CompetitionTasksCarousel tasks={indonesianRobotContestTasks} />
+      <div className='bg-[#1e5f4e] px-8 mt-20'>
+          {/* spacer */}
+      </div>
+
+      <CompetitionTasksCarousel tasks={indonesianRobotContestTasks} backgroundImage="/images/foreground-kri4.jpg" />
     </div>
   );
 }

@@ -56,7 +56,6 @@ export default function Navbar() {
             
             {isCompetitionsOpen && (
               <>
-                {/* Invisible bridge to prevent dropdown from closing */}
                 <div className="absolute top-full left-0 w-64 h-2 z-40"></div>
                 <div className="absolute top-full left-0 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50 mt-2">
                   <Link 

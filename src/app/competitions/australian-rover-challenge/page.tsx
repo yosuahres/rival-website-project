@@ -1,28 +1,22 @@
 import Image from 'next/image';
 import CompetitionTasksCarousel from '@/components/CompetitionTasksCarousel';
 
-const australianRoverChallengeTasks = [
+const indonesianRobotContestTasks = [
   {
     id: 1,
-    title: 'Autonomous Navigation',
-    description: 'Robots must navigate through a complex obstacle course autonomously, demonstrating advanced pathfinding and sensor integration capabilities.',
+    title: 'Autonomous Waste Sorting',
+    description: 'Robot 2 autonomously sorts waste items moving along the vibrating conveyor into five categories — ferro, nonferro, leaf, paper, and plastic. Each correctly sorted item earns 1 point.',
     image: '/images/foreground-kri.jpg', 
   },
   {
     id: 2,
-    title: 'Object Manipulation',
-    description: 'Teams design robots capable of precise object detection, grasping, and manipulation in various environmental conditions.',
-    image: '/images/foreground-kri2.JPG', 
-  },
-  {
-    id: 3,
-    title: 'Team Collaboration',
-    description: 'Multiple robots work together to solve complex tasks, requiring advanced communication and coordination protocols.',
-    image: '/images/foreground-kri.jpg', 
+    title: 'Trash Bin Transfer',
+      description: 'Teams design robots capable of precise object detection, grasping, and manipulation in various environmental conditions.',
+      image: '/images/foreground-kri2.JPG', 
   },
 ];
 
-export default function AustralianRoverChallengePage() {
+export default function IndonesianRobotContestPage() {
   return (
     <div className="min-h-screen bg-[#1e5f4e]">
       {/* Hero Section */}
@@ -30,16 +24,16 @@ export default function AustralianRoverChallengePage() {
         {/* Background image with reduced opacity */}
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <img 
-            src="/images/foreground-arc.jpeg" 
+            src="/images/foreground-kri.jpg" 
             alt="Competition background"
             className="w-full h-full object-cover object-center" 
             style={{ opacity: 0.5, objectPosition: 'center 55%' }}
           />
-        </div>
+        </div>  
         <div className="relative z-10 text-center text-white">
-          <h1 className="text-6xl font-bold mb-6">Australian Rover Challenge</h1>
+          <h1 className="text-6xl font-bold mb-6">Australian Rover Challenge 2026</h1>
           <a
-            href="https://set.adelaide.edu.au/atcsr/australian-rover-challenge/"
+            href="https://kontesrobotindonesia.id/index.html"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#1e5f4e] hover:bg-[#16473a] px-16 py-6 rounded-2xl font-bold text-2xl transition-colors inline-block shadow-lg"
@@ -64,24 +58,55 @@ export default function AustralianRoverChallengePage() {
 
       {/* Stats Section */}
   <section className="relative w-full min-h-[300px] flex items-center justify-center py-14 overflow-hidden">
-        {/* Background image and overlay */}
-        <div className="absolute inset-0 w-full h-full">
-          <img
-            src="/images/ROVER5.png"
-            alt="Stats background"
-            className="w-full h-full object-cover object-center"
-            style={{ objectPosition: 'center 60%', opacity: 0.3, height: '300px' }}
-          />
-        </div>
+        <div className="absolute inset-0 bg-[#1e5f4e] opacity-70"></div>
+        <img
+          src="/images/foreground-kri2.JPG"
+          alt="Stats background"
+          className="absolute inset-0 mx-auto max-w-7xl w-full h-full object-cover object-center z-0"
+          style={{ objectPosition: 'center 60%', opacity: 0.3 }}
+        />
+
+        {/* <img
+          src="/images/foreground-kri2.JPG"
+          alt="Stats background"
+          className="absolute inset-0 w-full h-full max-w-8xl object-cover object-center z-0"
+          style={{ objectPosition: 'center 60%', opacity: 0.3 }}
+        /> */}
         <div className="relative z-10 w-full flex justify-center items-center">
           <div className="flex flex-row items-end gap-32 mx-auto" style={{ justifyContent: 'center', width: 'fit-content' }}>
-            {/* as this first year no stats */}
-          
+            {/* 2025 stat */}
+            <div className="flex flex-col items-center justify-center">
+              <div className="text-9xl font-extrabold mb-2">1<sup className="text-4xl">st</sup></div>
+              <div className="text-lg opacity-80">OUT OF 36 TEAMS</div>
+              <div className="text-5xl font-extrabold mt-2">2024</div>
+            </div>
+            {/* 2024, 2023, 2022 grouped closer together */}
+            <div className="flex flex-row items-end gap-4">
+              <div className="flex flex-col items-center justify-end mx-6">
+                <div className="text-8xl font-bold mb-2">4<sup className="text-3xl">th</sup></div>
+                {/* <div className="text-base opacity-80">NATIONAL RUNNER-UP</div> */}
+                <div className="text-3xl font-bold mt-2">2023</div>
+              </div>
+              <div className="flex flex-col items-center justify-end mx-6">
+                <div className="text-8xl font-bold mb-2">1<sup className="text-3xl">st</sup></div>
+                {/* <div className="text-base opacity-80">NATIONAL CHAMPION</div> */}
+                <div className="text-3xl font-bold mt-2">2022</div>
+              </div>
+              <div className="flex flex-col items-center justify-end mx-6">
+                <div className="text-8xl font-bold mb-2">1<sup className="text-3xl">st</sup></div>
+                {/* <div className="text-base opacity-80">NATIONAL CHAMPION</div> */}
+                <div className="text-3xl font-bold mt-2">2021</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <CompetitionTasksCarousel tasks={australianRoverChallengeTasks} />
+      <div className='bg-[#1e5f4e] px-8 mt-20'>
+          {/* spacer */}
+      </div>
+
+      <CompetitionTasksCarousel tasks={indonesianRobotContestTasks} backgroundImage="/images/foreground-kri4.jpg" />
     </div>
   );
 }

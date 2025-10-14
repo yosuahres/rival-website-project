@@ -12,9 +12,10 @@ interface Task {
 
 interface CompetitionTasksCarouselProps {
   tasks: Task[];
+  backgroundImage?: string;
 }
 
-export default function CompetitionTasksCarousel({ tasks }: CompetitionTasksCarouselProps) {
+export default function CompetitionTasksCarousel({ tasks, backgroundImage }: CompetitionTasksCarouselProps) {
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -44,8 +45,12 @@ export default function CompetitionTasksCarousel({ tasks }: CompetitionTasksCaro
   const currentTask = tasks[currentTaskIndex];
 
   return (
-    <section className="py-20 px-8 bg-gray-900"> 
-      <div className="max-w-6xl mx-auto">
+    <section 
+      className="py-20 px-8 bg-gray-900 relative overflow-hidden"
+      style={backgroundImage ? { backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+    > 
+      {backgroundImage && <div className="absolute inset-0 bg-gray-900 opacity-70"></div>}
+      <div className="max-w-6xl mx-auto relative z-10">
         <h2 className="text-5xl font-bold text-white text-center mb-8">COMPETITION TASKS</h2> 
         
         <div className="relative flex flex-col items-center justify-center overflow-hidden h-[650px]"> 
@@ -62,7 +67,7 @@ export default function CompetitionTasksCarousel({ tasks }: CompetitionTasksCaro
           </div>
 
           {/* Text Content Container */}
-          <div className={`absolute text-center max-w-3xl px-4 transition-transform duration-300 ease-in-out top-[530px]
+          <div className={`absolute text-center max-w-5xl px-4 transition-transform duration-300 ease-in-out top-[530px]
             ${slideDirection === 'right' ? '-translate-x-full opacity-0' : slideDirection === 'left' ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100'}`}>
             <h3 className="text-4xl font-bold text-white mb-4">{currentTask.title}</h3>
             <p className="text-gray-300 text-lg">{currentTask.description}</p>

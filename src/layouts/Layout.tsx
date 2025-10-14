@@ -70,7 +70,7 @@ export default function Layout({ children }: LayoutProps) {
         </>
       ) : isCompetitionPage ? (
         <div className="flex flex-col min-h-screen">
-          <div className="bg-[#1e5f4e] w-full">
+          <div className="bg-[#1e5f4e] w-full pt-4">
             <Navbar />
           </div>
           <main className="flex-1">
