@@ -3,22 +3,28 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const [isCompetitionsOpen, setIsCompetitionsOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isSpecialPage = pathname === '/' || pathname.startsWith('/competitions') || pathname === '/contact';
+  const textColorClass = isSpecialPage ? 'text-white' : 'text-[#1e5f4e]';
+  const logo = isSpecialPage ? '/images/vertical.png' : '/images/verticalblack.png';
 
   return (
     <nav className="w-full px-8 py-6">
       <div className="max-w-[1400px] mx-auto flex items-center justify-between">
         {/* Left Navigation */}
         <div className="flex items-center gap-8">
-          <Link href="/" className="text-white hover:opacity-80 transition-opacity font-medium">
+          <Link href="/" className={`${textColorClass} hover:opacity-80 transition-opacity text-lg font-bold`}>
             Home
           </Link>
-          <Link href="/about" className="text-white hover:opacity-80 transition-opacity font-medium">
+          <Link href="/about" className={`${textColorClass} hover:opacity-80 transition-opacity text-lg font-bold`}>
             About
           </Link>
-          <Link href="/teams" className="text-white hover:opacity-80 transition-opacity font-medium">
+          <Link href="/teams" className={`${textColorClass} hover:opacity-80 transition-opacity text-lg font-bold`}>
             Our Team
           </Link>
         </div>
@@ -26,7 +32,7 @@ export default function Navbar() {
         {/* Center Logo */}
         <Link href="/" className="hover:opacity-80 transition-opacity">
           <Image 
-            src="/images/vertical.png" 
+            src={logo} 
             alt="RIVAL ITS Logo" 
             width={90} 
             height={20}
@@ -37,7 +43,7 @@ export default function Navbar() {
 
         {/* Right Navigation */}
         <div className="flex items-center gap-8">
-          <Link href="/partners" className="text-white hover:opacity-80 transition-opacity font-medium">
+          <Link href="/partners" className={`${textColorClass} hover:opacity-80 transition-opacity text-lg font-bold`}>
             Partners
           </Link>
           
@@ -47,7 +53,7 @@ export default function Navbar() {
             onMouseEnter={() => setIsCompetitionsOpen(true)}
             onMouseLeave={() => setIsCompetitionsOpen(false)}
           >
-            <button className="text-white hover:opacity-80 transition-opacity font-medium flex items-center gap-1">
+            <button className={`${textColorClass} hover:opacity-80 transition-opacity text-lg font-bold flex items-center gap-1`}>
               Competitions
               <svg className={`w-4 h-4 transition-transform ${isCompetitionsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -75,7 +81,7 @@ export default function Navbar() {
             )}
           </div>
           
-          <Link href="/contact" className="text-white hover:opacity-80 transition-opacity font-medium">
+          <Link href="/contact" className={`${textColorClass} hover:opacity-80 transition-opacity text-lg font-bold`}>
             Contact
           </Link>
         </div>

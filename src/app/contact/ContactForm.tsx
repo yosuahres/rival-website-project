@@ -87,9 +87,9 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="bg-white/95 backdrop-blur-sm rounded-lg p-8 shadow-xl border border-gray-200">
+  <div className="bg-white/0 backdrop-blur-sm rounded-lg p-8 shadow-xl border border-gray-200">
       {formState.isSuccess && (
-        <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+        <div className="mb-6 p-4 bg-green-100 border border-green-400 text-white rounded-lg">
           <div className="flex items-center">
             <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -114,7 +114,7 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="firstName" className="block text-gray-700 text-sm font-medium mb-2">
+            <label htmlFor="firstName" className="block text-white text-sm font-medium mb-2">
               First Name <span className="text-red-500">(required)</span>
             </label>
             <input
@@ -131,7 +131,7 @@ export default function ContactForm() {
           </div>
           
           <div>
-            <label htmlFor="lastName" className="block text-gray-700 text-sm font-medium mb-2">
+            <label htmlFor="lastName" className="block text-white text-sm font-medium mb-2">
               Last Name
             </label>
             <input
@@ -146,9 +146,9 @@ export default function ContactForm() {
             />
           </div>
         </div>
-
+        
         <div>
-          <label htmlFor="email" className="block text-gray-700 text-sm font-medium mb-2">
+          <label htmlFor="email" className="block text-white text-sm font-medium mb-2">
             Email <span className="text-red-500">(required)</span>
           </label>
           <input
@@ -165,7 +165,7 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="message" className="block text-gray-700 text-sm font-medium mb-2">
+          <label htmlFor="message" className="block text-white text-sm font-medium mb-2">
             Message <span className="text-red-500">(required)</span>
           </label>
           <textarea
@@ -184,7 +184,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={formState.isLoading}
-          className="bg-[#1e5f4e] hover:bg-[#16473a] text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e5f4e] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center"
+          className="bg-black hover:bg-[#16473a] text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e5f4e] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center"
         >
           {formState.isLoading ? (
             <>

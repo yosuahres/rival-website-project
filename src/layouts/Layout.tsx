@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -12,27 +12,38 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
-  const [isShrunk, setIsShrunk] = useState(pathname !== '/');
+  const [isShrunk, setIsShrunk] = useState(false);
+  const isInitialLoad = useRef(true);
 
   useEffect(() => {
-    if (pathname === '/') {
-      const timer = setTimeout(() => {
+    if (isInitialLoad.current) {
+      if (pathname === '/') {
+        const timer = setTimeout(() => {
+          setIsShrunk(true);
+        }, 50);
+        return () => clearTimeout(timer);
+      } else {
         setIsShrunk(true);
-      }, 50); 
-      return () => clearTimeout(timer);
+      }
+      isInitialLoad.current = false;
     } else {
-      setIsShrunk(true);
+      if (pathname === '/') {
+        setIsShrunk(false); 
+      } else {
+        setIsShrunk(true); 
+      }
     }
-  }, [pathname]); 
+  }, [pathname]);
 
   const isHomePage = pathname === '/';
   const isCompetitionPage = pathname.startsWith('/competitions/');
+  const isContactPage = pathname === '/contact';
 
   return (
     <div className="flex flex-col bg-gray-100 min-h-screen">
       {isHomePage ? (
         <>
-          <div className={`bg-[#1e5f4e] mx-6 mt-6 mb-6 rounded-3xl flex flex-col ${pathname === '/' && isShrunk ? 'animate-shrink' : 'h-[calc(100vh-3rem)]'}`}>
+          <div className={`bg-[#1e5f4e] mx-6 mt-6 mb-6 rounded-3xl flex flex-col ${isShrunk ? 'animate-shrink' : 'h-[calc(100vh-3rem)]'}`}>
             <Navbar />
             <main className="flex-1">
               {children}
@@ -78,9 +89,19 @@ export default function Layout({ children }: LayoutProps) {
           </main>
           <Footer />
         </div>
+      ) : isContactPage ? (
+        <div className="flex flex-col min-h-screen">
+          <div className="bg-[#1e5f4e] w-full pt-4">
+            <Navbar />
+            <main className="flex-1 bg-black">
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </div>
       ) : (
         <div className="flex flex-col min-h-screen">
-          <div className="bg-[#1e5f4e] rounded-2xl mx-4 mt-4 w-[calc(100%-2rem)]">
+          <div className="bg-[#f3f4f6] text-gray-800 rounded-2xl mx-4 mt-4 w-[calc(100%-2rem)]">
             <Navbar />
           </div>
           <main className="flex-1">

@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      {/* Hero Section - This will be inside the green container */}
-      <section className="flex items-center justify-center px-8 py-16 flex-1">
+      {/* Hero Section*/}
+      <section className="flex items-center justify-center px-8 py-60 flex-1">
         <div className="max-w-[1400px] w-full flex items-center justify-center">
           {/* Center Content */}
           <div className="text-center">
-            <p className="text-white text-lg mb-6 font-light tracking-wide">
+            <p className="text-white text-4xl mb-6 tracking-wide">
               "Sat Set Wat Wet Rival Juara"
             </p>
             
@@ -29,8 +29,8 @@ export default function Home() {
               </div>
             </h1>
 
-            <p className="text-white text-base max-w-2xl mx-auto mb-10 leading-relaxed">
-              Rival represents excellence in robotics, innovation, and teamwork. 
+            <p className="text-white text-2xl max-w-6xl mx-auto mb-10 leading-relaxed">
+              RIVAL ITS represents excellence in robotics, innovation, and teamwork. 
               Join us on our journey to push the boundaries of technology 
               and inspire the next generation of engineers.
             </p>
