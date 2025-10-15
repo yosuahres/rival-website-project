@@ -29,9 +29,9 @@ export default function Teams() {
 
   return (
     <div className="flex flex-col min-h-full">
-      <section className="flex-1 px-8 py-12">
+      <section className="flex-1 px-8 py-35">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-[#1e5f4e] font-black text-6xl mb-8">
+          <h1 className="text-white font-black text-6xl mb-8">
             Meet the Team
           </h1>
 
@@ -39,7 +39,7 @@ export default function Teams() {
             const membersInRole = teamMembers.filter(member => member.role === role);
             return (
               <div key={role} className="mb-12">
-                <h2 className="text-[#1e5f4e] font-bold text-4xl mt-12 mb-8 capitalize">
+                <h2 className="text-white font-bold text-4xl mt-12 mb-8 capitalize">
                   {role}
                 </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
@@ -49,7 +49,7 @@ export default function Teams() {
                         <div className="w-[200px] h-[200px] rounded-full overflow-hidden flex items-center justify-center mb-4">
                           <Image src={member.image} alt={`Team member ${member.name}`} width={200} height={200} className="object-cover" />
                         </div>
-                        <p className="text-[#1e5f4e]">{member.name.charAt(0).toUpperCase() + member.name.slice(1)}</p>
+                        <p className="text-white">{member.name.charAt(0).toUpperCase() + member.name.slice(1)}</p>
                       </div>
                     ))
                   ) : (

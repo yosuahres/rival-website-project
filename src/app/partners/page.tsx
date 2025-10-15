@@ -11,7 +11,7 @@ export default function Sponsors() {
     <>
       <div>
         {/* Header Section */}
-        <div className="text-[#1e5f4e] py-20 px-8">
+        <div className="text-white py-35 px-8">
           <div className="max-w-6xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Our Sponsors and Supporters

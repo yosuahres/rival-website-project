@@ -87,7 +87,7 @@ export default function ContactForm() {
   };
 
   return (
-  <div className="bg-white/0 backdrop-blur-sm rounded-lg p-8 shadow-xl border border-gray-200">
+  <div className="bg-white/0 backdrop-blur-sm rounded-lg p-8 ">
       {formState.isSuccess && (
         <div className="mb-6 p-4 bg-green-100 border border-green-400 text-white rounded-lg">
           <div className="flex items-center">

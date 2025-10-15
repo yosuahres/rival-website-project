@@ -10,7 +10,7 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-[#1e5f4e]">
       <div
-        className="relative px-80 py-25 bg-black bg-cover bg-center min-h-[400px]"
+        className="relative px-80 py-40 bg-black bg-cover bg-center min-h-[500px]"
         style={{ backgroundImage: `url('/images/contact.jpg')` }}
       >
         <div className="absolute inset-0 bg-black/80" style={{ pointerEvents: 'none' }} />
