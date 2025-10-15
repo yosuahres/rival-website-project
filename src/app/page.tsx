@@ -13,7 +13,7 @@ export default function Home() {
     <>
       {/* Hero Section*/}
       <section className="flex items-center justify-center px-8 py-60 flex-1">
-        <div className="max-w-[1400px] w-full flex items-center justify-center">
+        <div className="flex items-center justify-center">
           {/* Center Content */}
           <div className="text-center">
             <p className="text-white text-4xl mb-6 tracking-wide">

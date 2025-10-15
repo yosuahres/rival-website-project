@@ -15,7 +15,7 @@
 }
 
 body {
-  background: #f3f4f6;
+  background: #1e5f4e;
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   min-height: 100vh;
@@ -32,24 +32,6 @@ body {
   overflow-y: visible;
 }
 
-@keyframes shrinkEffect {
-  from {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    border-radius: 0;
-  }
-  to {
-    width: calc(100vw - 3rem);
-    height: calc(100vh - 3rem);
-    margin: 1.5rem;
-    border-radius: 1.5rem;
-  }
-}
-
-.animate-shrink {
-  animation: shrinkEffect 1s ease-in-out forwards;
-}
 
 .gradient-text {
   background: linear-gradient(180deg, #A9A9A9 0%, #808080 100%);
