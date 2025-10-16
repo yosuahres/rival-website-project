@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import CompetitionTasksCarousel from '@/components/CompetitionTasksCarousel';
 
-const indonesianRobotContestTasks = [
+const australianRoverChallengeTasks = [
   {
     id: 1,
     title: 'Autonomous Waste Sorting',
@@ -16,12 +16,10 @@ const indonesianRobotContestTasks = [
   },
 ];
 
-export default function IndonesianRobotContestPage() {
+export default function AustralianRoverChallengePage() {
   return (
     <div className="min-h-screen bg-[#1e5f4e]">
-      {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center">
-        {/* Background image with reduced opacity */}
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <img 
             src="/images/foreground-arc.png" 
@@ -43,7 +41,6 @@ export default function IndonesianRobotContestPage() {
         </div>
       </section>
 
-      {/* Description Section (separated) */}
       <section className="w-full bg-[#1e5f4e] bg-opacity-70 py-8 flex items-center justify-center">
         <div className="max-w-7xl w-full min-h-[120px] mx-auto">
           <p className="text-lg text-white p-6 text-justify font-bold">
@@ -57,7 +54,6 @@ export default function IndonesianRobotContestPage() {
         </div>
       </section>
 
-      {/* Stats Section */}
   <section className="relative w-full min-h-[300px] flex items-center justify-center py-14 overflow-hidden">
         <div className="absolute inset-0 bg-[#1e5f4e] opacity-70"></div>
         <img
@@ -84,7 +80,7 @@ export default function IndonesianRobotContestPage() {
           {/* spacer */}
       </div>
 
-      <CompetitionTasksCarousel tasks={indonesianRobotContestTasks} backgroundImage="/images/ROVER1.png" />
+      <CompetitionTasksCarousel tasks={australianRoverChallengeTasks} backgroundImage="/images/ROVER1.png" />
     </div>
   );
 }

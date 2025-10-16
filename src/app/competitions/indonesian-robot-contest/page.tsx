@@ -106,7 +106,7 @@ export default function IndonesianRobotContestPage() {
           {/* spacer */}
       </div>
 
-      <CompetitionTasksCarousel tasks={indonesianRobotContestTasks} backgroundImage="/images/foreground-kri4.jpg" />
+      <CompetitionTasksCarousel tasks={indonesianRobotContestTasks} backgroundImage="/images/foreground-kri3.jpg" />
     </div>
   );
 }
