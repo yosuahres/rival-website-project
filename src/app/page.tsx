@@ -73,7 +73,7 @@ export default function Home() {
         }}
       >
         <div
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 w-full h-full rounded-br-4xl rounded-bl-4xl"
           style={{
             backgroundImage: "url('/images/foreground-arc.png')",
             backgroundSize: "120%",
