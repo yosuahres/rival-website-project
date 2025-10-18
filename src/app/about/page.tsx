@@ -12,10 +12,10 @@ export default function About() {
             About RIVAL ITS
           </h1>
           <p className="text-white text-lg leading-relaxed">
-            RIVAL ITS is Indonesia's premier robotics team, dedicated to pushing 
-            the boundaries of technology and innovation. Our passionate team of 
-            engineers and innovators work together to create cutting-edge robotic 
-            solutions that inspire the next generation.
+            RIVAL ITS is Indonesia's premier robotics team, dedicated to pushing
+            the boundaries of technology and innovation. Our passionate team of
+            engineers and innovators work together to create cutting-edge
+            robotic solutions that inspire the next generation.
           </p>
         </div>
       </section>

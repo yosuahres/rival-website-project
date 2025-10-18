@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import Navbar from './Navbar';
-import Footer from './Footer';
-import NextImage from '@/components/NextImage';
-import SplashScreen from '@/components/SplashScreen';
+import { usePathname } from "next/navigation";
+import type React from "react";
+import { useEffect, useState } from "react";
+import SplashScreen from "@/components/SplashScreen";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
-  const [showSplashScreen, setShowSplashScreen] = useState(pathname === '/');
+  const [showSplashScreen, setShowSplashScreen] = useState(pathname === "/");
   const [fadeOut, setFadeOut] = useState(false);
 
   const handleSplashScreenFinish = () => {
@@ -22,7 +22,7 @@ export default function Layout({ children }: LayoutProps) {
   };
 
   useEffect(() => {
-    if (pathname !== '/') {
+    if (pathname !== "/") {
       setShowSplashScreen(false);
       setFadeOut(true);
     }
@@ -33,15 +33,15 @@ export default function Layout({ children }: LayoutProps) {
       {showSplashScreen && <SplashScreen onFinish={handleSplashScreenFinish} />}
       <div
         className={`flex flex-col bg-transparent transition-opacity duration-500 ${
-          showSplashScreen && !fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
+          showSplashScreen && !fadeOut
+            ? "opacity-0 pointer-events-none"
+            : "opacity-100"
         }`}
       >
         <div className="text-gray-800 rounded-2xl bg-transparent">
           <Navbar />
         </div>
-        <main className="flex-1 min-h-screen bg-transparent">
-          {children}
-        </main>
+        <main className="flex-1 min-h-screen bg-transparent">{children}</main>
         <Footer />
       </div>
     </div>

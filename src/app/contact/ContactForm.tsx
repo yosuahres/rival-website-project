@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 interface FormData {
   firstName: string;
@@ -17,10 +17,10 @@ interface FormState {
 
 export default function ContactForm() {
   const [formData, setFormData] = useState<FormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    message: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    message: "",
   });
 
   const [formState, setFormState] = useState<FormState>({
@@ -29,9 +29,11 @@ export default function ContactForm() {
     error: null,
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -39,7 +41,7 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Reset form state
     setFormState({
       isLoading: true,
@@ -48,10 +50,10 @@ export default function ContactForm() {
     });
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
+      const response = await fetch("/api/contact", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -59,7 +61,7 @@ export default function ContactForm() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to send message');
+        throw new Error(result.error || "Failed to send message");
       }
 
       // Success
@@ -71,40 +73,60 @@ export default function ContactForm() {
 
       // Reset form data
       setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        message: '',
+        firstName: "",
+        lastName: "",
+        email: "",
+        message: "",
       });
-
     } catch (error) {
       setFormState({
         isLoading: false,
         isSuccess: false,
-        error: error instanceof Error ? error.message : 'Failed to send message',
+        error:
+          error instanceof Error ? error.message : "Failed to send message",
       });
     }
   };
 
   return (
-  <div className="bg-white/0 backdrop-blur-sm rounded-lg p-8 ">
+    <div className="bg-white/0 backdrop-blur-sm rounded-lg p-8 ">
       {formState.isSuccess && (
         <div className="mb-6 p-4 bg-green-100 border border-green-400 text-white rounded-lg">
           <div className="flex items-center">
-            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            <svg
+              className="w-5 h-5 mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <title>Success Icon</title>
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clipRule="evenodd"
+              />
             </svg>
             <span className="font-medium">Message sent successfully!</span>
           </div>
-          <p className="mt-1 text-sm">Thank you for contacting us. We'll get back to you soon.</p>
+          <p className="mt-1 text-sm">
+            Thank you for contacting us. We'll get back to you soon.
+          </p>
         </div>
       )}
 
       {formState.error && (
         <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
           <div className="flex items-center">
-            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+            <svg
+              className="w-5 h-5 mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <title>Error Icon</title>
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clipRule="evenodd"
+              />
             </svg>
             <span className="font-medium">Error: {formState.error}</span>
           </div>
@@ -114,7 +136,10 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="firstName" className="block text-white text-sm font-medium mb-2">
+            <label
+              htmlFor="firstName"
+              className="block text-white text-sm font-medium mb-2"
+            >
               First Name <span className="text-red-500">(required)</span>
             </label>
             <input
@@ -129,9 +154,12 @@ export default function ContactForm() {
               placeholder="First Name"
             />
           </div>
-          
+
           <div>
-            <label htmlFor="lastName" className="block text-white text-sm font-medium mb-2">
+            <label
+              htmlFor="lastName"
+              className="block text-white text-sm font-medium mb-2"
+            >
               Last Name
             </label>
             <input
@@ -146,9 +174,12 @@ export default function ContactForm() {
             />
           </div>
         </div>
-        
+
         <div>
-          <label htmlFor="email" className="block text-white text-sm font-medium mb-2">
+          <label
+            htmlFor="email"
+            className="block text-white text-sm font-medium mb-2"
+          >
             Email <span className="text-red-500">(required)</span>
           </label>
           <input
@@ -165,7 +196,10 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="message" className="block text-white text-sm font-medium mb-2">
+          <label
+            htmlFor="message"
+            className="block text-white text-sm font-medium mb-2"
+          >
             Message <span className="text-red-500">(required)</span>
           </label>
           <textarea
@@ -188,14 +222,31 @@ export default function ContactForm() {
         >
           {formState.isLoading ? (
             <>
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <svg
+                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <title>Loading Spinner</title>
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
               </svg>
               Sending...
             </>
           ) : (
-            'Send'
+            "Send"
           )}
         </button>
       </form>

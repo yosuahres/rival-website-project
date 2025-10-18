@@ -1,14 +1,13 @@
 "use client";
 
-import Image from "next/image"; 
-import Link from "next/link";
 import type { Metadata } from "next";
-import NextImage from "@/components/NextImage";
-import { useEffect, useRef, useState, useLayoutEffect } from "react";
+import Image from "next/image";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-const metadata: Metadata = {
+const _metadata: Metadata = {
   title: "Home",
-  description: "Welcome to RIVAL ITS - Indonesia's premier robotic team pushing boundaries in technology and innovation.",
+  description:
+    "Welcome to RIVAL ITS - Indonesia's premier robotic team pushing boundaries in technology and innovation.",
 };
 
 export default function Home() {
@@ -67,7 +66,7 @@ export default function Home() {
       <section
         className="flex items-center justify-between px-8 py-80 flex-1 relative rounded-bl-4xl rounded-br-4xl"
         style={{
-          backgroundSize: "120%", 
+          backgroundSize: "120%",
           backgroundPosition: "5px center",
           transform: "scaleX(-1)",
         }}
@@ -83,7 +82,10 @@ export default function Home() {
             pointerEvents: "none",
           }}
         />
-        <div className="flex items-center justify-center flex-1 relative" style={{ transform: "scaleX(-1)", zIndex: 1 }}>
+        <div
+          className="flex items-center justify-center flex-1 relative"
+          style={{ transform: "scaleX(-1)", zIndex: 1 }}
+        >
           <Image
             src="/images/vertical.png"
             alt="RIVAL ITS Logo"
@@ -97,12 +99,17 @@ export default function Home() {
 
       <section className="py-25 px-2">
         <div className="mx-auto text-center max-w-7xl">
-          <h2 className="text-5xl text-white mb-6 font-medium">A student robotic team designing and building robots for competition</h2>
+          <h2 className="text-5xl text-white mb-6 font-medium">
+            A student robotic team designing and building robots for competition
+          </h2>
           <p className="text-lg text-white mx-auto">
-            RIVAL ITS is a student robotic team based in Indonesia, dedicated to designing and building advanced robots for international competitions.
-            Our mission is to push the boundaries of technology and innovation, while fostering a collaborative and inclusive environment for students to learn and grow.
+            RIVAL ITS is a student robotic team based in Indonesia, dedicated to
+            designing and building advanced robots for international
+            competitions. Our mission is to push the boundaries of technology
+            and innovation, while fostering a collaborative and inclusive
+            environment for students to learn and grow.
           </p>
-        </div>         
+        </div>
       </section>
 
       <section className="py-0 px-0 bg-black">
@@ -125,14 +132,30 @@ export default function Home() {
       <section className="py-24">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-16 md:gap-0">
           <div className="flex-1 flex flex-col items-center">
-            <span className="text-[10vw] md:text-[8vw] font-bold text-[#FFD700] leading-none">1st</span>
-            <span className="text-2xl md:text-3xl text-white font-medium mt-6 mb-6">in Indonesia</span>
-            <span className="text-lg md:text-xl text-gray-300 text-center">Indonesian Robot Contest<br/>(2024)</span>
+            <span className="text-[10vw] md:text-[8vw] font-bold text-[#FFD700] leading-none">
+              1st
+            </span>
+            <span className="text-2xl md:text-3xl text-white font-medium mt-6 mb-6">
+              in Indonesia
+            </span>
+            <span className="text-lg md:text-xl text-gray-300 text-center">
+              Indonesian Robot Contest
+              <br />
+              (2024)
+            </span>
           </div>
           <div className="flex-1 flex flex-col items-center">
-            <span className="text-[10vw] md:text-[8vw] font-bold text-[#FFD700] leading-none">11th</span>
-            <span className="text-2xl md:text-3xl text-white font-medium mt-6 mb-6">Worldwide</span>
-            <span className="text-lg md:text-xl text-gray-300 text-center">European Rover Challenge (Remote)<br/>(2025)</span>
+            <span className="text-[10vw] md:text-[8vw] font-bold text-[#FFD700] leading-none">
+              11th
+            </span>
+            <span className="text-2xl md:text-3xl text-white font-medium mt-6 mb-6">
+              Worldwide
+            </span>
+            <span className="text-lg md:text-xl text-gray-300 text-center">
+              European Rover Challenge (Remote)
+              <br />
+              (2025)
+            </span>
           </div>
         </div>
       </section>
@@ -153,17 +176,16 @@ export default function Home() {
           />
           <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
             <h2 className="text-white text-4xl md:text-5xl font-bold drop-shadow-lg mb-6 text-center">
-              Through student leadership and teamwork, we innovate and excel. 
+              Through student leadership and teamwork, we innovate and excel.
             </h2>
             <p className="text-white text-xl md:text-2xl font-base  drop-shadow-lg text-center max-w-6xl">
-              We design, build, and test the next generation of robots right here in Indonesia - and inspire future generations to do the same.
+              We design, build, and test the next generation of robots right
+              here in Indonesia - and inspire future generations to do the same.
             </p>
           </div>
           <div className="absolute inset-0 bg-black/40 pointer-events-none" />
         </div>
       </section>
-
-      
     </>
   );
 }

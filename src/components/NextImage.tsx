@@ -1,17 +1,22 @@
-import Image, { ImageProps } from 'next/image';
-import { clsxm } from '@/lib/clsxm';
+import Image, { type ImageProps } from "next/image";
+import { clsxm } from "@/lib/clsxm";
 
 type NextImageProps = {
-  use  ?: 'default' | 'fill';
+  use?: "default" | "fill";
   className?: string;
   alt: string;
 } & ImageProps;
 
-const NextImage = ({ use = 'default', className, alt, ...rest }: NextImageProps) => {
-  if (use === 'fill') {
+const NextImage = ({
+  use = "default",
+  className,
+  alt,
+  ...rest
+}: NextImageProps) => {
+  if (use === "fill") {
     return (
-      <div className={clsxm('overflow-hidden', className)}>
-        <Image alt={alt} fill className='object-cover' {...rest} />
+      <div className={clsxm("overflow-hidden", className)}>
+        <Image alt={alt} fill className="object-cover" {...rest} />
       </div>
     );
   }

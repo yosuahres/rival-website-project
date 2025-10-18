@@ -1,32 +1,71 @@
 import type { Metadata } from "next";
-import Image from 'next/image';
-import RoleNavigation from '@/components/RoleNavigation';
+import Image from "next/image";
+import RoleNavigation from "@/components/RoleNavigation";
 
 export const metadata: Metadata = {
   title: "Our Teams",
-  description: "Meet the talented teams that make up RIVAL ITS - from mechanical design to software development, each team brings unique expertise.",
+  description:
+    "Meet the talented teams that make up RIVAL ITS - from mechanical design to software development, each team brings unique expertise.",
 };
 
 export default function Teams() {
   const teamMembers = [
-    { name: 'dharma', image: '/personal-data/dharma.png', role: 'advisor team' },
-    { name: 'Valencia Stevie F. H.', image: '/personal-data/stevie.png', role: 'electrical team' },
-    { name: 'mely', image: '/personal-data/mely.png', role: 'electrical team' },
-    { name: 'evan', image: '/personal-data/evan.png', role: 'electrical team' },
-    { name: 'ademas', image: '/personal-data/ademas.png', role: 'electrical team' },
-    { name: 'atok', image: '/personal-data/atok.png', role: 'mechanical team' },
-    { name: 'anam', image: '/personal-data/anam.png', role: 'mechanical team' },
-    { name: 'andre', image: '/personal-data/andre.png', role: 'mechanical team' },
-    { name: 'rijal', image: '/personal-data/rijal.png', role: 'mechanical team' },
-    { name: 'karina', image: '/personal-data/karina.png', role: 'outreach' },
-    { name: 'gibran', image: '/personal-data/gibran.png', role: 'outreach' },
-    { name: 'kaysa', image: '/personal-data/kaysa.png', role: 'outreach' },
-    { name: 'Wildan', image: '/personal-data/wildan.png', role: 'programming team' },
-    { name: 'naufal', image: '/personal-data/naufal.png', role: 'programming team' },
-    { name: 'radit', image: '/personal-data/radit.png', role: 'programming team' },
+    {
+      name: "dharma",
+      image: "/personal-data/dharma.png",
+      role: "advisor team",
+    },
+    {
+      name: "Valencia Stevie F. H.",
+      image: "/personal-data/stevie.png",
+      role: "electrical team",
+    },
+    { name: "mely", image: "/personal-data/mely.png", role: "electrical team" },
+    { name: "evan", image: "/personal-data/evan.png", role: "electrical team" },
+    {
+      name: "ademas",
+      image: "/personal-data/ademas.png",
+      role: "electrical team",
+    },
+    { name: "atok", image: "/personal-data/atok.png", role: "mechanical team" },
+    { name: "anam", image: "/personal-data/anam.png", role: "mechanical team" },
+    {
+      name: "andre",
+      image: "/personal-data/andre.png",
+      role: "mechanical team",
+    },
+    {
+      name: "rijal",
+      image: "/personal-data/rijal.png",
+      role: "mechanical team",
+    },
+    { name: "karina", image: "/personal-data/karina.png", role: "outreach" },
+    { name: "gibran", image: "/personal-data/gibran.png", role: "outreach" },
+    { name: "kaysa", image: "/personal-data/kaysa.png", role: "outreach" },
+    {
+      name: "Wildan",
+      image: "/personal-data/wildan.png",
+      role: "programming team",
+    },
+    {
+      name: "naufal",
+      image: "/personal-data/naufal.png",
+      role: "programming team",
+    },
+    {
+      name: "radit",
+      image: "/personal-data/radit.png",
+      role: "programming team",
+    },
   ];
 
-  const roles = ['advisor team', 'electrical team', 'mechanical team', 'programming team', 'outreach'];
+  const roles = [
+    "advisor team",
+    "electrical team",
+    "mechanical team",
+    "programming team",
+    "outreach",
+  ];
 
   return (
     <div className="flex flex-col min-h-full">
@@ -55,11 +94,11 @@ export default function Teams() {
             <div className="text-center">
               {roles.map((role) => {
                 const membersInRole = teamMembers.filter(
-                  (member) => member.role === role
+                  (member) => member.role === role,
                 );
                 return (
                   <div
-                    id={role.replace(/\s+/g, '-')}
+                    id={role.replace(/\s+/g, "-")}
                     key={role}
                     className="mb-12"
                   >
@@ -69,9 +108,9 @@ export default function Teams() {
                     </h2>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
                       {membersInRole.length > 0 ? (
-                        membersInRole.map((member, index) => (
+                        membersInRole.map((member) => (
                           <div
-                            key={index}
+                            key={member.name}
                             className="bg-white/10 rounded-2xl p-6 flex flex-col items-center"
                           >
                             <div className="w-[400px] h-[400px] rounded-full overflow-hidden flex items-center justify-center mb-4">

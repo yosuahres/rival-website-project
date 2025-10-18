@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface SplashScreenProps {
   onFinish: () => void;
@@ -13,16 +13,16 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
 
   useEffect(() => {
     const fallTimer = setTimeout(() => {
-      setIsFalling(false); 
+      setIsFalling(false);
       const fadeTimer = setTimeout(() => {
-        setIsVisible(false); 
+        setIsVisible(false);
         const finishTimer = setTimeout(() => {
           onFinish();
-        }, 600); 
+        }, 600);
         return () => clearTimeout(finishTimer);
-      }, 700); 
+      }, 700);
       return () => clearTimeout(fadeTimer);
-    }, 700); 
+    }, 700);
 
     return () => clearTimeout(fallTimer);
   }, [onFinish]);
@@ -34,7 +34,7 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
   return (
     <div
       className={`fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-700 ${
-        isVisible ? 'opacity-100' : 'opacity-0'
+        isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
       <Image
@@ -43,7 +43,7 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
         width={200}
         height={200}
         className={`transition-transform duration-700 ease-out ${
-          isFalling ? 'animate-fall' : 'translate-y-0'
+          isFalling ? "animate-fall" : "translate-y-0"
         }`}
       />
     </div>

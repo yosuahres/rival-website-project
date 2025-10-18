@@ -1,14 +1,18 @@
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 type CookieAttributes = {
   expires?: number | Date;
   path?: string;
   domain?: string;
   secure?: boolean;
-  sameSite?: 'strict' | 'lax' | 'none';
+  sameSite?: "strict" | "lax" | "none";
 };
 
-export const setCookie = (name: string, value: string, attributes?: CookieAttributes) => {
+export const setCookie = (
+  name: string,
+  value: string,
+  attributes?: CookieAttributes,
+) => {
   Cookies.set(name, value, attributes);
 };
 
