@@ -88,7 +88,9 @@ export default function RoleNavigation({ roles }: RoleNavigationProps) {
     <div
       ref={navRef}
       style={
-        isFixed && left !== null ? { left: left, width: width } : undefined
+        isFixed && left !== null && width !== null
+          ? { left: left, width: width }
+          : undefined
       }
       className={`w-full pr-4 ${
         isFixed ? "fixed top-24 z-40" : "sticky top-96"

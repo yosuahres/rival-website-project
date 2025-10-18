@@ -10,6 +10,19 @@ import type {
   UninterceptedApiError,
 } from "../types/api";
 
+const getErrorMessage = (
+  message: string | Record<string, string[]> | undefined,
+  fallback: string,
+): string => {
+  if (typeof message === "string") {
+    return message;
+  }
+  if (typeof message === "object" && message !== null) {
+    return JSON.stringify(message);
+  }
+  return fallback;
+};
+
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api";
 
@@ -47,13 +60,10 @@ api.interceptors.response.use(
       const apiError: ApiError = {
         code: error.response.status,
         status: false,
-        message:
-          typeof (error.response.data as UninterceptedApiError).message ===
-          "string"
-            ? (error.response.data as UninterceptedApiError).message
-            : JSON.stringify(
-                (error.response.data as UninterceptedApiError).message,
-              ) || error.message,
+        message: getErrorMessage(
+          (error.response.data as UninterceptedApiError).message,
+          error.message || "An unknown error occurred",
+        ),
       };
       console.error("API Error:", apiError);
       return Promise.reject(apiError);
