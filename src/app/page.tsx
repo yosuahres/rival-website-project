@@ -167,7 +167,7 @@ export default function Home() {
           style={{ height: "600px" }}
         >
           <Image
-            src="/images/home2.jpg"
+            src="/images/home3.jpg"
             alt="RIVAL ITS Team 2"
             width={1920}
             height={1080}
