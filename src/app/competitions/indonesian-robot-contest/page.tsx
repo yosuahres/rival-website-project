@@ -19,9 +19,7 @@ const indonesianRobotContestTasks = [
 export default function IndonesianRobotContestPage() {
   return (
     <div className="min-h-screen bg-[#1e5f4e]">
-      {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center">
-        {/* Background image with reduced opacity */}
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <img 
             src="/images/foreground-kri.jpg" 

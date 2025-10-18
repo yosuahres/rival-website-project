@@ -1,9 +1,22 @@
 @import "tailwindcss";
 
+@keyframes fall {
+  0% {
+    transform: translateY(-100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-fall {
+  animation: fall 1s ease-out forwards;
+}
+
 :root {
   --phamily-green: #1e5f4e;
   --phamily-green-dark: #16473a;
-  --background: #1e5f4e; /* Keeping the base green for consistency with other elements */
+  --background: #1e5f4e; 
   --foreground: #ffffff;
 }
 
@@ -16,15 +29,15 @@
 
 body {
   background:
-    radial-gradient(circle at 10% 90%, rgba(30, 95, 78, 0.9) 0%, transparent 60%),
-    radial-gradient(circle at 90% 10%, rgba(42, 125, 99, 0.9) 0%, transparent 60%),
-    radial-gradient(circle at 30% 70%, rgba(30, 95, 78, 0.7) 0%, transparent 75%),
-    radial-gradient(circle at 70% 30%, rgba(42, 125, 99, 0.7) 0%, transparent 75%),
-    radial-gradient(circle at 50% 50%, rgba(30, 95, 78, 0.5) 0%, transparent 80%),
+    radial-gradient(circle at 5% 95%, rgba(30, 95, 78, 1) 0%, transparent 60%), 
+    radial-gradient(circle at 95% 5%, rgba(42, 125, 99, 1) 0%, transparent 60%), 
+    radial-gradient(circle at 25% 75%, rgba(30, 95, 78, 0.9) 0%, transparent 70%),
+    radial-gradient(circle at 75% 25%, rgba(42, 125, 99, 0.9) 0%, transparent 70%),
+    radial-gradient(circle at 50% 50%, rgba(100, 50, 150, 0.9) 0%, transparent 75%), 
     linear-gradient(135deg, #1e5f4e 0%, #2a7d63 50%, #1e5f4e 100%);
-  background-size: 200% 200%; /* Make background larger to allow more movement/variation */
+  background-size: 250% 250%; 
   background-attachment: fixed;
-  animation: backgroundPan 20s linear infinite alternate; /* Subtle animation for dynamic effect */
+  animation: backgroundPan 25s linear infinite alternate; 
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   min-height: 100vh;
@@ -42,10 +55,6 @@ body {
 }
 
 .green-container {
-  /* Adjusting green-container to blend better with the new body background,
-     or keep it as is if it's meant to be a distinct section.
-     For now, I'll keep it as is, assuming it's a specific component.
-     If the user wants this to also change, they can specify. */
   background: linear-gradient(135deg, #1e5f4e 0%, #2a7d63 50%, #1e5f4e 100%);
   border-radius: 0;
   position: relative;
@@ -113,7 +122,6 @@ body {
   animation-delay: 0.5s;
 }
 
-/* Button hover effects */
 button, a[class*="bg-"] {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -166,4 +174,20 @@ button:hover, a[class*="bg-"]:hover {
 
 .animate-slide-in {
   animation: slide-in 0.3s ease-in-out forwards;
+}
+
+@keyframes line-grow {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.animate-line-grow {
+  animation: line-grow 1s ease-out forwards;
+  transform-origin: center;
 }

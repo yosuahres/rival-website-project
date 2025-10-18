@@ -122,15 +122,15 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#1e5f4e] py-24">
+      <section className="py-24">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-16 md:gap-0">
           <div className="flex-1 flex flex-col items-center">
-            <span className="text-[10vw] md:text-[8vw] font-bold text-orange-600 leading-none">1st</span>
+            <span className="text-[10vw] md:text-[8vw] font-bold text-[#FFD700] leading-none">1st</span>
             <span className="text-2xl md:text-3xl text-white font-medium mt-6 mb-6">in Indonesia</span>
             <span className="text-lg md:text-xl text-gray-300 text-center">Indonesian Robot Contest<br/>(2024)</span>
           </div>
           <div className="flex-1 flex flex-col items-center">
-            <span className="text-[10vw] md:text-[8vw] font-bold text-orange-600 leading-none">11th</span>
+            <span className="text-[10vw] md:text-[8vw] font-bold text-[#FFD700] leading-none">11th</span>
             <span className="text-2xl md:text-3xl text-white font-medium mt-6 mb-6">Worldwide</span>
             <span className="text-lg md:text-xl text-gray-300 text-center">European Rover Challenge (Remote)<br/>(2025)</span>
           </div>
@@ -167,4 +167,3 @@ export default function Home() {
     </>
   );
 }
-

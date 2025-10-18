@@ -33,8 +33,8 @@ function FadeIn({ children, className = "" }: { children: React.ReactNode; class
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ease-out will-change-transform ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      className={`transition-opacity duration-700 ease-out will-change-opacity ${
+        visible ? "opacity-100" : "opacity-0"
       } ${className}`}
     >
       {children}
@@ -52,12 +52,17 @@ export default function Sponsors() {
           </h1>
         </div>
 
-        {/* Full-width black strip to highlight logos */}
-        <div className="w-full bg-black py-12 md:py-16">
+        <div
+          className="w-full py-12 md:py-16"
+          style={{
+            backgroundColor: 'rgba(11, 18, 32, 0.5)', 
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)'
+          }}
+        >
           <div className="mx-auto max-w-6xl px-6 sm:px-8">
             <div className="min-h-[120px] md:min-h-[160px] flex items-center">
               <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
-                {/* Sponsor Logos */}
                 <div className="col-span-1 md:col-span-1 lg:col-span-2 flex items-center justify-center">
                   <FadeIn>
                     <NextImage
@@ -73,7 +78,7 @@ export default function Sponsors() {
                 <div className="col-span-1 md:col-span-1 lg:col-span-2 flex items-center justify-center">
                   <FadeIn>
                     <NextImage
-                      src="/sponsors/ikoma.png"
+                      src="/sponsors/indahpuri.png"
                       alt="IKOMA ITS"
                       width={320}
                       height={160}
@@ -85,7 +90,7 @@ export default function Sponsors() {
                 <div className="col-span-1 md:col-span-1 lg:col-span-2 flex items-center justify-center">
                   <FadeIn>
                     <NextImage
-                      src="/sponsors/ikoma.png"
+                      src="/sponsors/indahpuri.png"
                       alt="Akhishop"
                       width={320}
                       height={160}
@@ -105,7 +110,7 @@ export default function Sponsors() {
           <div>
             <h2 className="text-white text-4xl font-bold mb-8">Become a sponsor</h2>
             <h3 className="text-white text-xl font-semibold mb-4">WHAT DO WE OFFER?</h3>
-            <p className="text-gray-300 leading-relaxed mb-8">
+            <p className="text-gray-100 leading-relaxed mb-8">
               We offer four different sponsorship packages: WILDAN, WILDAN, WILDAN, WILDAN. 
               Each one has been carefully designed to provide unique benefits tailored to the needs of our partners. 
               Depending on the chosen package, sponsors can expect a variety of promotional opportunities, 

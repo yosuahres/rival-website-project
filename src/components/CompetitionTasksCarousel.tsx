@@ -54,7 +54,6 @@ export default function CompetitionTasksCarousel({ tasks, backgroundImage }: Com
         <h2 className="text-5xl font-bold text-white text-center mb-8">COMPETITION TASKS</h2> 
         
         <div className="relative flex flex-col items-center justify-center overflow-hidden h-[650px]"> 
-          {/* Image Container */}
           <div className={`absolute h-100 w-full max-w-3xl shadow-lg mb-8 transition-transform duration-300 ease-in-out
             ${slideDirection === 'right' ? '-translate-x-full opacity-0' : slideDirection === 'left' ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100'}`}>
             <Image 
@@ -66,14 +65,12 @@ export default function CompetitionTasksCarousel({ tasks, backgroundImage }: Com
             />
           </div>
 
-          {/* Text Content Container */}
           <div className={`absolute text-center max-w-5xl px-4 transition-transform duration-300 ease-in-out top-[530px]
             ${slideDirection === 'right' ? '-translate-x-full opacity-0' : slideDirection === 'left' ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100'}`}>
             <h3 className="text-4xl font-bold text-white mb-4">{currentTask.title}</h3>
             <p className="text-gray-300 text-lg">{currentTask.description}</p>
           </div>
 
-          {/* Previous Button */}
           <button
             onClick={prevTask}
             className="absolute left-0 z-10 w-16 h-16 flex items-center justify-center rounded-full bg-[#1e5f4e] hover:bg-white text-white focus:outline-none text-4xl" 
@@ -87,7 +84,6 @@ export default function CompetitionTasksCarousel({ tasks, backgroundImage }: Com
             &larr;
           </button>
 
-          {/* Next Button */}
           <button
             onClick={nextTask}
             className="absolute right-0 z-10 w-16 h-16 flex items-center justify-center rounded-full bg-[#1e5f4e] hover:bg-white text-white focus:outline-none text-4xl" 
