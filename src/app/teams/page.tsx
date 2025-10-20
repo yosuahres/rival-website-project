@@ -69,21 +69,22 @@ export default function Teams() {
 
   return (
     <div className="flex flex-col min-h-full">
-      <section className="flex-1 px-8 py-35 relative">
-        <div className="absolute top-[250px] left-8 w-[300px]">
+      <section className="flex-1 px-4 sm:px-8 py-20 sm:py-35 relative">
+        {/* Sidebar navigation: only show on md+ */}
+        <div className="hidden md:block sm:absolute sm:top-[250px] sm:left-8 sm:w-[300px] w-full static mb-8 sm:mb-0">
           <RoleNavigation roles={roles} />
         </div>
 
         <div className="w-full">
           <div className="w-full max-w-4xl mx-auto">
             <div className="text-center">
-              <h1 className="text-white font-black text-6xl mb-8">
+              <h1 className="text-white font-black text-4xl sm:text-6xl mb-6 sm:mb-8">
                 Meet the Team
               </h1>
             </div>
           </div>
 
-          <div className="w-full h-1 bg-white my-8 animate-line-grow"></div>
+          <div className="w-full h-1 bg-white my-6 sm:my-8 animate-line-grow"></div>
           <div className="w-full max-w-4xl mx-auto">
             <div className="text-center">
               {roles.map((role) => {
@@ -94,28 +95,28 @@ export default function Teams() {
                   <div
                     id={role.replace(/\s+/g, "-")}
                     key={role}
-                    className="mb-12"
+                    className="mb-8 sm:mb-12"
                   >
-                    <h2 className="text-white font-bold text-4xl mt-12 mb-8 capitalize text-center">
+                    <h2 className="text-white font-bold text-2xl sm:text-4xl mt-8 sm:mt-12 mb-6 sm:mb-8 capitalize text-center">
                       {role}
                     </h2>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-12">
                       {membersInRole.length > 0 ? (
                         membersInRole.map((member) => (
                           <div
                             key={member.name}
-                            className="bg-white/10 rounded-2xl p-6 flex flex-col items-center"
+                            className="bg-white/10 rounded-2xl p-4 sm:p-6 flex flex-col items-center"
                           >
-                            <div className="w-[400px] h-[400px] rounded-full overflow-hidden flex items-center justify-center mb-4">
+                            <div className="w-40 h-40 sm:w-[400px] sm:h-[400px] rounded-full overflow-hidden flex items-center justify-center mb-4">
                               <Image
                                 src={member.image}
                                 alt={`Team member ${member.name}`}
-                                width={400}
-                                height={400}
+                                width={200}
+                                height={200}
                                 className="h-full object-cover"
                               />
                             </div>
-                            <p className="text-white font-medium text-xl">
+                            <p className="text-white font-medium text-lg sm:text-xl">
                               {member.name.charAt(0).toUpperCase() +
                                 member.name.slice(1)}
                             </p>

@@ -4,20 +4,20 @@ import Typography from "@/components/Typography";
 const Footer = () => {
   return (
     <footer className="bg-[#0B1220] text-white py-10">
-      <div className="max-w-8xl mx-20 px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-start">
-          <div className="md:w-1/3 flex flex-col items-start self-start mb-8 md:mb-0 pl-0 md:pl-0 ml-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-start text-center md:text-left">
+          <div className="w-full md:w-1/3 flex flex-col items-center md:items-start mb-8 md:mb-0">
             <NextImage
               src="/images/horizontal.png"
               alt="RIVAL ITS Logo"
               width={200}
               height={100}
-              className="mb-4 ml-0"
+              className="mb-4"
             />
-            <Typography variant="h6" className="mb-2 ml-0">
+            <Typography variant="h6" className="mb-2">
               Follow RIVAL ITS
             </Typography>
-            <div className="flex space-x-4 mb-2 ml-0">
+            <div className="flex space-x-4 mb-2">
               <a
                 href="https://instagram.com/rival_its"
                 aria-label="Instagram"
@@ -51,14 +51,14 @@ const Footer = () => {
                 </svg>
               </a>
             </div>
-            <Typography variant="p" className="text-sm text-gray-400 mb-2 ml-0">
+            <Typography variant="p" className="text-sm text-gray-400 mb-2">
               official.krtmiits@gmail.com
             </Typography>
-            <Typography variant="p" className="text-sm text-gray-400 ml-0">
+            <Typography variant="p" className="text-sm text-gray-400">
               Institut Teknologi Sepuluh Nopember, Surabaya, Indonesia
             </Typography>
           </div>
-          <div className="md:w-1/3 flex flex-col items-center justify-center mb-8 md:mb-0">
+          <div className="w-full md:w-1/3 flex flex-col items-center justify-center mb-8 md:mb-0">
             <Typography variant="h6" className="mb-2 text-center w-full">
               With support from our partners
             </Typography>
@@ -71,9 +71,9 @@ const Footer = () => {
               />
             </div>
           </div>
-          <div className="md:w-1/3 flex flex-col items-end justify-end">
+          <div className="w-full md:w-1/3 flex flex-col items-center md:items-end justify-end">
             <nav>
-              <ul className="grid grid-cols-2 gap-x-8 gap-y-3 text-white text-base font-medium">
+              <ul className="grid grid-cols-2 gap-x-8 gap-y-3 text-white text-base font-medium text-center md:text-right">
                 <li>
                   <a
                     href="/partners"

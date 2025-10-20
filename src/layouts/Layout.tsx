@@ -4,9 +4,9 @@ import { usePathname } from "next/navigation";
 import type React from "react";
 import { useEffect } from "react";
 import SplashScreen from "@/components/SplashScreen";
+import { useUiStore } from "@/store";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
-import { useUiStore } from "@/store";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,7 +14,8 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
-  const { showSplashScreen, fadeOut, setShowSplashScreen, setFadeOut } = useUiStore();
+  const { showSplashScreen, fadeOut, setShowSplashScreen, setFadeOut } =
+    useUiStore();
 
   const handleSplashScreenFinish = () => {
     setFadeOut(true);

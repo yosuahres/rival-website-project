@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface UiState {
   showSplashScreen: boolean;
@@ -8,7 +8,7 @@ interface UiState {
 }
 
 export const useUiStore = create<UiState>((set) => ({
-  showSplashScreen: true, // Initial state for splash screen
+  showSplashScreen: true,
   fadeOut: false,
   setShowSplashScreen: (value: boolean) => set({ showSplashScreen: value }),
   setFadeOut: (value: boolean) => set({ fadeOut: value }),

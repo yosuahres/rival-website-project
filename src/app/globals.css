@@ -187,3 +187,11 @@ a[class*="bg-"]:hover {
   animation: line-grow 1s ease-out forwards;
   transform-origin: center;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

@@ -68,41 +68,44 @@ export default function Sponsors() {
         >
           <div className="mx-auto max-w-6xl px-6 sm:px-8">
             <div className="min-h-[120px] md:min-h-[160px] flex items-center">
-              <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
-                <div className="col-span-1 md:col-span-1 lg:col-span-2 flex items-center justify-center">
-                  <FadeIn>
-                    <NextImage
-                      src="/sponsors/indahpuri.png"
-                      alt="Aisler"
-                      width={320}
-                      height={160}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </FadeIn>
-                </div>
+              {/* Sponsors: horizontal scroll on mobile, grid on md+ */}
+              <div className="w-full">
+                <div className="flex md:grid md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center overflow-x-auto md:overflow-x-visible scrollbar-hide">
+                  <div className="flex-shrink-0 md:col-span-1 lg:col-span-2 flex items-center justify-center">
+                    <FadeIn>
+                      <NextImage
+                        src="/sponsors/indahpuri.png"
+                        alt="Aisler"
+                        width={320}
+                        height={160}
+                        className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                      />
+                    </FadeIn>
+                  </div>
 
-                <div className="col-span-1 md:col-span-1 lg:col-span-2 flex items-center justify-center">
-                  <FadeIn>
-                    <NextImage
-                      src="/sponsors/indahpuri.png"
-                      alt="IKOMA ITS"
-                      width={320}
-                      height={160}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </FadeIn>
-                </div>
+                  <div className="flex-shrink-0 md:col-span-1 lg:col-span-2 flex items-center justify-center">
+                    <FadeIn>
+                      <NextImage
+                        src="/sponsors/indahpuri.png"
+                        alt="IKOMA ITS"
+                        width={320}
+                        height={160}
+                        className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                      />
+                    </FadeIn>
+                  </div>
 
-                <div className="col-span-1 md:col-span-1 lg:col-span-2 flex items-center justify-center">
-                  <FadeIn>
-                    <NextImage
-                      src="/sponsors/indahpuri.png"
-                      alt="Akhishop"
-                      width={320}
-                      height={160}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </FadeIn>
+                  <div className="flex-shrink-0 md:col-span-1 lg:col-span-2 flex items-center justify-center">
+                    <FadeIn>
+                      <NextImage
+                        src="/sponsors/indahpuri.png"
+                        alt="Akhishop"
+                        width={320}
+                        height={160}
+                        className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                      />
+                    </FadeIn>
+                  </div>
                 </div>
               </div>
             </div>

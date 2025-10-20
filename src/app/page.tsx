@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <>
       <section
-        className="flex items-center justify-between px-8 py-80 flex-1 relative rounded-bl-4xl rounded-br-4xl"
+        className="flex items-center justify-between px-8 py-50 flex-1 relative rounded-bl-4xl rounded-br-4xl"
         style={{
           backgroundSize: "120%",
           backgroundPosition: "5px center",
