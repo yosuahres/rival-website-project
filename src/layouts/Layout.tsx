@@ -2,10 +2,11 @@
 
 import { usePathname } from "next/navigation";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SplashScreen from "@/components/SplashScreen";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import { useUiStore } from "@/store";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -13,8 +14,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
-  const [showSplashScreen, setShowSplashScreen] = useState(pathname === "/");
-  const [fadeOut, setFadeOut] = useState(false);
+  const { showSplashScreen, fadeOut, setShowSplashScreen, setFadeOut } = useUiStore();
 
   const handleSplashScreenFinish = () => {
     setFadeOut(true);
@@ -26,7 +26,7 @@ export default function Layout({ children }: LayoutProps) {
       setShowSplashScreen(false);
       setFadeOut(true);
     }
-  }, [pathname]);
+  }, [pathname, setShowSplashScreen, setFadeOut]);
 
   return (
     <div className="flex flex-col min-h-screen bg-transparent">

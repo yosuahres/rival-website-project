@@ -28,24 +28,7 @@
 }
 
 body {
-  background:
-    radial-gradient(circle at 5% 95%, rgba(30, 95, 78, 1) 0%, transparent 60%),
-    radial-gradient(circle at 95% 5%, rgba(42, 125, 99, 1) 0%, transparent 60%),
-    radial-gradient(
-      circle at 25% 75%,
-      rgba(30, 95, 78, 0.9) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      circle at 75% 25%,
-      rgba(42, 125, 99, 0.9) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(100, 50, 150, 0.9) 0%,
-      transparent 75%
-    ), linear-gradient(135deg, #1e5f4e 0%, #2a7d63 50%, #1e5f4e 100%);
+  background: linear-gradient(135deg, #1e5f4e 0%, #2a7d63 50%, #1e5f4e 100%);
   background-size: 250% 250%;
   background-attachment: fixed;
   animation: backgroundPan 25s linear infinite alternate;

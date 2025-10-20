@@ -2,7 +2,7 @@
 
 import type { Metadata } from "next";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 const _metadata: Metadata = {
   title: "Home",
@@ -11,55 +11,8 @@ const _metadata: Metadata = {
 };
 
 export default function Home() {
-  const [visible, setVisible] = useState(false);
-  const [hasShown, setHasShown] = useState(false);
   const teamSectionRef = useRef<HTMLDivElement>(null);
-
-  const [visible2, setVisible2] = useState(false);
-  const [hasShown2, setHasShown2] = useState(false);
   const lastImageRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    if (teamSectionRef.current) {
-      const rect = teamSectionRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      if (rect.top < windowHeight && rect.bottom > 0) {
-        setVisible(true);
-        setHasShown(true);
-      }
-    }
-    if (lastImageRef.current) {
-      const rect = lastImageRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      if (rect.top < windowHeight && rect.bottom > 0) {
-        setVisible2(true);
-        setHasShown2(true);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (teamSectionRef.current && !hasShown) {
-        const rect = teamSectionRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        if (rect.top < windowHeight && rect.bottom > 0) {
-          setVisible(true);
-          setHasShown(true);
-        }
-      }
-      if (lastImageRef.current && !hasShown2) {
-        const rect = lastImageRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        if (rect.top < windowHeight && rect.bottom > 0) {
-          setVisible2(true);
-          setHasShown2(true);
-        }
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [hasShown, hasShown2]);
 
   return (
     <>
@@ -123,7 +76,7 @@ export default function Home() {
             alt="RIVAL ITS Team"
             width={1920}
             height={1080}
-            className={`w-full h-full object-cover object-center transition-opacity duration-700 ${visible || hasShown ? "opacity-100" : "opacity-0"}`}
+            className="w-full h-full object-cover object-center transition-opacity duration-700 opacity-100"
             priority
           />
         </div>
@@ -171,7 +124,7 @@ export default function Home() {
             alt="RIVAL ITS Team 2"
             width={1920}
             height={1080}
-            className={`w-full h-full object-cover object-center transition-opacity duration-700 ${visible2 || hasShown2 ? "opacity-100" : "opacity-0"}`}
+            className="w-full h-full object-cover object-center transition-opacity duration-700 opacity-100"
             priority
           />
           <div className="absolute inset-0 flex flex-col items-center justify-center z-10">

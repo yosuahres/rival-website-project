@@ -70,14 +70,11 @@ export default function Teams() {
   return (
     <div className="flex flex-col min-h-full">
       <section className="flex-1 px-8 py-35 relative">
-        {/* Left-side navigation for roles */}
         <div className="absolute top-[250px] left-8 w-[300px]">
           <RoleNavigation roles={roles} />
         </div>
 
-        {/* Main content wrapper */}
         <div className="w-full">
-          {/* Constrained container for the title */}
           <div className="w-full max-w-4xl mx-auto">
             <div className="text-center">
               <h1 className="text-white font-black text-6xl mb-8">
@@ -86,10 +83,7 @@ export default function Teams() {
             </div>
           </div>
 
-          {/* Full-width line (moved outside the max-w-4xl container) */}
           <div className="w-full h-1 bg-white my-8 animate-line-grow"></div>
-
-          {/* Constrained container for the team grid */}
           <div className="w-full max-w-4xl mx-auto">
             <div className="text-center">
               {roles.map((role) => {
@@ -102,7 +96,6 @@ export default function Teams() {
                     key={role}
                     className="mb-12"
                   >
-                    {/* Centered title */}
                     <h2 className="text-white font-bold text-4xl mt-12 mb-8 capitalize text-center">
                       {role}
                     </h2>
@@ -117,8 +110,8 @@ export default function Teams() {
                               <Image
                                 src={member.image}
                                 alt={`Team member ${member.name}`}
-                                width={200}
-                                height={200}
+                                width={400}
+                                height={400}
                                 className="h-full object-cover"
                               />
                             </div>
