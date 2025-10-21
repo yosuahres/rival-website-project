@@ -11,7 +11,7 @@ const openSans = Open_Sans({
 export const metadata: Metadata = {
   title: {
     template: "%s | RIVAL ITS",
-    default: "RIVAL ITS - Indonesia Robotic Team Official Website",
+    default: "RIVAL ITS",
   },
   description: "RIVAL ITS - Indonesia Robotic Team Official Website",
 };

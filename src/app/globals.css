@@ -28,10 +28,14 @@
 }
 
 body {
-  background: linear-gradient(135deg, #1e5f4e 0%, #2a7d63 50%, #1e5f4e 100%);
-  background-size: 250% 250%;
+  background: linear-gradient(
+    135deg,
+    var(--phamily-green-dark) 0%,
+    var(--phamily-green) 100%
+  ); /* Removed light green for less contrast */
+  background-size: 400% 400%;
   background-attachment: fixed;
-  animation: backgroundPan 25s linear infinite alternate;
+  animation: subtlePulse 30s ease-in-out infinite alternate; /* Moderate animation speed */
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   min-height: 100vh;
@@ -39,12 +43,15 @@ body {
   scroll-behavior: smooth;
 }
 
-@keyframes backgroundPan {
+@keyframes subtlePulse {
   0% {
     background-position: 0% 0%;
   }
-  100% {
+  50% {
     background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
   }
 }
 

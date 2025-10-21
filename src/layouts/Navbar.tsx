@@ -110,12 +110,6 @@ export default function Navbar() {
                     Indonesian Robot Contest
                   </Link>
                   <Link
-                    href="/competitions/european-rover-challenge"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
-                  >
-                    European Rover Challenge (Remote)
-                  </Link>
-                  <Link
                     href="/competitions/australian-rover-challenge"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
                   >

@@ -1,54 +1,12 @@
-"use client";
 import type { Metadata } from "next";
-import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import FadeIn from "@/components/FadeIn";
 import NextImage from "@/components/NextImage";
 
-const _metadata: Metadata = {
-  title: "Our Sponsors and Supporters",
+export const metadata: Metadata = {
+  title: "Sponsors",
   description:
     "Meet the amazing sponsors and supporters who help RIVAL ITS achieve excellence in robotics competition.",
 };
-
-function FadeIn({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisible(true);
-            obs.disconnect();
-          }
-        });
-      },
-      { threshold: 0.15 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={`transition-opacity duration-700 ease-out will-change-opacity ${
-        visible ? "opacity-100" : "opacity-0"
-      } ${className}`}
-    >
-      {children}
-    </div>
-  );
-}
 
 export default function Sponsors() {
   return (
@@ -75,7 +33,7 @@ export default function Sponsors() {
                     <FadeIn>
                       <NextImage
                         src="/sponsors/indahpuri.png"
-                        alt="Aisler"
+                        alt="Indah Puri"
                         width={320}
                         height={160}
                         className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
@@ -86,8 +44,8 @@ export default function Sponsors() {
                   <div className="flex-shrink-0 md:col-span-1 lg:col-span-2 flex items-center justify-center">
                     <FadeIn>
                       <NextImage
-                        src="/sponsors/indahpuri.png"
-                        alt="IKOMA ITS"
+                        src="/sponsors/akhishop.png"
+                        alt="Akhishop Electronics"
                         width={320}
                         height={160}
                         className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
@@ -95,7 +53,7 @@ export default function Sponsors() {
                     </FadeIn>
                   </div>
 
-                  <div className="flex-shrink-0 md:col-span-1 lg:col-span-2 flex items-center justify-center">
+                  {/* <div className="flex-shrink-0 md:col-span-1 lg:col-span-2 flex items-center justify-center">
                     <FadeIn>
                       <NextImage
                         src="/sponsors/indahpuri.png"
@@ -105,7 +63,7 @@ export default function Sponsors() {
                         className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                       />
                     </FadeIn>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

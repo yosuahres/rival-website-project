@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import CompetitionTasksCarousel from "@/components/CompetitionTasksCarousel";
+
+export const metadata: Metadata = {
+  title: "ARCh",
+  description:
+    "Australian Rover Challenge 2026 Competition - RIVAL ITS participation details and tasks.",
+};
 
 const australianRoverChallengeTasks = [
   {

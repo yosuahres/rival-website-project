@@ -69,6 +69,12 @@ const Footer = () => {
                 width={200}
                 height={100}
               />
+              <NextImage
+                src="/sponsors/akhishop.png"
+                alt="akhishop"
+                width={200}
+                height={100}
+              />
             </div>
           </div>
           <div className="w-full md:w-1/3 flex flex-col items-center md:items-end justify-end">

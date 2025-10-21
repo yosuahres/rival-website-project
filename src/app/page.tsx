@@ -131,19 +131,6 @@ export default function Home() {
               (2024)
             </span>
           </div>
-          <div className="flex-1 flex flex-col items-center">
-            <span className="text-[10vw] md:text-[8vw] font-bold text-[#FFD700] leading-none">
-              11th
-            </span>
-            <span className="text-2xl md:text-3xl text-white font-medium mt-6 mb-6">
-              Worldwide
-            </span>
-            <span className="text-lg md:text-xl text-gray-300 text-center">
-              European Rover Challenge (Remote)
-              <br />
-              (2025)
-            </span>
-          </div>
         </div>
       </section>
 
