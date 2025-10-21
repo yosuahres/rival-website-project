@@ -2,7 +2,7 @@
 
 import type { Metadata } from "next";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const _metadata: Metadata = {
   title: "Home",
@@ -13,6 +13,40 @@ const _metadata: Metadata = {
 export default function Home() {
   const teamSectionRef = useRef<HTMLDivElement>(null);
   const lastImageRef = useRef<HTMLDivElement>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [teamImageLoaded, setTeamImageLoaded] = useState(false);
+
+  useEffect(() => {
+    setImageLoaded(false);
+    setTeamImageLoaded(false);
+
+    // Fade in team image when in view
+    const teamObserver = new window.IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setTeamImageLoaded(true);
+      },
+      { threshold: 0.2 },
+    );
+    if (teamSectionRef.current) {
+      teamObserver.observe(teamSectionRef.current);
+    }
+
+    // Fade in last image when in view
+    const lastObserver = new window.IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setImageLoaded(true);
+      },
+      { threshold: 0.2 },
+    );
+    if (lastImageRef.current) {
+      lastObserver.observe(lastImageRef.current);
+    }
+
+    return () => {
+      teamObserver.disconnect();
+      lastObserver.disconnect();
+    };
+  }, []);
 
   return (
     <>
@@ -76,7 +110,7 @@ export default function Home() {
             alt="RIVAL ITS Team"
             width={1920}
             height={1080}
-            className="w-full h-full object-cover object-center transition-opacity duration-700 opacity-100"
+            className={`w-full h-full object-cover object-center transition-opacity duration-700 ${teamImageLoaded ? "opacity-100" : "opacity-0"}`}
             priority
           />
         </div>
@@ -124,7 +158,9 @@ export default function Home() {
             alt="RIVAL ITS Team 2"
             width={1920}
             height={1080}
-            className="w-full h-full object-cover object-center transition-opacity duration-700 opacity-100"
+            className={`w-full h-full object-cover object-center transition-opacity duration-700 ${
+              imageLoaded ? "opacity-100" : "opacity-0"
+            }`}
             priority
           />
           <div className="absolute inset-0 flex flex-col items-center justify-center z-10">

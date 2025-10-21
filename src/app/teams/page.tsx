@@ -11,9 +11,14 @@ export const metadata: Metadata = {
 export default function Teams() {
   const teamMembers = [
     {
+      name: "Marin",
+      image: "/personal-data/marin.png",
+      role: "advisor team",
+    },
+    {
       name: "dharma",
       image: "/personal-data/dharma.png",
-      role: "advisor team",
+      role: "team leader",
     },
     {
       name: "Valencia Stevie F. H.",
@@ -48,6 +53,11 @@ export default function Teams() {
       role: "programming team",
     },
     {
+      name: "Zalfa",
+      image: "/personal-data/zalfa.png",
+      role: "programming team",
+    },
+    {
       name: "naufal",
       image: "/personal-data/naufal.png",
       role: "programming team",
@@ -61,6 +71,7 @@ export default function Teams() {
 
   const roles = [
     "advisor team",
+    "team leader",
     "electrical team",
     "mechanical team",
     "programming team",
@@ -70,7 +81,6 @@ export default function Teams() {
   return (
     <div className="flex flex-col min-h-full">
       <section className="flex-1 px-4 sm:px-8 py-20 sm:py-35 relative">
-        {/* Sidebar navigation: only show on md+ */}
         <div className="hidden md:block sm:absolute sm:top-[250px] sm:left-8 sm:w-[300px] w-full static mb-8 sm:mb-0">
           <RoleNavigation roles={roles} />
         </div>

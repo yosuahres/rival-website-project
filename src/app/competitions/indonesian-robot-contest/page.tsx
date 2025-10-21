@@ -32,19 +32,20 @@ export default function IndonesianRobotContestPage() {
           />
         </div>
         <div className="relative z-10 text-center text-white">
-          <h1 className="text-6xl font-bold mb-6">Indonesian Robot Contest</h1>
+          <h1 className="text-5xl font-bold mb-6 mt-15">
+            Indonesian Robot Contest
+          </h1>
           <a
             href="https://kontesrobotindonesia.id/index.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#1e5f4e] hover:bg-[#16473a] px-16 py-6 rounded-2xl font-bold text-2xl transition-colors inline-block shadow-lg"
+            className="bg-[#1e5f4e] hover:bg-[#16473a] px-6 py-4 rounded-2xl font-bold text-xl transition-colors inline-block shadow-lg"
           >
             Learn more
           </a>
         </div>
       </section>
 
-      {/* Description Section (separated) */}
       <section className="w-full bg-[#1e5f4e] bg-opacity-70 py-8 flex items-center justify-center">
         <div className="max-w-7xl w-full min-h-[120px] mx-auto">
           <p className="text-lg text-white p-6 text-justify font-bold">
@@ -62,57 +63,60 @@ export default function IndonesianRobotContestPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="relative w-full min-h-[300px] flex items-center justify-center py-14 overflow-hidden">
+      <section className="relative w-full min-h-[180px] sm:min-h-[300px] flex items-center justify-center py-8 sm:py-14 overflow-hidden">
         <div className="absolute inset-0 bg-[#1e5f4e] opacity-70"></div>
         <Image
           src="/images/foreground-kri2.JPG"
           alt="Stats background"
-          className="absolute inset-0 mx-auto max-w-7xl w-full h-full object-cover object-center z-0"
+          className="absolute inset-0 mx-auto max-w-2xl sm:max-w-7xl w-full h-full object-cover object-center z-0"
           style={{ objectPosition: "center 60%", opacity: 0.3 }}
           fill={true}
         />
 
-        {/* <img
-          src="/images/foreground-kri2.JPG"
-          alt="Stats background"
-          className="absolute inset-0 w-full h-full max-w-8xl object-cover object-center z-0"
-          style={{ objectPosition: "center 60%", opacity: 0.3 }}
-        /> */}
         <div className="relative z-10 w-full flex justify-center items-center">
           <div
-            className="flex flex-row items-end gap-32 mx-auto"
+            className="flex flex-row items-end gap-8 sm:gap-16 md:gap-32 mx-auto max-w-xs sm:max-w-none"
             style={{ justifyContent: "center", width: "fit-content" }}
           >
-            {/* 2025 stat */}
             <div className="flex flex-col items-center justify-center">
-              <div className="text-9xl font-extrabold mb-2">
-                1<sup className="text-4xl">st</sup>
+              <div className="text-5xl sm:text-7xl md:text-9xl font-extrabold mb-2">
+                1<sup className="text-xl sm:text-2xl md:text-4xl">st</sup>
               </div>
-              <div className="text-lg opacity-80">OUT OF 36 TEAMS</div>
-              <div className="text-5xl font-extrabold mt-2">2024</div>
+              <div
+                className="text-sm sm:text-sm
+               opacity-80"
+              >
+                OUT OF 36 TEAMS
+              </div>
+              <div className="text-2xl sm:text-4xl md:text-5xl font-extrabold mt-2">
+                2024
+              </div>
             </div>
-            {/* 2024, 2023, 2022 grouped closer together */}
-            <div className="flex flex-row items-end gap-4">
-              <div className="flex flex-col items-center justify-end mx-6">
-                <div className="text-8xl font-bold mb-2">
-                  4<sup className="text-3xl">th</sup>
+
+            <div className="flex flex-row items-end gap-2 sm:gap-4">
+              <div className="flex flex-col items-center justify-end mx-2 sm:mx-6">
+                <div className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2">
+                  4<sup className="text-lg sm:text-xl md:text-3xl">th</sup>
                 </div>
-                {/* <div className="text-base opacity-80">NATIONAL RUNNER-UP</div> */}
-                <div className="text-3xl font-bold mt-2">2023</div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold mt-2">
+                  2023
+                </div>
               </div>
-              <div className="flex flex-col items-center justify-end mx-6">
-                <div className="text-8xl font-bold mb-2">
-                  1<sup className="text-3xl">st</sup>
+              <div className="flex flex-col items-center justify-end mx-2 sm:mx-6">
+                <div className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2">
+                  1<sup className="text-lg sm:text-xl md:text-3xl">st</sup>
                 </div>
-                {/* <div className="text-base opacity-80">NATIONAL CHAMPION</div> */}
-                <div className="text-3xl font-bold mt-2">2022</div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold mt-2">
+                  2022
+                </div>
               </div>
-              <div className="flex flex-col items-center justify-end mx-6">
-                <div className="text-8xl font-bold mb-2">
-                  1<sup className="text-3xl">st</sup>
+              <div className="flex flex-col items-center justify-end mx-2 sm:mx-6">
+                <div className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2">
+                  1<sup className="text-lg sm:text-xl md:text-3xl">st</sup>
                 </div>
-                {/* <div className="text-base opacity-80">NATIONAL CHAMPION</div> */}
-                <div className="text-3xl font-bold mt-2">2021</div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold mt-2">
+                  2021
+                </div>
               </div>
             </div>
           </div>
