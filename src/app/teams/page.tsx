@@ -101,6 +101,7 @@ export default function Teams() {
                 const membersInRole = teamMembers.filter(
                   (member) => member.role === role,
                 );
+                const isFew = membersInRole.length <= 2;
                 return (
                   <div
                     id={role.replace(/\s+/g, "-")}
@@ -110,12 +111,21 @@ export default function Teams() {
                     <h2 className="text-white font-bold text-2xl sm:text-4xl mt-8 sm:mt-12 mb-6 sm:mb-8 capitalize text-center">
                       {role}
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-12">
+                    <div
+                      className={
+                        isFew
+                          ? "flex justify-center gap-6 sm:gap-8 mt-8 sm:mt-12 flex-wrap"
+                          : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-12"
+                      }
+                    >
                       {membersInRole.length > 0 ? (
                         membersInRole.map((member) => (
                           <div
                             key={member.name}
-                            className="bg-white/10 rounded-2xl p-4 sm:p-6 flex flex-col items-center"
+                            className={
+                              "bg-white/10 rounded-2xl p-4 sm:p-6 flex flex-col items-center" +
+                              (isFew ? " w-80 max-w-xs" : "")
+                            }
                           >
                             <div className="w-40 h-40 sm:w-[400px] sm:h-[400px] rounded-full overflow-hidden flex items-center justify-center mb-4">
                               <Image
