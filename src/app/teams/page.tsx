@@ -12,7 +12,7 @@ export default function Teams() {
   const teamMembers = [
     {
       name: "Marin",
-      image: "/personal-data/marin.png",
+      image: "/personal-data/marin2.png",
       role: "advisor team",
     },
     {
@@ -54,7 +54,7 @@ export default function Teams() {
     },
     {
       name: "Zalfa",
-      image: "/personal-data/zalfa.png",
+      image: "/personal-data/zalfa2.png",
       role: "programming team",
     },
     {
