@@ -25,15 +25,31 @@ export default function Teams() {
       image: "/personal-data/stevie.png",
       role: "electrical team",
     },
-    { name: "Melyana Putri Tiyarno", image: "/personal-data/mely.png", role: "electrical team" },
-    { name: "Evan Javier Firdausi Malik", image: "/personal-data/evan.png", role: "electrical team" },
+    {
+      name: "Melyana Putri Tiyarno",
+      image: "/personal-data/mely.png",
+      role: "electrical team",
+    },
+    {
+      name: "Evan Javier Firdausi Malik",
+      image: "/personal-data/evan.png",
+      role: "electrical team",
+    },
     {
       name: "Ademas Fazri Sunaryo",
       image: "/personal-data/ademas.png",
       role: "electrical team",
     },
-    { name: "Rizal Khoirul Atok", image: "/personal-data/atok.png", role: "mechanical team" },
-    { name: "Khoirul Anam", image: "/personal-data/anam.png", role: "mechanical team" },
+    {
+      name: "Rizal Khoirul Atok",
+      image: "/personal-data/atok.png",
+      role: "mechanical team",
+    },
+    {
+      name: "Khoirul Anam",
+      image: "/personal-data/anam.png",
+      role: "mechanical team",
+    },
     {
       name: "Andreas Agung Servia Pintarta",
       image: "/personal-data/andre.png",
@@ -44,9 +60,21 @@ export default function Teams() {
       image: "/personal-data/rijal.png",
       role: "mechanical team",
     },
-    { name: "Karina Maheswari", image: "/personal-data/karina.png", role: "outreach" },
-    { name: "Alif Gibran", image: "/personal-data/gibran.png", role: "outreach" },
-    { name: "Kaysa Tsana Adilah", image: "/personal-data/kaysa.png", role: "outreach" },
+    {
+      name: "Karina Maheswari",
+      image: "/personal-data/karina.png",
+      role: "outreach",
+    },
+    {
+      name: "Alif Gibran",
+      image: "/personal-data/gibran.png",
+      role: "outreach",
+    },
+    {
+      name: "Kaysa Tsana Adilah",
+      image: "/personal-data/kaysa.png",
+      role: "outreach",
+    },
     {
       name: "Moh. Wildan Risqi Maulidi",
       image: "/personal-data/wildan.png",
