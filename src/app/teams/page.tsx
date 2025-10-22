@@ -21,6 +21,11 @@ export default function Teams() {
       role: "team leader",
     },
     {
+      name: "Mochammad Rifki Al Syawal",
+      image: "/personal-data/syawal.png",
+      role: "electrical team",
+    },
+    {
       name: "Valencia Stevie F. H.",
       image: "/personal-data/stevie.png",
       role: "electrical team",
