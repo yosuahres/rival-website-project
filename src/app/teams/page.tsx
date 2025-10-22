@@ -66,6 +66,11 @@ export default function Teams() {
       role: "outreach",
     },
     {
+      name: "Oktavian Rifki Danendra",
+      image: "/personal-data/rifki.png",
+      role: "outreach",
+    },
+    {
       name: "Alif Gibran",
       image: "/personal-data/gibran.png",
       role: "outreach",
