@@ -411,16 +411,6 @@ export default function Navbar() {
                 Indonesian Robot Contest
               </Link>
               <Link
-                href="/competitions/european-rover-challenge"
-                className="text-white text-3xl md:text-4xl font-medium hover:opacity-80 transition-opacity text-right w-full"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  setIsProjectsSubMenu(false);
-                }}
-              >
-                European Rover Challenge (Remote)
-              </Link>
-              <Link
                 href="/competitions/australian-rover-challenge"
                 className="text-white text-3xl md:text-4xl font-medium hover:opacity-80 transition-opacity text-right w-full"
                 onClick={() => {
