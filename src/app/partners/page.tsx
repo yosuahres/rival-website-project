@@ -56,7 +56,7 @@ export default function Sponsors() {
                   {/* <div className="flex-shrink-0 md:col-span-1 lg:col-span-2 flex items-center justify-center">
                     <FadeIn>
                       <NextImage
-                        src="/sponsors/indahpuri.png"
+                        src="/sponsors/indahpuri.webp"
                         alt="Akhishop"
                         width={320}
                         height={160}
@@ -154,11 +154,11 @@ export default function Sponsors() {
             <div className="absolute inset-0 flex justify-center lg:justify-end items-center space-x-4">
               <div className="inline-block overflow-hidden">
                 <NextImage
-                  src="/images/foreground-arc.png"
+                  src="/images/ROVER3.webp"
                   alt="current projects"
                   width={500}
                   height={300}
-                  className="max-w-full h-auto block"
+                  className="max-w-full h-auto block rounded-4xl"
                 />
               </div>
             </div>

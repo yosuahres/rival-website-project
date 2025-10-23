@@ -3,35 +3,49 @@ import Image from "next/image";
 import CompetitionTasksCarousel from "@/components/CompetitionTasksCarousel";
 
 export const metadata: Metadata = {
-  title: "ARCh",
+  title: "KRI",
   description:
-    "Australian Rover Challenge 2026 Competition - RIVAL ITS participation details and tasks.",
+    "Indonesian Robot Contest 2026 Competition - RIVAL ITS participation details and tasks.",
 };
 
-const australianRoverChallengeTasks = [
+const indonesianRobotContestTasks = [
   {
     id: 1,
-    title: "Autonomous Waste Sorting",
+    title: "Post Landing Tasks",
     description:
-      "Robot 2 autonomously sorts waste items moving along the vibrating conveyor into five categories — ferro, nonferro, leaf, paper, and plastic. Each correctly sorted item earns 1 point.",
-    image: "/images/task-kri1.jpg",
+      "The rover must perform a series of activities immediately after landing to establish an operational In-Situ Resource Utilisation (ISRU) outpost, including conducting system checks, evaluating supply caches, performing maintenance, and connecting propellant hoses.",
+    image: "/images/arm1.webp",
   },
   {
     id: 2,
-    title: "Trash Bin Transfer",
+    title: "Space Resources Task",
     description:
-      "Teams design robots capable of precise object detection, grasping, and manipulation in various environmental conditions.",
-    image: "/images/task-kri2.jpg",
+      "The rover must evaluate, collect, and extract critical lunar resources—specifically prospecting for ilmenite and icy regolith, and processing the icy regolith to extract the highest possible amount of liquid water.",
+    image: "/images/assemblykosong.webp",
+  },
+  {
+    id: 3,
+    title: "Excavation and Construction Task",
+    description:
+      "The rover must prepare a landing site by clearing hazardous rocks, excavating regolith to construct a protective berm, and deploying dust-mitigating pavers.",
+    image: "/images/ROVER4.webp",
+  },
+  {
+    id: 4,
+    title: "Mapping and Autonomous Task",
+    description:
+      "The rover is required to autonomously navigate to predefined landmarks and subsequently explore the area to construct a comprehensive map, reporting the coordinates of previously unknown landmarks",
+    image: "/images/foreground-arc.webp",
   },
 ];
 
-export default function AustralianRoverChallengePage() {
+export default function IndonesianRobotContestPage() {
   return (
     <div className="min-h-screen bg-[#1e5f4e]">
       <section className="relative h-[60vh] flex items-center justify-center">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <Image
-            src="/images/foreground-kri.jpg"
+            src="/images/ROVER4.webp"
             alt="Competition background"
             className="w-full h-full object-cover object-center"
             style={{ opacity: 0.5, objectPosition: "center 55%" }}
@@ -40,7 +54,7 @@ export default function AustralianRoverChallengePage() {
         </div>
         <div className="relative z-10 text-center text-white">
           <h1 className="text-5xl font-bold mb-6 mt-15">
-            Australian Rover Challenge
+            Australian Rover Challenge 2026
           </h1>
           <a
             href="https://kontesrobotindonesia.id/index.html"
@@ -70,10 +84,11 @@ export default function AustralianRoverChallengePage() {
         </div>
       </section>
 
+      {/* Stats Section */}
       <section className="relative w-full min-h-[180px] sm:min-h-[300px] flex items-center justify-center py-8 sm:py-14 overflow-hidden">
         <div className="absolute inset-0 bg-[#1e5f4e] opacity-70"></div>
         <Image
-          src="/images/foreground-kri2.JPG"
+          src="/images/fototeam1.webp"
           alt="Stats background"
           className="absolute inset-0 mx-auto max-w-2xl sm:max-w-7xl w-full h-full object-cover object-center z-0"
           style={{ objectPosition: "center 60%", opacity: 0.3 }}
@@ -97,8 +112,8 @@ export default function AustralianRoverChallengePage() {
       <div className="bg-[#1e5f4e] px-8 mt-20">{/* spacer */}</div>
 
       <CompetitionTasksCarousel
-        tasks={australianRoverChallengeTasks}
-        backgroundImage="/images/foreground-kri3.jpg"
+        tasks={indonesianRobotContestTasks}
+        backgroundImage="/images/fototeam2.webp"
       />
     </div>
   );

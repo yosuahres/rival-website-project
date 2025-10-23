@@ -12,7 +12,7 @@ export default function Contact() {
     <div className="min-h-screen">
       <div
         className="relative px-80 py-40 bg-black bg-cover bg-center min-h-[500px]"
-        style={{ backgroundImage: `url('/images/contact.jpg')` }}
+        style={{ backgroundImage: `url('/images/contact.webp')` }}
       >
         <div
           className="absolute inset-0 bg-black/80"

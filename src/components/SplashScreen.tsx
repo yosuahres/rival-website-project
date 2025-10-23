@@ -38,7 +38,7 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
       }`}
     >
       <Image
-        src="/images/vertical.png"
+        src="/images/vertical.webp"
         alt="Logo"
         width={200}
         height={200}

@@ -70,9 +70,9 @@ export default function CompetitionTasksCarousel({
           COMPETITION TASKS
         </h2>
 
-        <div className="relative flex flex-col items-center justify-center overflow-hidden h-[650px]">
+        <div className="relative flex flex-col items-center justify-between overflow-hidden min-h-[650px] md:h-[650px] p-4">
           <div
-            className={`absolute h-100 w-full max-w-3xl shadow-lg mb-8 transition-transform duration-300 ease-in-out
+            className={`relative h-[300px] w-full max-w-3xl shadow-xl bg-white rounded-xl mb-8 transition-transform duration-300 ease-in-out md:h-100
             ${
               slideDirection === "right"
                 ? "-translate-x-full opacity-0"
@@ -91,7 +91,7 @@ export default function CompetitionTasksCarousel({
           </div>
 
           <div
-            className={`absolute text-center max-w-5xl px-4 transition-transform duration-300 ease-in-out top-[530px]
+            className={`relative text-center max-w-5xl px-4 transition-transform duration-300 ease-in-out
             ${
               slideDirection === "right"
                 ? "-translate-x-full opacity-0"
@@ -103,36 +103,32 @@ export default function CompetitionTasksCarousel({
             <h3 className="text-4xl font-bold text-white mb-4">
               {currentTask.title}
             </h3>
-            <p className="text-gray-300 text-lg">{currentTask.description}</p>
+            <p className="text-gray-300 text-lg mt-4">
+              {currentTask.description}
+            </p>
           </div>
 
-          <button
-            type="button"
-            onClick={prevTask}
-            className="absolute left-0 z-10 w-16 h-16 flex items-center justify-center rounded-full bg-[#1e5f4e] hover:bg-white text-white focus:outline-none text-4xl"
-            style={{
-              top: "50%",
-              transform: "translateY(-50%)",
-              paddingBottom: "2px",
-            }}
-            disabled={isAnimating}
-          >
-            &larr;
-          </button>
+          <div className="relative flex justify-between w-full max-w-xs px-4 mt-8 md:absolute md:bottom-auto md:top-1/2 md:left-0 md:transform md:-translate-x-1/2 md:translate-x-0 md:-translate-y-1/2 md:max-w-none md:px-0">
+            <button
+              type="button"
+              onClick={prevTask}
+              className="z-10 w-16 h-16 flex items-center justify-center rounded-full bg-[#1e5f4e] hover:bg-white text-white focus:outline-none text-4xl"
+              style={{ paddingBottom: "2px" }}
+              disabled={isAnimating}
+            >
+              &larr;
+            </button>
 
-          <button
-            type="button"
-            onClick={nextTask}
-            className="absolute right-0 z-10 w-16 h-16 flex items-center justify-center rounded-full bg-[#1e5f4e] hover:bg-white text-white focus:outline-none text-4xl"
-            style={{
-              top: "50%",
-              transform: "translateY(-50%)",
-              paddingBottom: "2px",
-            }}
-            disabled={isAnimating}
-          >
-            &rarr;
-          </button>
+            <button
+              type="button"
+              onClick={nextTask}
+              className="z-10 w-16 h-16 flex items-center justify-center rounded-full bg-[#1e5f4e] hover:bg-white text-white focus:outline-none text-4xl"
+              style={{ paddingBottom: "2px" }}
+              disabled={isAnimating}
+            >
+              &rarr;
+            </button>
+          </div>
         </div>
       </div>
     </section>

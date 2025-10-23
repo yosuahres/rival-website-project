@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center md:items-start text-center md:text-left">
           <div className="w-full md:w-1/3 flex flex-col items-center md:items-start mb-8 md:mb-0">
             <NextImage
-              src="/images/horizontal.png"
+              src="/images/horizontal.webp"
               alt="RIVAL ITS Logo"
               width={200}
               height={100}

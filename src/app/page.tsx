@@ -20,7 +20,6 @@ export default function Home() {
     setImageLoaded(false);
     setTeamImageLoaded(false);
 
-    // Fade in team image when in view
     const teamObserver = new window.IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setTeamImageLoaded(true);
@@ -31,7 +30,6 @@ export default function Home() {
       teamObserver.observe(teamSectionRef.current);
     }
 
-    // Fade in last image when in view
     const lastObserver = new window.IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setImageLoaded(true);
@@ -53,28 +51,30 @@ export default function Home() {
       <section
         className="flex items-center justify-between px-8 py-50 flex-1 relative rounded-bl-4xl rounded-br-4xl"
         style={{
-          backgroundSize: "120%",
-          backgroundPosition: "5px center",
-          transform: "scaleX(-1)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
       >
         <div
           className="absolute inset-0 w-full h-full rounded-br-4xl rounded-bl-4xl"
           style={{
-            backgroundImage: "url('/images/foreground-arc.png')",
-            backgroundSize: "120%",
-            backgroundPosition: "5px center",
+            backgroundImage: "url('/images/ROVER3.webp')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
             opacity: 0.7,
             zIndex: 0,
             pointerEvents: "none",
+            transform: "scaleX(-1)",
           }}
         />
         <div
           className="flex items-center justify-center flex-1 relative"
-          style={{ transform: "scaleX(-1)", zIndex: 1 }}
+          style={{ zIndex: 1 }}
         >
           <Image
-            src="/images/vertical.png"
+            src="/images/vertical.webp"
             alt="RIVAL ITS Logo"
             width={220}
             height={220}
@@ -106,7 +106,7 @@ export default function Home() {
           style={{ height: "600px", position: "relative" }}
         >
           <Image
-            src="/images/home.jpg"
+            src="/images/home.webp"
             alt="RIVAL ITS Team"
             width={1920}
             height={1080}
@@ -141,7 +141,7 @@ export default function Home() {
           style={{ height: "600px" }}
         >
           <Image
-            src="/images/home3.jpg"
+            src="/images/home3.webp"
             alt="RIVAL ITS Team 2"
             width={1920}
             height={1080}

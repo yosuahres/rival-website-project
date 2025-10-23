@@ -14,14 +14,14 @@ const indonesianRobotContestTasks = [
     title: "Autonomous Waste Sorting",
     description:
       "Robot 2 autonomously sorts waste items moving along the vibrating conveyor into five categories — ferro, nonferro, leaf, paper, and plastic. Each correctly sorted item earns 1 point.",
-    image: "/images/task-kri1.jpg",
+    image: "/images/task-kri1.webp",
   },
   {
     id: 2,
     title: "Trash Bin Transfer",
     description:
-      "Teams design robots capable of precise object detection, grasping, and manipulation in various environmental conditions.",
-    image: "/images/task-kri2.jpg",
+      "Robot 1 is responsible for manually moving the trash bin to the vibrating conveyor..",
+    image: "/images/task-kri2.webp",
   },
 ];
 
@@ -31,7 +31,7 @@ export default function IndonesianRobotContestPage() {
       <section className="relative h-[60vh] flex items-center justify-center">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <Image
-            src="/images/foreground-kri.jpg"
+            src="/images/foreground-kri.webp"
             alt="Competition background"
             className="w-full h-full object-cover object-center"
             style={{ opacity: 0.5, objectPosition: "center 55%" }}
@@ -73,7 +73,7 @@ export default function IndonesianRobotContestPage() {
       <section className="relative w-full min-h-[180px] sm:min-h-[300px] flex items-center justify-center py-8 sm:py-14 overflow-hidden">
         <div className="absolute inset-0 bg-[#1e5f4e] opacity-70"></div>
         <Image
-          src="/images/foreground-kri2.JPG"
+          src="/images/foreground-kri2.webp"
           alt="Stats background"
           className="absolute inset-0 mx-auto max-w-2xl sm:max-w-7xl w-full h-full object-cover object-center z-0"
           style={{ objectPosition: "center 60%", opacity: 0.3 }}
@@ -134,7 +134,7 @@ export default function IndonesianRobotContestPage() {
 
       <CompetitionTasksCarousel
         tasks={indonesianRobotContestTasks}
-        backgroundImage="/images/foreground-kri3.jpg"
+        backgroundImage="/images/foreground-kri3.webp"
       />
     </div>
   );

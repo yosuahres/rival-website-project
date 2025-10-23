@@ -11,7 +11,7 @@ export function generatePageMetadata({
   title,
   description,
   keywords,
-  ogImage = "/images/vertical.png",
+  ogImage = "/images/vertical.webp",
 }: PageMetadata): Metadata {
   return {
     title,

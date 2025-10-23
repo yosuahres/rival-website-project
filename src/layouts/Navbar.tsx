@@ -18,7 +18,7 @@ export default function Navbar() {
             className="hover:opacity-80 transition-opacity flex items-center"
           >
             <Image
-              src="/images/vertical.png"
+              src="/images/vertical.webp"
               alt="RIVAL ITS Logo"
               width={50}
               height={30}
@@ -143,7 +143,7 @@ export default function Navbar() {
             <div className="flex items-center gap-2">
               <span className="inline-block w-6 h-4 rounded overflow-hidden border border-white">
                 <Image
-                  src="https://flagcdn.com/w20/id.png"
+                  src="https://flagcdn.com/w20/id.webp"
                   alt="Polish"
                   width={25}
                   height={18}
@@ -151,7 +151,7 @@ export default function Navbar() {
               </span>
               <span className="inline-block w-6 h-4 rounded overflow-hidden border border-white">
                 <Image
-                  src="https://flagcdn.com/w20/us.png"
+                  src="https://flagcdn.com/w20/us.webp"
                   alt="English"
                   width={25}
                   height={18}
@@ -208,7 +208,7 @@ export default function Navbar() {
             {/* Logo center */}
             <div className="flex-1 flex justify-center">
               <Image
-                src="/images/vertical.png"
+                src="/images/vertical.webp"
                 alt="RIVAL ITS Logo"
                 width={70}
                 height={50}
@@ -283,7 +283,7 @@ export default function Navbar() {
               <div className="flex items-center gap-2">
                 <span className="inline-block w-8 h-6 rounded overflow-hidden border border-white">
                   <Image
-                    src="https://flagcdn.com/w20/id.png"
+                    src="https://flagcdn.com/w20/id.webp"
                     alt="Indonesian"
                     width={30}
                     height={20}
@@ -291,7 +291,7 @@ export default function Navbar() {
                 </span>
                 <span className="inline-block w-8 h-6 rounded overflow-hidden border border-white">
                   <Image
-                    src="https://flagcdn.com/w20/us.png"
+                    src="https://flagcdn.com/w20/us.webp"
                     alt="English"
                     width={30}
                     height={20}
@@ -351,7 +351,7 @@ export default function Navbar() {
               {/* Logo center */}
               <div className="flex-1 flex justify-center">
                 <Image
-                  src="/images/vertical.png"
+                  src="/images/vertical.webp"
                   alt="RIVAL ITS Logo"
                   width={70}
                   height={50}
