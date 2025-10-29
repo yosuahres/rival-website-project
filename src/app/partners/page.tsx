@@ -81,12 +81,13 @@ export default function Sponsors() {
               WHAT DO WE OFFER?
             </h3>
             <p className="text-gray-100 leading-relaxed mb-8">
-              We offer four different sponsorship packages: WILDAN, WILDAN,
-              WILDAN, WILDAN. Each one has been carefully designed to provide
+              We offer four different sponsorship packages: SILVER, BRONZE, WINNER, PLATINUM, and GOLD. 
+              Each one has been carefully designed to provide
               unique benefits tailored to the needs of our partners. Depending
               on the chosen package, sponsors can expect a variety of
               promotional opportunities, including the addition of promotional
-              materials to the club's social media, logo exposure on promotional
+              materials to the club's social media, logo exposure on promotional.
+              Email us for more details!
             </p>
             <a
               href="/contact"
