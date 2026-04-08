@@ -35,14 +35,14 @@ export async function POST(request: NextRequest) {
 
     const emailContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1e5f4e; border-bottom: 2px solid #1e5f4e; padding-bottom: 10px;">
+        <h2 style="color: #398561; border-bottom: 2px solid #398561; padding-bottom: 10px;">
           New Contact Form Submission
         </h2>
         
         <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3 style="color: #333; margin-top: 0;">Contact Information</h3>
           <p><strong>Name:</strong> ${fullName}</p>
-          <p><strong>Email:</strong> <a href="mailto:${email}" style="color: #1e5f4e;">${email}</a></p>
+          <p><strong>Email:</strong> <a href="mailto:${email}" style="color: #398561;">${email}</a></p>
         </div>
         
         <div style="background-color: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
         </div>
         
         <div style="margin-top: 20px; padding: 15px; background-color: #e8f5e8; border-radius: 8px;">
-          <p style="margin: 0; color: #1e5f4e; font-size: 14px;">
+          <p style="margin: 0; color: #398561; font-size: 14px;">
             <strong>Note:</strong> This message was sent through the RIVAL ITS website contact form.
           </p>
         </div>

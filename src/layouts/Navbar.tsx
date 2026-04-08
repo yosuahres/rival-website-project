@@ -11,7 +11,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="w-full fixed top-0 left-0 z-50 bg-[#23272f]/30 backdrop-blur-xl px-4 md:px-8 py-3">
+      <nav className="w-full fixed top-0 left-0 z-50 bg-[#021507]/30 backdrop-blur-xl px-4 md:px-8 py-3">
         <div className="max-w-[1400px] mx-auto flex items-center justify-between">
           <Link
             href="/"
@@ -120,6 +120,12 @@ export default function Navbar() {
             </div>
 
             <Link
+              href="/news"
+              className="text-white hover:opacity-80 transition-opacity text-lg font-medium"
+            >
+              News
+            </Link>
+            <Link
               href="/teams"
               className="text-white hover:opacity-80 transition-opacity text-lg font-medium"
             >
@@ -194,6 +200,24 @@ export default function Navbar() {
                 <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.025-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.843-1.563 3.041 0 3.602 2.003 3.602 4.605v5.591z" />
               </svg>
             </a>
+            <a
+              href="https://tiktok.com/@rival_its"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:opacity-80"
+            >
+              <svg
+                width="24"
+                height="24"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                role="img"
+                aria-labelledby="tiktok-navbar-title"
+              >
+                <title id="tiktok-navbar-title">TikTok</title>
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.1 1.75 2.9 2.9 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z" />
+              </svg>
+            </a>
           </div>
         </div>
       </nav>
@@ -202,11 +226,9 @@ export default function Navbar() {
       {isMobileMenuOpen && !isProjectsSubMenu && (
         <div className="md:hidden fixed inset-0 z-[100] bg-black">
           {/* Logo and close button row, centered, same height as competition submenu */}
-          <div className="flex items-center justify-between px-6 pt-6 pb-10">
-            {/* Empty for spacing */}
-            <div style={{ width: 32 }} />
+          <div className="flex items-center justify-center px-6 pt-6 pb-10 relative">
             {/* Logo center */}
-            <div className="flex-1 flex justify-center">
+            <div className="flex justify-center">
               <Image
                 src="/images/vertical.webp"
                 alt="RIVAL ITS Logo"
@@ -216,10 +238,10 @@ export default function Navbar() {
                 priority
               />
             </div>
-            {/* Close button */}
+            {/* Close button - absolute positioned */}
             <button
               type="button"
-              className="text-white text-3xl"
+              className="text-white text-3xl absolute right-6"
               aria-label="Close menu"
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -257,6 +279,13 @@ export default function Navbar() {
                   </svg>
                 </button>
               </div>
+              <Link
+                href="/news"
+                className="text-white hover:opacity-80 transition-opacity text-2xl font-medium text-right w-full"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                News
+              </Link>
               <Link
                 href="/teams"
                 className="text-white hover:opacity-80 transition-opacity text-2xl font-medium text-right w-full"
@@ -334,6 +363,24 @@ export default function Navbar() {
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.025-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.843-1.563 3.041 0 3.602 2.003 3.602 4.605v5.591z" />
                 </svg>
               </a>
+              <a
+                href="https://tiktok.com/@rival_its"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:opacity-80"
+              >
+                <svg
+                  width="30"
+                  height="30"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  role="img"
+                  aria-labelledby="tiktok-navbar-title-mobile"
+                >
+                  <title id="tiktok-navbar-title-mobile">TikTok</title>
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.1 1.75 2.9 2.9 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
@@ -345,11 +392,9 @@ export default function Navbar() {
           {/* Right-sided drawer */}
           <div className="ml-auto w-full max-w-[90vw] sm:max-w-[400px] h-full flex flex-col">
             {/* Top bar with logo and close, centered */}
-            <div className="flex items-center justify-between px-6 pt-6 pb-10">
-              {/* Empty for spacing */}
-              <div style={{ width: 32 }} />
+            <div className="flex items-center justify-center w-full pt-6 pb-10 px-6 relative">
               {/* Logo center */}
-              <div className="flex-1 flex justify-center">
+              <div className="flex justify-center">
                 <Image
                   src="/images/vertical.webp"
                   alt="RIVAL ITS Logo"
@@ -359,10 +404,10 @@ export default function Navbar() {
                   priority
                 />
               </div>
-              {/* Close button */}
+              {/* Close button - absolute positioned */}
               <button
                 type="button"
-                className="text-white text-3xl"
+                className="text-white text-3xl absolute right-6"
                 aria-label="Close menu"
                 onClick={() => {
                   setIsMobileMenuOpen(false);

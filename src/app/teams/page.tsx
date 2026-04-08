@@ -1,14 +1,17 @@
+"use client";
+
 import type { Metadata } from "next";
 import Image from "next/image";
-import RoleNavigation from "@/components/RoleNavigation";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: "Our Teams",
   description:
     "Meet the talented teams that make up RIVAL ITS - from mechanical design to software development, each team brings unique expertise.",
 };
 
 export default function Teams() {
+  const isMobile = useIsMobile();
   const teamMembers = [
     {
       name: "Moh Ismarintan Zazuli",
@@ -48,11 +51,6 @@ export default function Teams() {
     {
       name: "Rizal Khoirul Atok",
       image: "/personal-data/atok.png",
-      role: "mechanical team",
-    },
-    {
-      name: "Khoirul Anam",
-      image: "/personal-data/anam.png",
       role: "mechanical team",
     },
     {
@@ -118,13 +116,9 @@ export default function Teams() {
 
   return (
     <div className="flex flex-col min-h-full">
-      <section className="flex-1 px-4 sm:px-8 py-20 sm:py-35 relative">
-        <div className="hidden md:block sm:absolute sm:top-[250px] sm:left-8 sm:w-[300px] w-full static mb-8 sm:mb-0">
-          <RoleNavigation roles={roles} />
-        </div>
-
+      <section className="flex-1 py-20 sm:py-35 relative">
         <div className="w-full">
-          <div className="w-full max-w-4xl mx-auto">
+          <div className="w-full">
             <div className="text-center">
               <h1 className="text-white font-black text-4xl sm:text-6xl mb-6 sm:mb-8">
                 Meet the Team
@@ -133,59 +127,74 @@ export default function Teams() {
           </div>
 
           <div className="w-full h-1 bg-white my-6 sm:my-8 animate-line-grow"></div>
-          <div className="w-full max-w-4xl mx-auto">
+          <div className="w-full">
             <div className="text-center">
-              {roles.map((role) => {
+              {roles.map((role, index) => {
                 const membersInRole = teamMembers.filter(
                   (member) => member.role === role,
                 );
-                const isFew = membersInRole.length <= 2;
                 return (
-                  <div
-                    id={role.replace(/\s+/g, "-")}
-                    key={role}
-                    className="mb-8 sm:mb-12"
-                  >
-                    <h2 className="text-white font-bold text-2xl sm:text-4xl mt-8 sm:mt-12 mb-6 sm:mb-8 capitalize text-center">
-                      {role}
-                    </h2>
+                  <div key={role}>
                     <div
-                      className={
-                        isFew
-                          ? "flex justify-center gap-6 sm:gap-8 mt-8 sm:mt-12 flex-wrap"
-                          : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-12"
-                      }
+                      id={role.replace(/\s+/g, "-")}
+                      className="mb-8 sm:mb-12"
                     >
-                      {membersInRole.length > 0 ? (
-                        membersInRole.map((member) => (
-                          <div
-                            key={member.name}
-                            className={
-                              "bg-white/10 rounded-2xl p-4 sm:p-6 flex flex-col items-center" +
-                              (isFew ? " w-80 max-w-xs" : "")
-                            }
-                          >
-                            <div className="w-40 h-40 sm:w-[400px] sm:h-[400px] rounded-full overflow-hidden flex items-center justify-center mb-4">
-                              <Image
-                                src={member.image}
-                                alt={`Team member ${member.name}`}
-                                width={200}
-                                height={200}
-                                className="h-full object-cover"
-                              />
+                      <h2 className="text-white font-bold text-2xl sm:text-4xl mt-8 sm:mt-12 mb-6 sm:mb-8 capitalize text-center">
+                        {role}
+                      </h2>
+                      <div
+                        className={
+                          index === 0 || index === 1
+                            ? "flex justify-center gap-3 sm:gap-4 mt-8 sm:mt-12"
+                            : "w-full grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-4 mt-8 sm:mt-12"
+                        }
+                      >
+                        {membersInRole.length > 0 ? (
+                          membersInRole.map((member) => (
+                            <div
+                              key={member.name}
+                              className="flex flex-col items-center"
+                            >
+                              <div className="w-48 h-48 sm:w-64 sm:h-64 rounded-full overflow-hidden flex items-center justify-center mb-4 bg-white/10">
+                                <Image
+                                  src={member.image}
+                                  alt={`Team member ${member.name}`}
+                                  width={200}
+                                  height={200}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <p className="text-white font-medium text-lg sm:text-xl text-center">
+                                {member.name.charAt(0).toUpperCase() +
+                                  member.name.slice(1)}
+                              </p>
                             </div>
-                            <p className="text-white font-medium text-lg sm:text-xl">
-                              {member.name.charAt(0).toUpperCase() +
-                                member.name.slice(1)}
-                            </p>
-                          </div>
-                        ))
-                      ) : (
-                        <p className="text-[#1e5f4e] col-span-full">
-                          No {role} members available.
-                        </p>
-                      )}
+                          ))
+                        ) : (
+                          <p className="text-[#398561] col-span-full">
+                            No {role} members available.
+                          </p>
+                        )}
+                      </div>
                     </div>
+                    {index < roles.length - 1 && (
+                      <svg
+                        className="w-full h-16 my-8 sm:my-12"
+                        viewBox="0 0 1200 100"
+                        preserveAspectRatio="none"
+                      >
+                        <path
+                          d={
+                            index === 0
+                              ? "M0,50 Q600,-30 1200,50"
+                              : "M0,50 Q300,20 600,50 T1200,50"
+                          }
+                          stroke="white"
+                          strokeWidth="4"
+                          fill="none"
+                        />
+                      </svg>
+                    )}
                   </div>
                 );
               })}

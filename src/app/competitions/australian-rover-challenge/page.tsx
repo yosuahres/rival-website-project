@@ -1,8 +1,11 @@
+"use client";
+
 import type { Metadata } from "next";
 import Image from "next/image";
 import CompetitionTasksCarousel from "@/components/CompetitionTasksCarousel";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: "KRI",
   description:
     "Indonesian Robot Contest 2026 Competition - RIVAL ITS participation details and tasks.",
@@ -40,8 +43,9 @@ const indonesianRobotContestTasks = [
 ];
 
 export default function IndonesianRobotContestPage() {
+  const isMobile = useIsMobile();
   return (
-    <div className="min-h-screen bg-[#1e5f4e]">
+    <div className="min-h-screen bg-[#398561]">
       <section className="relative h-[60vh] flex items-center justify-center">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <Image
@@ -53,21 +57,21 @@ export default function IndonesianRobotContestPage() {
           />
         </div>
         <div className="relative z-10 text-center text-white">
-          <h1 className="text-5xl font-bold mb-6 mt-15">
+          <h1 className="text-2xl md:text-5xl font-bold mb-6 mt-15">
             Australian Rover Challenge 2026
           </h1>
           <a
             href="https://kontesrobotindonesia.id/index.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#1e5f4e] hover:bg-[#16473a] px-6 py-4 rounded-2xl font-bold text-xl transition-colors inline-block shadow-lg"
+            className="bg-[#398561] hover:bg-[#021507] px-6 py-4 rounded-2xl font-bold text-sm md:text-xl transition-colors inline-block shadow-lg"
           >
             Learn more
           </a>
         </div>
       </section>
 
-      <section className="w-full bg-[#1e5f4e] bg-opacity-70 py-8 flex items-center justify-center">
+      <section className="w-full bg-[#398561] bg-opacity-70 py-8 flex items-center justify-center">
         <div className="max-w-7xl w-full min-h-[120px] mx-auto">
           <p className="text-lg text-white p-6 text-justify font-bold">
             The Australian Rover Challenge (ARCh) is an annual robotics
@@ -86,7 +90,7 @@ export default function IndonesianRobotContestPage() {
 
       {/* Stats Section */}
       <section className="relative w-full min-h-[180px] sm:min-h-[300px] flex items-center justify-center py-8 sm:py-14 overflow-hidden">
-        <div className="absolute inset-0 bg-[#1e5f4e] opacity-70"></div>
+        <div className="absolute inset-0 bg-[#398561] opacity-70"></div>
         <Image
           src="/images/fototeam1.webp"
           alt="Stats background"
@@ -109,7 +113,7 @@ export default function IndonesianRobotContestPage() {
         </div>
       </section>
 
-      <div className="bg-[#1e5f4e] px-8 mt-20">{/* spacer */}</div>
+      <div className="bg-[#398561] px-8 mt-20">{/* spacer */}</div>
 
       <CompetitionTasksCarousel
         tasks={indonesianRobotContestTasks}

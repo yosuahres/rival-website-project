@@ -1,69 +1,222 @@
-import type { Metadata } from "next";
-import FadeIn from "@/components/FadeIn";
-import NextImage from "@/components/NextImage";
+"use client";
 
-export const metadata: Metadata = {
+import type { Metadata } from "next";
+import NextImage from "@/components/NextImage";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+const metadata: Metadata = {
   title: "Sponsors",
   description:
     "Meet the amazing sponsors and supporters who help RIVAL ITS achieve excellence in robotics competition.",
 };
 
 export default function Sponsors() {
+  const isMobile = useIsMobile();
   return (
     <>
       <section className="py-20 mt-10">
         <div className="mx-auto max-w-6xl px-6 sm:px-8 pt-8 md:pt-12">
-          <h1 className="text-white text-5xl font-bold mb-16">Our sponsors</h1>
+          <h1 className="text-white text-2xl md:text-5xl font-bold mb-16">Our sponsors</h1>
         </div>
 
         <div
-          className="w-full py-12 md:py-16"
+          className="w-full py-12 md:py-16 overflow-hidden"
           style={{
             backgroundColor: "rgba(11, 18, 32, 0.5)",
             backdropFilter: "blur(6px)",
             WebkitBackdropFilter: "blur(6px)",
           }}
         >
-          <div className="mx-auto max-w-6xl px-6 sm:px-8">
-            <div className="min-h-[120px] md:min-h-[160px] flex items-center">
-              {/* Sponsors: horizontal scroll on mobile, grid on md+ */}
-              <div className="w-full">
-                <div className="flex md:grid md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center overflow-x-auto md:overflow-x-visible scrollbar-hide">
-                  <div className="flex-shrink-0 md:col-span-1 lg:col-span-2 flex items-center justify-center">
-                    <FadeIn>
-                      <NextImage
-                        src="/sponsors/indahpuri.png"
-                        alt="Indah Puri"
-                        width={320}
-                        height={160}
-                        className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                      />
-                    </FadeIn>
+          <div className="w-full">
+            <div className="min-h-[120px] md:min-h-[160px] flex items-center overflow-hidden">
+              <style>{`
+                @keyframes slideRight {
+                  0% {
+                    transform: translateX(0);
+                  }
+                  100% {
+                    transform: translateX(-50%);
+                  }
+                }
+                .sponsors-slide {
+                  display: flex;
+                  gap: 10rem;
+                  animation: slideRight 20s linear infinite;
+                  will-change: transform;
+                }
+                .sponsors-wrapper {
+                  display: flex;
+                  overflow: hidden;
+                  width: 100%;
+                }
+              `}</style>
+              <div className="sponsors-wrapper w-full">
+                <div className="sponsors-slide">
+                  {/* First set of sponsors */}
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/APD.png"
+                      alt="APD"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/ARL.png"
+                      alt="ARL"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/Akhishop.png"
+                      alt="Akhishop Electronics"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/AndiSobolangit.png"
+                      alt="Andi Sobolangit"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/Fure.png"
+                      alt="Fure"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/GrahaPintar.png"
+                      alt="Graha Pintar"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/IPBTH.png"
+                      alt="IPBTH"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/Triguna.png"
+                      alt="Triguna"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/wika.png"
+                      alt="Wika"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
                   </div>
 
-                  <div className="flex-shrink-0 md:col-span-1 lg:col-span-2 flex items-center justify-center">
-                    <FadeIn>
-                      <NextImage
-                        src="/sponsors/akhishop.png"
-                        alt="Akhishop Electronics"
-                        width={320}
-                        height={160}
-                        className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                      />
-                    </FadeIn>
+                  {/* Duplicate set for seamless loop */}
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/APD.png"
+                      alt="APD"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
                   </div>
-
-                  {/* <div className="flex-shrink-0 md:col-span-1 lg:col-span-2 flex items-center justify-center">
-                    <FadeIn>
-                      <NextImage
-                        src="/sponsors/indahpuri.webp"
-                        alt="Akhishop"
-                        width={320}
-                        height={160}
-                        className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                      />
-                    </FadeIn>
-                  </div> */}
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/ARL.png"
+                      alt="ARL"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/Akhishop.png"
+                      alt="Akhishop Electronics"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/AndiSobolangit.png"
+                      alt="Andi Sobolangit"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/Fure.png"
+                      alt="Fure"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/GrahaPintar.png"
+                      alt="Graha Pintar"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/IPBTH.png"
+                      alt="IPBTH"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/Triguna.png"
+                      alt="Triguna"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <NextImage
+                      src="/sponsors/wika.png"
+                      alt="Wika"
+                      width={320}
+                      height={160}
+                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -92,7 +245,7 @@ export default function Sponsors() {
             <a
               href="/contact"
               aria-label="Email RIVAL ITS to become a sponsor"
-              className="inline-block bg-[#FFD700] text-black font-bold py-3 px-8 rounded-lg hover:bg-[#E0B800] transition duration-300 mb-8"
+              className="inline-block bg-[#D4AF37] text-black font-bold py-3 px-8 rounded-lg hover:bg-[#C49626] transition duration-300 mb-8"
             >
               EMAIL US!
             </a>

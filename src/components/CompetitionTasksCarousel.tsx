@@ -112,7 +112,7 @@ export default function CompetitionTasksCarousel({
             <button
               type="button"
               onClick={prevTask}
-              className="z-10 w-16 h-16 flex items-center justify-center rounded-full bg-[#1e5f4e] hover:bg-white text-white focus:outline-none text-4xl"
+              className="z-10 w-16 h-16 flex items-center justify-center rounded-full bg-[#398561] hover:bg-white text-white focus:outline-none text-4xl"
               style={{ paddingBottom: "2px" }}
               disabled={isAnimating}
             >
@@ -122,7 +122,7 @@ export default function CompetitionTasksCarousel({
             <button
               type="button"
               onClick={nextTask}
-              className="z-10 w-16 h-16 flex items-center justify-center rounded-full bg-[#1e5f4e] hover:bg-white text-white focus:outline-none text-4xl"
+              className="z-10 w-16 h-16 flex items-center justify-center rounded-full bg-[#398561] hover:bg-white text-white focus:outline-none text-4xl"
               style={{ paddingBottom: "2px" }}
               disabled={isAnimating}
             >

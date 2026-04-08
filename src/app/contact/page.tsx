@@ -1,13 +1,17 @@
+"use client";
+
 import type { Metadata } from "next";
 import ContactForm from "./ContactForm";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: "Contact Us",
   description:
     "Get in touch with RIVAL ITS - reach out for collaborations, partnerships, or to learn more about our robotics projects.",
 };
 
 export default function Contact() {
+  const isMobile = useIsMobile();
   return (
     <div className="min-h-screen">
       <div
@@ -19,7 +23,7 @@ export default function Contact() {
           style={{ pointerEvents: "none" }}
         />
         <div className="relative z-10">
-          <h1 className="text-white font-bold text-5xl md:text-6xl mb-2">
+          <h1 className="text-white font-bold text-3xl md:text-5xl lg:text-6xl mb-2">
             Contact Us
           </h1>
         </div>
@@ -30,7 +34,7 @@ export default function Contact() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div className="space-y-8">
               <div>
-                <h2 className="text-white text-3xl font-bold mb-6">
+                <h2 className="text-white text-xl md:text-3xl font-bold mb-6">
                   RIVAL ITS Team
                 </h2>
 
@@ -77,7 +81,7 @@ export default function Contact() {
                 <div className="flex space-x-4 mt-8">
                   <a
                     href="https://instagram.com/rival_its"
-                    className="text-white hover:text-[#16473a] transition-colors"
+                    className="text-white hover:text-[#D4AF37] transition-colors"
                   >
                     <svg
                       className="w-6 h-6"
@@ -91,7 +95,7 @@ export default function Contact() {
 
                   <a
                     href="https://linkedin.com/company/rival-its"
-                    className="text-white hover:text-[#16473a] transition-colors"
+                    className="text-white hover:text-[#D4AF37] transition-colors"
                   >
                     <svg
                       className="w-6 h-6"

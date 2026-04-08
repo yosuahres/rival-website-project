@@ -91,7 +91,7 @@ export default function ContactForm() {
   return (
     <div className="bg-white/0 backdrop-blur-sm rounded-lg p-8 ">
       {formState.isSuccess && (
-        <div className="mb-6 p-4 bg-green-100 border border-green-400 text-white rounded-lg">
+        <div className="mb-6 p-4 bg-[#398561]/20 border border-[#398561] text-white rounded-lg">
           <div className="flex items-center">
             <svg
               className="w-5 h-5 mr-2"
@@ -150,7 +150,7 @@ export default function ContactForm() {
               onChange={handleInputChange}
               required
               disabled={formState.isLoading}
-              className="w-full px-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1e5f4e] focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#398561] focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="First Name"
             />
           </div>
@@ -169,7 +169,7 @@ export default function ContactForm() {
               value={formData.lastName}
               onChange={handleInputChange}
               disabled={formState.isLoading}
-              className="w-full px-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1e5f4e] focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#398561] focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="Last Name"
             />
           </div>
@@ -190,7 +190,7 @@ export default function ContactForm() {
             onChange={handleInputChange}
             required
             disabled={formState.isLoading}
-            className="w-full px-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1e5f4e] focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#398561] focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             placeholder="Email"
           />
         </div>
@@ -210,7 +210,7 @@ export default function ContactForm() {
             onChange={handleInputChange}
             required
             disabled={formState.isLoading}
-            className="w-full px-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1e5f4e] focus:border-transparent resize-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-3 bg-white/90 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#398561] focus:border-transparent resize-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             placeholder="Message"
           ></textarea>
         </div>
@@ -218,7 +218,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={formState.isLoading}
-          className="bg-black hover:bg-[#16473a] text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e5f4e] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center"
+          className="bg-black hover:bg-[#398561] text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#398561] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center"
         >
           {formState.isLoading ? (
             <>

@@ -14,10 +14,14 @@
 }
 
 :root {
-  --phamily-green: #1e5f4e;
-  --phamily-green-dark: #16473a;
-  --background: #1e5f4e;
+  --phamily-green: #398561;
+  --phamily-green-dark: #021507;
+  --phamily-green-light: #4FA578;
+  --phamily-green-lighter: #57B894;
+  --background: #021507;
   --foreground: #ffffff;
+  --accent-gold: #D4AF37;
+  --accent-light: #E8F2EA;
 }
 
 @theme inline {
@@ -33,9 +37,8 @@ body {
     var(--phamily-green-dark) 0%,
     var(--phamily-green) 100%
   ); /* Removed light green for less contrast */
-  background-size: 400% 400%;
+  background-size: 100% 100%;
   background-attachment: fixed;
-  animation: subtlePulse 30s ease-in-out infinite alternate; /* Moderate animation speed */
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   min-height: 100vh;
@@ -43,20 +46,9 @@ body {
   scroll-behavior: smooth;
 }
 
-@keyframes subtlePulse {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
-}
 
 .green-container {
-  background: linear-gradient(135deg, #1e5f4e 0%, #2a7d63 50%, #1e5f4e 100%);
+  background: linear-gradient(135deg, #021507 0%, #398561 50%, #021507 100%);
   border-radius: 0;
   position: relative;
   width: 100vw;

@@ -111,7 +111,7 @@ export default function RoleNavigation({ roles }: RoleNavigationProps) {
                   flex items-center space-x-3 p-3 rounded-lg 
                   cursor-pointer transition-all duration-200 
                   group hover:bg-white/10
-                  ${isActive ? "bg-green-400/20" : "bg-transparent"}
+                  ${isActive ? "bg-[#398561]/20" : "bg-transparent"}
                 `}
                 onClick={(e) => {
                   e.preventDefault();
@@ -125,7 +125,7 @@ export default function RoleNavigation({ roles }: RoleNavigationProps) {
                     w-2.5 h-2.5 rounded-full transition-all duration-200
                     ${
                       isActive
-                        ? "bg-green-400"
+                        ? "bg-[#398561]"
                         : "bg-white/50 group-hover:bg-white"
                     }
                   `}
@@ -136,7 +136,7 @@ export default function RoleNavigation({ roles }: RoleNavigationProps) {
                     capitalize transition-all duration-200
                     ${
                       isActive
-                        ? "font-bold text-green-400"
+                        ? "font-bold text-[#398561]"
                         : "text-white/80 group-hover:text-white"
                     }
                   `}
