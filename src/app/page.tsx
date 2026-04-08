@@ -1,15 +1,8 @@
 "use client";
 
-import type { Metadata } from "next";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-const _metadata: Metadata = {
-  title: "Home",
-  description:
-    "Welcome to RIVAL ITS - Indonesia's premier robotic team pushing boundaries in technology and innovation.",
-};
 
 export default function Home() {
   const isMobile = useIsMobile();

@@ -1,10 +1,6 @@
 "use client";
 
-import type { Metadata } from "next";
-import { generatePageMetadata, metadataTemplates } from "@/lib/metadata";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-const metadata: Metadata = generatePageMetadata(metadataTemplates.about);
 
 export default function About() {
   const isMobile = useIsMobile();

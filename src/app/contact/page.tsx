@@ -1,14 +1,7 @@
 "use client";
 
-import type { Metadata } from "next";
 import ContactForm from "./ContactForm";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-const metadata: Metadata = {
-  title: "Contact Us",
-  description:
-    "Get in touch with RIVAL ITS - reach out for collaborations, partnerships, or to learn more about our robotics projects.",
-};
 
 export default function Contact() {
   const isMobile = useIsMobile();

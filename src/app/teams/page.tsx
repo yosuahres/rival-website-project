@@ -1,14 +1,6 @@
 "use client";
-
-import type { Metadata } from "next";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-const metadata: Metadata = {
-  title: "Our Teams",
-  description:
-    "Meet the talented teams that make up RIVAL ITS - from mechanical design to software development, each team brings unique expertise.",
-};
 
 export default function Teams() {
   const isMobile = useIsMobile();

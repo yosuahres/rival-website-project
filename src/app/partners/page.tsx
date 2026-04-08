@@ -1,14 +1,6 @@
 "use client";
-
-import type { Metadata } from "next";
 import NextImage from "@/components/NextImage";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-const metadata: Metadata = {
-  title: "Sponsors",
-  description:
-    "Meet the amazing sponsors and supporters who help RIVAL ITS achieve excellence in robotics competition.",
-};
 
 export default function Sponsors() {
   const isMobile = useIsMobile();

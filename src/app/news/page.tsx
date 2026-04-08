@@ -1,14 +1,6 @@
 "use client";
-
-import type { Metadata } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-const metadata: Metadata = {
-  title: "News",
-  description:
-    "Latest news and updates about RIVAL ITS - stay informed about our competitions, achievements, and robotics innovations.",
-};
 
 const newsData = [
   {
