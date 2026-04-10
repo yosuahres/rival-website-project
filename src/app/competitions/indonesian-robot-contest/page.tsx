@@ -24,7 +24,7 @@ const indonesianRobotContestTasks = [
 export default function IndonesianRobotContestPage() {
   const isMobile = useIsMobile();
   return (
-    <div className="min-h-screen bg-[#398561]">
+    <div className="min-h-screen">
       <section className="relative h-[60vh] flex items-center justify-center">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <Image
@@ -50,7 +50,7 @@ export default function IndonesianRobotContestPage() {
         </div>
       </section>
 
-      <section className="w-full bg-[#398561] bg-opacity-70 py-8 flex items-center justify-center">
+      <section className="w-full py-8 flex items-center justify-center">
         <div className="max-w-7xl w-full min-h-[120px] mx-auto">
           <p className="text-lg text-white p-6 text-justify font-bold">
             The Indonesian Robot Contest (KRI) is an annual student competition
@@ -68,7 +68,6 @@ export default function IndonesianRobotContestPage() {
 
       {/* Stats Section */}
       <section className="relative w-full min-h-[180px] sm:min-h-[300px] flex items-center justify-center py-8 sm:py-14 overflow-hidden">
-        <div className="absolute inset-0 bg-[#398561] opacity-70"></div>
         <Image
           src="/images/foreground-kri2.webp"
           alt="Stats background"
@@ -127,7 +126,7 @@ export default function IndonesianRobotContestPage() {
         </div>
       </section>
 
-      <div className="bg-[#398561] px-8 mt-20">{/* spacer */}</div>
+      <div className="px-8 mt-20">{/* spacer */}</div>
 
       <CompetitionTasksCarousel
         tasks={indonesianRobotContestTasks}

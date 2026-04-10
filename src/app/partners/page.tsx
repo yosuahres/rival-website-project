@@ -297,7 +297,7 @@ export default function Sponsors() {
           </div>
 
           <div className="relative flex items-center justify-center lg:justify-end mt-16">
-            <div className="absolute inset-0 flex justify-center lg:justify-end items-center space-x-4">
+            <div className="md:absolute md:inset-0 flex justify-center lg:justify-end items-center space-x-4">
               <div className="inline-block overflow-hidden">
                 <NextImage
                   src="/images/ROVER3.webp"

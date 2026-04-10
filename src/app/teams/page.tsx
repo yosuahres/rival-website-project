@@ -8,7 +8,7 @@ export default function Teams() {
     {
       name: "Moh Ismarintan Zazuli",
       image: "/personal-data/marin2.png",
-      role: "advisor team",
+      role: "team advisor",
     },
     {
       name: "Aditya Dharma Saputra",
@@ -98,7 +98,7 @@ export default function Teams() {
   ];
 
   const roles = [
-    "advisor team",
+    "team advisor",
     "team leader",
     "electrical team",
     "mechanical team",

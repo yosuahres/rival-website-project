@@ -38,7 +38,7 @@ const indonesianRobotContestTasks = [
 export default function IndonesianRobotContestPage() {
   const isMobile = useIsMobile();
   return (
-    <div className="min-h-screen bg-[#398561]">
+    <div className="min-h-screen">
       <section className="relative h-[60vh] flex items-center justify-center">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <Image
@@ -64,7 +64,7 @@ export default function IndonesianRobotContestPage() {
         </div>
       </section>
 
-      <section className="w-full bg-[#398561] bg-opacity-70 py-8 flex items-center justify-center">
+      <section className="w-full py-8 flex items-center justify-center">
         <div className="max-w-7xl w-full min-h-[120px] mx-auto">
           <p className="text-lg text-white p-6 text-justify font-bold">
             The Australian Rover Challenge (ARCh) is an annual robotics
@@ -83,7 +83,6 @@ export default function IndonesianRobotContestPage() {
 
       {/* Stats Section */}
       <section className="relative w-full min-h-[180px] sm:min-h-[300px] flex items-center justify-center py-8 sm:py-14 overflow-hidden">
-        <div className="absolute inset-0 bg-[#398561] opacity-70"></div>
         <Image
           src="/images/fototeam1.webp"
           alt="Stats background"
@@ -98,8 +97,11 @@ export default function IndonesianRobotContestPage() {
             style={{ justifyContent: "center", width: "fit-content" }}
           >
             <div className="flex flex-col items-center justify-center">
+              <div className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2">
+                6<sup className="text-lg sm:text-xl md:text-3xl">th</sup>
+              </div>
               <div className="text-2xl sm:text-4xl md:text-5xl font-extrabold mt-2">
-                OUR FIRST YEAR!
+                2026
               </div>
             </div>
           </div>

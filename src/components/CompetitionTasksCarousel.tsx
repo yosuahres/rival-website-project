@@ -70,24 +70,66 @@ export default function CompetitionTasksCarousel({
           COMPETITION TASKS
         </h2>
 
-        <div className="relative flex flex-col items-center justify-between overflow-hidden min-h-[650px] md:h-[650px] p-4">
-          <div
-            className={`relative h-[300px] w-full max-w-3xl shadow-xl bg-white rounded-xl mb-8 transition-transform duration-300 ease-in-out md:h-100
-            ${
-              slideDirection === "right"
-                ? "-translate-x-full opacity-0"
-                : slideDirection === "left"
-                  ? "translate-x-full opacity-0"
-                  : "translate-x-0 opacity-100"
-            }`}
-          >
-            <Image
-              src={currentTask.image}
-              alt={currentTask.title}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-lg"
-            />
+        <div className="relative flex flex-col items-center justify-center overflow-hidden min-h-[650px] md:h-[650px] p-4 gap-8">
+          <div className="relative flex items-center justify-center gap-4 md:gap-8 w-full">
+            <button
+              type="button"
+              onClick={prevTask}
+              className="z-10 hidden md:flex w-16 h-16 items-center justify-center rounded-full bg-[#398561] hover:bg-white hover:text-[#398561] text-white focus:outline-none text-4xl leading-none flex-shrink-0 transition-all"
+              style={{ lineHeight: "1" }}
+              disabled={isAnimating}
+            >
+              &larr;
+            </button>
+
+            <div
+              className={`relative h-[300px] w-full max-w-3xl shadow-xl bg-white rounded-xl transition-transform duration-300 ease-in-out md:h-100
+              ${
+                slideDirection === "right"
+                  ? "-translate-x-full opacity-0"
+                  : slideDirection === "left"
+                    ? "translate-x-full opacity-0"
+                    : "translate-x-0 opacity-100"
+              }`}
+            >
+              <Image
+                src={currentTask.image}
+                alt={currentTask.title}
+                layout="fill"
+                objectFit="cover"
+                className="rounded-lg"
+              />
+
+              <button
+                type="button"
+                onClick={prevTask}
+                className="z-10 md:hidden absolute left-2 top-1/2 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-[#398561] hover:bg-white hover:text-[#398561] text-white focus:outline-none text-3xl leading-none transition-all"
+                style={{ lineHeight: "1" }}
+                disabled={isAnimating}
+              >
+                &larr;
+              </button>
+
+              <button
+                type="button"
+                onClick={nextTask}
+                className="z-10 md:hidden absolute right-2 top-1/2 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-[#398561] hover:bg-white hover:text-[#398561] text-white focus:outline-none text-3xl leading-none transition-all"
+                style={{ lineHeight: "1" }}
+                disabled={isAnimating}
+              >
+                &rarr;
+              </button>
+            </div>
+
+            <button
+              type="button"
+              onClick={nextTask}
+              className="z-10 hidden md:flex w-16 h-16 items-center justify-center rounded-full bg-[#398561] hover:bg-white hover:text-[#398561] text-white focus:outline-none text-4xl leading-none flex-shrink-0 transition-all"
+              style={{ lineHeight: "1" }}
+              disabled={isAnimating}
+            >
+              &rarr;
+            </button>
           </div>
 
           <div
@@ -106,28 +148,6 @@ export default function CompetitionTasksCarousel({
             <p className="text-gray-300 text-lg mt-4">
               {currentTask.description}
             </p>
-          </div>
-
-          <div className="relative flex justify-between w-full max-w-xs px-4 mt-8 md:absolute md:bottom-auto md:top-1/2 md:left-0 md:transform md:-translate-x-1/2 md:translate-x-0 md:-translate-y-1/2 md:max-w-none md:px-0">
-            <button
-              type="button"
-              onClick={prevTask}
-              className="z-10 w-16 h-16 flex items-center justify-center rounded-full bg-[#398561] hover:bg-white text-white focus:outline-none text-4xl"
-              style={{ paddingBottom: "2px" }}
-              disabled={isAnimating}
-            >
-              &larr;
-            </button>
-
-            <button
-              type="button"
-              onClick={nextTask}
-              className="z-10 w-16 h-16 flex items-center justify-center rounded-full bg-[#398561] hover:bg-white text-white focus:outline-none text-4xl"
-              style={{ paddingBottom: "2px" }}
-              disabled={isAnimating}
-            >
-              &rarr;
-            </button>
           </div>
         </div>
       </div>
