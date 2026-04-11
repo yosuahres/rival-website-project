@@ -58,10 +58,9 @@ export default function Home() {
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
-            opacity: 0.7,
+            opacity: 0.6,
             zIndex: 0,
             pointerEvents: "none",
-            transform: "scaleX(-1)",
           }}
         />
         <div

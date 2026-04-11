@@ -8,6 +8,7 @@ interface Task {
   title: string;
   description: string;
   image: string;
+  videoLink?: string;
 }
 
 interface CompetitionTasksCarouselProps {
@@ -92,13 +93,37 @@ export default function CompetitionTasksCarousel({
                     : "translate-x-0 opacity-100"
               }`}
             >
-              <Image
-                src={currentTask.image}
-                alt={currentTask.title}
-                layout="fill"
-                objectFit="cover"
-                className="rounded-lg"
-              />
+              {currentTask.videoLink ? (
+                <a
+                  href={currentTask.videoLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full h-full rounded-lg cursor-pointer group relative"
+                >
+                  <Image
+                    src={currentTask.image}
+                    alt={currentTask.title}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-lg group-hover:brightness-75 transition-all duration-200"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center rounded-lg group-hover:bg-black group-hover:bg-opacity-40 transition-all duration-200">
+                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-200 shadow-lg">
+                      <svg className="w-10 h-10 text-[#398561] ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <polygon points="5 3 19 12 5 21"></polygon>
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              ) : (
+                <Image
+                  src={currentTask.image}
+                  alt={currentTask.title}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg"
+                />
+              )}
 
               <button
                 type="button"

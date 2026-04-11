@@ -52,7 +52,7 @@ export default function IndonesianRobotContestPage() {
 
       <section className="w-full py-8 flex items-center justify-center">
         <div className="max-w-7xl w-full min-h-[120px] mx-auto">
-          <p className="text-lg text-white p-6 text-justify font-bold">
+          <p className="text-lg text-white p-6 text-justify">
             The Indonesian Robot Contest (KRI) is an annual student competition
             in the field of robot design and engineering, open to all university
             students across the Republic of Indonesia under the Ministry of

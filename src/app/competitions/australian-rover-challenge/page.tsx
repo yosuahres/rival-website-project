@@ -10,28 +10,32 @@ const indonesianRobotContestTasks = [
     title: "Post Landing Tasks",
     description:
       "The rover must perform a series of activities immediately after landing to establish an operational In-Situ Resource Utilisation (ISRU) outpost, including conducting system checks, evaluating supply caches, performing maintenance, and connecting propellant hoses.",
-    image: "/images/arm1.webp",
+    image: "/images/arch/arch5.webp",
+    videoLink: "https://www.youtube.com/live/OL-GZQfJ3AQ?si=ddnjgknbIWuNDhUe",
   },
   {
     id: 2,
     title: "Space Resources Task",
     description:
       "The rover must evaluate, collect, and extract critical lunar resources—specifically prospecting for ilmenite and icy regolith, and processing the icy regolith to extract the highest possible amount of liquid water.",
-    image: "/images/assemblykosong.webp",
+    image: "/images/arch/arch1.webp",
+    videoLink: "https://www.youtube.com/live/Oe0o9es1_Q8?si=QY5_XCorFn6xtLQK",
   },
   {
     id: 3,
     title: "Excavation and Construction Task",
     description:
       "The rover must prepare a landing site by clearing hazardous rocks, excavating regolith to construct a protective berm, and deploying dust-mitigating pavers.",
-    image: "/images/ROVER4.webp",
+    image: "/images/arch/arch4.webp",
+    videoLink: "https://www.youtube.com/live/MWcUxFiwad8?si=2w9qcM4wgIs_YjDI",
   },
   {
     id: 4,
     title: "Mapping and Autonomous Task",
     description:
       "The rover is required to autonomously navigate to predefined landmarks and subsequently explore the area to construct a comprehensive map, reporting the coordinates of previously unknown landmarks",
-    image: "/images/foreground-arc.webp",
+    image: "/images/arch/arch6auto.webp",
+    videoLink: "https://www.youtube.com/live/HbswUp7gHko?si=MMiIoeLgElbGIzMU",
   },
 ];
 
@@ -42,10 +46,10 @@ export default function IndonesianRobotContestPage() {
       <section className="relative h-[60vh] flex items-center justify-center">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <Image
-            src="/images/ROVER4.webp"
+            src="/images/arch/archfamily.webp"
             alt="Competition background"
             className="w-full h-full object-cover object-center"
-            style={{ opacity: 0.5, objectPosition: "center 55%" }}
+            style={{ opacity: 0.5, objectPosition: "center 20%" }}
             fill={true}
           />
         </div>
@@ -54,7 +58,7 @@ export default function IndonesianRobotContestPage() {
             Australian Rover Challenge 2026
           </h1>
           <a
-            href="https://kontesrobotindonesia.id/index.html"
+            href="https://adelaide.edu.au/about/events/2026/australian-rover-challenge/"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#398561] hover:bg-[#021507] px-6 py-4 rounded-2xl font-bold text-sm md:text-xl transition-colors inline-block shadow-lg"
@@ -66,7 +70,7 @@ export default function IndonesianRobotContestPage() {
 
       <section className="w-full py-8 flex items-center justify-center">
         <div className="max-w-7xl w-full min-h-[120px] mx-auto">
-          <p className="text-lg text-white p-6 text-justify font-bold">
+          <p className="text-lg text-white p-6 text-justify">
             The Australian Rover Challenge (ARCh) is an annual robotics
             competition held by the University of Adelaide, where university
             students from across Australia and around the globe, battle it out
@@ -81,7 +85,6 @@ export default function IndonesianRobotContestPage() {
         </div>
       </section>
 
-      {/* Stats Section */}
       <section className="relative w-full min-h-[180px] sm:min-h-[300px] flex items-center justify-center py-8 sm:py-14 overflow-hidden">
         <Image
           src="/images/fototeam1.webp"
