@@ -112,11 +112,10 @@ const Footer = () => {
               </div>
               <div className="w-32 h-20 flex items-center justify-center">
                 <NextImage
-                  src="/sponsors/Akhishop.png"
+                  src="sponsors/gajelas.png"
                   alt="Akhishop"
                   width={800}
                   height={302}
-                  unoptimized
                   className="object-contain"
                 />
               </div>

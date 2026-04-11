@@ -148,7 +148,7 @@ export default function Sponsors() {
                   </div>
                   <div className="flex items-center justify-center flex-shrink-0">
                     <NextImage
-                      src="/sponsors/Akhishop.png"
+                      src="/sponsors/gajelas.png"
                       alt="Akhishop Electronics"
                       width={800}
                       height={302}
