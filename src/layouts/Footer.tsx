@@ -10,8 +10,8 @@ const Footer = () => {
             <NextImage
               src="/images/horizontal.webp"
               alt="RIVAL ITS Logo"
-              width={200}
-              height={100}
+              width={280}
+              height={78}
               className="mb-4"
             />
             <Typography variant="h6" className="mb-2">
@@ -96,8 +96,8 @@ const Footer = () => {
                 <NextImage
                   src="/sponsors/APD.png"
                   alt="APD"
-                  width={120}
-                  height={60}
+                  width={240}
+                  height={300}
                   className="object-contain"
                 />
               </div>
@@ -105,8 +105,8 @@ const Footer = () => {
                 <NextImage
                   src="/sponsors/ARL.png"
                   alt="ARL"
-                  width={120}
-                  height={60}
+                  width={320}
+                  height={320}
                   className="object-contain"
                 />
               </div>
@@ -114,8 +114,9 @@ const Footer = () => {
                 <NextImage
                   src="/sponsors/Akhishop.png"
                   alt="Akhishop"
-                  width={120}
-                  height={60}
+                  width={800}
+                  height={302}
+                  unoptimized
                   className="object-contain"
                 />
               </div>
@@ -123,8 +124,8 @@ const Footer = () => {
                 <NextImage
                   src="/sponsors/AndiSobolangit.png"
                   alt="AndiSobolangit"
-                  width={120}
-                  height={60}
+                  width={320}
+                  height={320}
                   className="object-contain"
                 />
               </div>
@@ -132,8 +133,8 @@ const Footer = () => {
                 <NextImage
                   src="/sponsors/Fure.png"
                   alt="Fure"
-                  width={120}
-                  height={60}
+                  width={320}
+                  height={320}
                   className="object-contain"
                 />
               </div>
@@ -141,8 +142,8 @@ const Footer = () => {
                 <NextImage
                   src="/sponsors/GrahaPintar.png"
                   alt="GrahaPintar"
-                  width={120}
-                  height={60}
+                  width={320}
+                  height={320}
                   className="object-contain"
                 />
               </div>
@@ -150,8 +151,8 @@ const Footer = () => {
                 <NextImage
                   src="/sponsors/IPBTH.png"
                   alt="IPBTH"
-                  width={120}
-                  height={60}
+                  width={800}
+                  height={357}
                   className="object-contain"
                 />
               </div>
@@ -159,8 +160,8 @@ const Footer = () => {
                 <NextImage
                   src="/sponsors/Triguna.png"
                   alt="Triguna"
-                  width={120}
-                  height={60}
+                  width={320}
+                  height={320}
                   className="object-contain"
                 />
               </div>
@@ -168,8 +169,8 @@ const Footer = () => {
                 <NextImage
                   src="/sponsors/wika.png"
                   alt="wika"
-                  width={120}
-                  height={60}
+                  width={320}
+                  height={320}
                   className="object-contain"
                 />
               </div>

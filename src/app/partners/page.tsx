@@ -49,8 +49,8 @@ export default function Sponsors() {
                     <NextImage
                       src="/sponsors/APD.png"
                       alt="APD"
-                      width={320}
-                      height={160}
+                      width={240}
+                      height={300}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -59,7 +59,7 @@ export default function Sponsors() {
                       src="/sponsors/ARL.png"
                       alt="ARL"
                       width={320}
-                      height={160}
+                      height={320}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -67,8 +67,8 @@ export default function Sponsors() {
                     <NextImage
                       src="/sponsors/Akhishop.png"
                       alt="Akhishop Electronics"
-                      width={320}
-                      height={160}
+                      width={800}
+                      height={302}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -77,7 +77,7 @@ export default function Sponsors() {
                       src="/sponsors/AndiSobolangit.png"
                       alt="Andi Sobolangit"
                       width={320}
-                      height={160}
+                      height={320}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -86,7 +86,7 @@ export default function Sponsors() {
                       src="/sponsors/Fure.png"
                       alt="Fure"
                       width={320}
-                      height={160}
+                      height={320}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -95,7 +95,7 @@ export default function Sponsors() {
                       src="/sponsors/GrahaPintar.png"
                       alt="Graha Pintar"
                       width={320}
-                      height={160}
+                      height={320}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -103,8 +103,8 @@ export default function Sponsors() {
                     <NextImage
                       src="/sponsors/IPBTH.png"
                       alt="IPBTH"
-                      width={320}
-                      height={160}
+                      width={800}
+                      height={357}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -113,7 +113,7 @@ export default function Sponsors() {
                       src="/sponsors/Triguna.png"
                       alt="Triguna"
                       width={320}
-                      height={160}
+                      height={320}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -122,7 +122,7 @@ export default function Sponsors() {
                       src="/sponsors/wika.png"
                       alt="Wika"
                       width={320}
-                      height={160}
+                      height={320}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -132,8 +132,8 @@ export default function Sponsors() {
                     <NextImage
                       src="/sponsors/APD.png"
                       alt="APD"
-                      width={320}
-                      height={160}
+                      width={240}
+                      height={300}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -142,7 +142,7 @@ export default function Sponsors() {
                       src="/sponsors/ARL.png"
                       alt="ARL"
                       width={320}
-                      height={160}
+                      height={320}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -150,8 +150,8 @@ export default function Sponsors() {
                     <NextImage
                       src="/sponsors/Akhishop.png"
                       alt="Akhishop Electronics"
-                      width={320}
-                      height={160}
+                      width={800}
+                      height={302}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -160,7 +160,7 @@ export default function Sponsors() {
                       src="/sponsors/AndiSobolangit.png"
                       alt="Andi Sobolangit"
                       width={320}
-                      height={160}
+                      height={320}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -169,7 +169,7 @@ export default function Sponsors() {
                       src="/sponsors/Fure.png"
                       alt="Fure"
                       width={320}
-                      height={160}
+                      height={320}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -178,7 +178,7 @@ export default function Sponsors() {
                       src="/sponsors/GrahaPintar.png"
                       alt="Graha Pintar"
                       width={320}
-                      height={160}
+                      height={320}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -186,8 +186,8 @@ export default function Sponsors() {
                     <NextImage
                       src="/sponsors/IPBTH.png"
                       alt="IPBTH"
-                      width={320}
-                      height={160}
+                      width={800}
+                      height={357}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -196,7 +196,7 @@ export default function Sponsors() {
                       src="/sponsors/Triguna.png"
                       alt="Triguna"
                       width={320}
-                      height={160}
+                      height={320}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -205,7 +205,7 @@ export default function Sponsors() {
                       src="/sponsors/wika.png"
                       alt="Wika"
                       width={320}
-                      height={160}
+                      height={320}
                       className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
                     />
                   </div>
@@ -300,7 +300,7 @@ export default function Sponsors() {
             <div className="md:absolute md:inset-0 flex justify-center lg:justify-end items-center space-x-4">
               <div className="inline-block overflow-hidden">
                 <NextImage
-                  src="/images/ROVER3.webp"
+                  src="/images/arch/arch3.webp"
                   alt="current projects"
                   width={500}
                   height={300}
