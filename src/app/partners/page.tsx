@@ -1,14 +1,68 @@
 "use client";
 import NextImage from "@/components/NextImage";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useEffect, useRef } from "react";
+
+const SPONSORS = [
+  { src: "/sponsors/APD.png", alt: "APD", w: 240, h: 300 },
+  { src: "/sponsors/ARL.png", alt: "ARL", w: 800, h: 302 },
+  { src: "/sponsors/gajelas.png", alt: "Akhishop Electronics", w: 800, h: 302 },
+  { src: "/sponsors/AndiSobolangit.png", alt: "Andi Sobolangit", w: 320, h: 320 },
+  { src: "/sponsors/Fure.png", alt: "Fure", w: 320, h: 320 },
+  { src: "/sponsors/GrahaPintar.png", alt: "Graha Pintar", w: 320, h: 320 },
+  { src: "/sponsors/IPBTH.png", alt: "IPBTH", w: 800, h: 357 },
+  { src: "/sponsors/Triguna.png", alt: "Triguna", w: 320, h: 320 },
+  { src: "/sponsors/wika.png", alt: "Wika", w: 320, h: 320 },
+];
 
 export default function Sponsors() {
-  const isMobile = useIsMobile();
+  const trackRef = useRef<HTMLDivElement>(null);
+  const xRef = useRef(0);
+  const rafRef = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const itemCount = SPONSORS.length;
+    let singleSetWidth = 0;
+    const children = track.children;
+    for (let i = 0; i < itemCount; i++) {
+      singleSetWidth +=
+        (children[i] as HTMLElement).getBoundingClientRect().width + 160;
+    }
+
+    const speed = 80;
+    let lastTime: number | null = null;
+
+    function animate(ts: number): void {
+      if (!lastTime) lastTime = ts;
+      const dt = (ts - lastTime) / 1000;
+      lastTime = ts;
+
+      xRef.current += speed * dt;
+      if (xRef.current >= singleSetWidth) {
+        xRef.current -= singleSetWidth;
+      }
+
+      if (track) track.style.transform = `translateX(-${xRef.current}px)`;
+      rafRef.current = requestAnimationFrame(animate);
+    }
+
+    rafRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  const tripled = [...SPONSORS, ...SPONSORS, ...SPONSORS];
+
   return (
     <>
       <section className="py-20 mt-10">
         <div className="mx-auto max-w-6xl px-6 sm:px-8 pt-8 md:pt-12">
-          <h1 className="text-white text-2xl md:text-5xl font-bold mb-16">Our sponsors</h1>
+          <h1 className="text-white text-2xl md:text-5xl font-bold mb-16">
+            Our sponsors
+          </h1>
         </div>
 
         <div
@@ -19,198 +73,26 @@ export default function Sponsors() {
             WebkitBackdropFilter: "blur(6px)",
           }}
         >
-          <div className="w-full">
-            <div className="min-h-[120px] md:min-h-[160px] flex items-center overflow-hidden">
-              <style>{`
-                @keyframes slideRight {
-                  0% {
-                    transform: translateX(0);
-                  }
-                  100% {
-                    transform: translateX(-50%);
-                  }
-                }
-                .sponsors-slide {
-                  display: flex;
-                  gap: 10rem;
-                  animation: slideRight 20s linear infinite;
-                  will-change: transform;
-                }
-                .sponsors-wrapper {
-                  display: flex;
-                  overflow: hidden;
-                  width: 100%;
-                }
-              `}</style>
-              <div className="sponsors-wrapper w-full">
-                <div className="sponsors-slide">
-                  {/* First set of sponsors */}
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/APD.png"
-                      alt="APD"
-                      width={240}
-                      height={300}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/ARL.png"
-                      alt="ARL"
-                      width={320}
-                      height={320}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/Akhishop.png"
-                      alt="Akhishop Electronics"
-                      width={800}
-                      height={302}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/AndiSobolangit.png"
-                      alt="Andi Sobolangit"
-                      width={320}
-                      height={320}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/Fure.png"
-                      alt="Fure"
-                      width={320}
-                      height={320}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/GrahaPintar.png"
-                      alt="Graha Pintar"
-                      width={320}
-                      height={320}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/IPBTH.png"
-                      alt="IPBTH"
-                      width={800}
-                      height={357}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/Triguna.png"
-                      alt="Triguna"
-                      width={320}
-                      height={320}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/wika.png"
-                      alt="Wika"
-                      width={320}
-                      height={320}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-
-                  {/* Duplicate set for seamless loop */}
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/APD.png"
-                      alt="APD"
-                      width={240}
-                      height={300}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/ARL.png"
-                      alt="ARL"
-                      width={320}
-                      height={320}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/gajelas.png"
-                      alt="Akhishop Electronics"
-                      width={800}
-                      height={302}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/AndiSobolangit.png"
-                      alt="Andi Sobolangit"
-                      width={320}
-                      height={320}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/Fure.png"
-                      alt="Fure"
-                      width={320}
-                      height={320}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/GrahaPintar.png"
-                      alt="Graha Pintar"
-                      width={320}
-                      height={320}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/IPBTH.png"
-                      alt="IPBTH"
-                      width={800}
-                      height={357}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/Triguna.png"
-                      alt="Triguna"
-                      width={320}
-                      height={320}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center flex-shrink-0">
-                    <NextImage
-                      src="/sponsors/wika.png"
-                      alt="Wika"
-                      width={320}
-                      height={320}
-                      className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                    />
-                  </div>
+          <div className="min-h-[120px] md:min-h-[160px] flex items-center overflow-hidden">
+            <div
+              ref={trackRef}
+              className="flex items-center"
+              style={{ gap: "10rem", width: "max-content", willChange: "transform" }}
+            >
+              {tripled.map((s, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-center flex-shrink-0"
+                >
+                  <NextImage
+                    src={s.src}
+                    alt={s.alt}
+                    width={s.w}
+                    height={s.h}
+                    className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
+                  />
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -248,14 +130,7 @@ export default function Sponsors() {
                 rel="noopener noreferrer"
                 className="text-white hover:opacity-80"
               >
-                <svg
-                  width="24"
-                  height="24"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  role="img"
-                  aria-labelledby="instagram-title"
-                >
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" role="img" aria-labelledby="instagram-title">
                   <title id="instagram-title">Instagram</title>
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                 </svg>
@@ -266,14 +141,7 @@ export default function Sponsors() {
                 rel="noopener noreferrer"
                 className="text-white hover:opacity-80"
               >
-                <svg
-                  width="24"
-                  height="24"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  role="img"
-                  aria-labelledby="linkedin-title"
-                >
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" role="img" aria-labelledby="linkedin-title">
                   <title id="linkedin-title">LinkedIn</title>
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.025-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.843-1.563 3.041 0 3.602 2.003 3.602 4.605v5.591z" />
                 </svg>
@@ -282,13 +150,7 @@ export default function Sponsors() {
                 href="mailto:official.krtmiits@gmail.com"
                 className="text-white hover:opacity-80 transition-colors"
               >
-                <svg
-                  className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  role="img"
-                  aria-labelledby="email-title"
-                >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" role="img" aria-labelledby="email-title">
                   <title id="email-title">Email</title>
                   <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h.749L12 10.724l9.615-6.903h.749c.904 0 1.636.732 1.636 1.636z" />
                 </svg>

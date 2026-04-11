@@ -10,7 +10,7 @@ const Footer = () => {
             <NextImage
               src="/images/horizontal.webp"
               alt="RIVAL ITS Logo"
-              width={280}
+              width={250}
               height={78}
               className="mb-4"
             />
@@ -112,7 +112,7 @@ const Footer = () => {
               </div>
               <div className="w-32 h-20 flex items-center justify-center">
                 <NextImage
-                  src="sponsors/gajelas.png"
+                  src="/sponsors/gajelas.png"
                   alt="Akhishop"
                   width={800}
                   height={302}
