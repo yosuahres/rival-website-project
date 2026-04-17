@@ -5,6 +5,16 @@ import { useEffect, useState } from "react";
 const newsData = [
   {
     id: 1,
+    title: "ITS Kembali Rebut Kali Keenam Gelar Juara Umum KRI 2024",
+    source: "ITS News",
+    date: "2024",
+    description:
+      "Pertegas kehebatannya di bidang robotika, Institut Teknologi Sepuluh Nopember (ITS) kembali berjaya dengan membawa pulang gelar Juara Umum untuk kali keenam pada ajang Kontes Robot Indonesia (KRI) 2024.",
+    link: "https://share.google/M0yHCGKkA072weOaZ",
+    image: "/news/its-kri.jpg",
+  },
+  {
+    id: 2,
     title: "Tim Rival ITS Raih Best Rookie Team di Australia",
     source: "tempo.co",
     date: "2026",
@@ -14,9 +24,9 @@ const newsData = [
     image: "/news/tempo.jpg",
   },
   {
-    id: 2,
+    id: 3,
     title: "Debut Internasional, Tim RIVAL ITS Raih Best Rookie Team",
-    source: "ITS Official",
+    source: "ITS News",
     date: "2026",
     description:
       "RIVAL ITS continues to represent Institut Teknologi Sepuluh Nopember with distinction in robotics competitions and international platforms.",
@@ -40,7 +50,7 @@ export default function News() {
     <div className="min-h-screen bg-[#021507]">
       {/* News Cards Section */}
       <div className="pt-32 pb-20 px-8 md:px-16 lg:px-32">
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {newsData.map((news) => (
             <div
               key={news.id}
@@ -65,7 +75,7 @@ export default function News() {
               </h3>
 
               {/* Description */}
-              <p className="text-gray-300 text-sm leading-relaxed mb-6">
+              <p className="text-gray-300 text-sm leading-relaxed mb-6 line-clamp-3">
                 {news.description}
               </p>
 

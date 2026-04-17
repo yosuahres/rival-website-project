@@ -1,113 +1,36 @@
 "use client";
 import NextImage from "@/components/NextImage";
-import { useEffect, useRef } from "react";
-
-const SPONSORS = [
-  { src: "/sponsors/APD.png", alt: "APD", w: 240, h: 300 },
-  { src: "/sponsors/ARL.png", alt: "ARL", w: 800, h: 302 },
-  { src: "/sponsors/gajelas.png", alt: "Akhishop Electronics", w: 800, h: 302 },
-  { src: "/sponsors/AndiSobolangit.png", alt: "Andi Sobolangit", w: 320, h: 320 },
-  { src: "/sponsors/Fure.png", alt: "Fure", w: 320, h: 320 },
-  { src: "/sponsors/GrahaPintar.png", alt: "Graha Pintar", w: 320, h: 320 },
-  { src: "/sponsors/IPBTH.png", alt: "IPBTH", w: 800, h: 357 },
-  { src: "/sponsors/Triguna.png", alt: "Triguna", w: 320, h: 320 },
-  { src: "/sponsors/wika.png", alt: "Wika", w: 320, h: 320 },
-];
 
 export default function Sponsors() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const xRef = useRef(0);
-  const rafRef = useRef<number | undefined>(undefined);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const itemCount = SPONSORS.length;
-    let singleSetWidth = 0;
-    const children = track.children;
-    for (let i = 0; i < itemCount; i++) {
-      singleSetWidth +=
-        (children[i] as HTMLElement).getBoundingClientRect().width + 160;
-    }
-
-    const speed = 80;
-    let lastTime: number | null = null;
-
-    function animate(ts: number): void {
-      if (!lastTime) lastTime = ts;
-      const dt = (ts - lastTime) / 1000;
-      lastTime = ts;
-
-      xRef.current += speed * dt;
-      if (xRef.current >= singleSetWidth) {
-        xRef.current -= singleSetWidth;
-      }
-
-      if (track) track.style.transform = `translateX(-${xRef.current}px)`;
-      rafRef.current = requestAnimationFrame(animate);
-    }
-
-    rafRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
-
-  const tripled = [...SPONSORS, ...SPONSORS, ...SPONSORS];
-
   return (
     <>
-      <section className="py-20 mt-10">
-        <div className="mx-auto max-w-6xl px-6 sm:px-8 pt-8 md:pt-12">
-          <h1 className="text-white text-2xl md:text-5xl font-bold mb-16">
-            Our sponsors
+      <section className="relative w-full min-h-[750px] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <NextImage
+            src="/sponsors/additional/hero.jpg"
+            alt="Rover robot"
+            width={1920}
+            height={1080}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0"></div>
+        </div>
+
+        <div className="relative z-10 text-center px-6 max-w-4xl">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-8">
+            Sponsors & Partners
           </h1>
         </div>
 
-        <div
-          className="w-full py-12 md:py-16 overflow-hidden"
-          style={{
-            backgroundColor: "rgba(11, 18, 32, 0.5)",
-            backdropFilter: "blur(6px)",
-            WebkitBackdropFilter: "blur(6px)",
-          }}
-        >
-          <div className="min-h-[120px] md:min-h-[160px] flex items-center overflow-hidden">
-            <div
-              ref={trackRef}
-              className="flex items-center"
-              style={{ gap: "10rem", width: "max-content", willChange: "transform" }}
-            >
-              {tripled.map((s, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-center flex-shrink-0"
-                >
-                  <NextImage
-                    src={s.src}
-                    alt={s.alt}
-                    width={s.w}
-                    height={s.h}
-                    className="w-[120px] md:w-[180px] lg:w-[240px] max-w-full h-auto"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-2 bg-white z-20"></div>
       </section>
 
-      <section className="pb-6">
-        <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-white text-4xl font-bold mb-8">
-              Become a sponsor
-            </h2>
-            <h3 className="text-white text-xl font-semibold mb-4">
-              WHAT DO WE OFFER?
-            </h3>
-            <p className="text-gray-100 leading-relaxed mb-8">
+      <section className="py-16 md:py-24 bg-transparent">
+        <div className="max-w-6xl mx-auto px-6 text-justify">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 text-center">
+            Become A Sponsor
+          </h2>
+          <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-8">
               We offer four different sponsorship packages: SILVER, BRONZE,
               WINNER, PLATINUM, and GOLD. Each one has been carefully designed
               to provide unique benefits tailored to the needs of our partners.
@@ -115,60 +38,248 @@ export default function Sponsors() {
               promotional opportunities, including the addition of promotional
               materials to the club's social media, logo exposure on
               promotional. Email us for more details!
-            </p>
+          </p>
+          <div className="flex justify-center">
             <a
               href="/contact"
-              aria-label="Email RIVAL ITS to become a sponsor"
-              className="inline-block bg-[#D4AF37] text-black font-bold py-3 px-8 rounded-lg hover:bg-[#C49626] transition duration-300 mb-8"
+              className="inline-block bg-white text-black font-bold py-6 px-16 rounded-lg hover:bg-gray-200 transition duration-300 text-xl"
             >
-              EMAIL US!
+              Contact Us
             </a>
-            <div className="flex space-x-6 text-gray-400">
-              <a
-                href="https://instagram.com/rival_its"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:opacity-80"
-              >
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" role="img" aria-labelledby="instagram-title">
-                  <title id="instagram-title">Instagram</title>
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                </svg>
-              </a>
-              <a
-                href="https://linkedin.com/company/rival-its"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:opacity-80"
-              >
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" role="img" aria-labelledby="linkedin-title">
-                  <title id="linkedin-title">LinkedIn</title>
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.025-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.843-1.563 3.041 0 3.602 2.003 3.602 4.605v5.591z" />
-                </svg>
-              </a>
-              <a
-                href="mailto:official.krtmiits@gmail.com"
-                className="text-white hover:opacity-80 transition-colors"
-              >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" role="img" aria-labelledby="email-title">
-                  <title id="email-title">Email</title>
-                  <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h.749L12 10.724l9.615-6.903h.749c.904 0 1.636.732 1.636 1.636z" />
-                </svg>
-              </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-transparent">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="mb-12">
+            <div className="border-t-2 border-white mb-6"></div>
+            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">PLATINUM SPONSORS</h2>
+            <div className="border-b-2 border-white"></div>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-12">
+            <div className="text-center flex-shrink-0">
+              <div className="flex justify-center mb-6">
+                <NextImage
+                  src="/sponsors/AndiSobolangit.png"
+                  alt="Platinum sponsor 1"
+                  width={250}
+                  height={200}
+                  className="w-auto h-auto"
+                />
+              </div>
+            </div>
+            <div className="text-center flex-shrink-0">
+              <div className="flex justify-center mb-6">
+                <NextImage
+                  src="/sponsors/ancuk.png"
+                  alt="Platinum sponsor 2"
+                  width={250}
+                  height={200}
+                  className="w-auto h-auto"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-4 md:py-6 bg-transparent">
+        <div className="flex justify-center">
+          <NextImage
+            src="/sponsors/additional/section1.jpg"
+            alt="Sponsor section divider"
+            width={1000}
+            height={100}
+            className="w-full object-cover max-h-140"
+          />
+        </div>
+      </section>
+
+      {/* Platinum Section */}
+      <section className="py-16 md:py-24 bg-transparent">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="mb-12">
+            <div className="border-t-2 border-white mb-6"></div>
+            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">SILVER SPONSORS</h2>
+            <div className="border-b-2 border-white"></div>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-12">
+            <div className="text-center flex-shrink-0">
+              <div className="flex justify-center mb-6">
+                <NextImage
+                  src="/sponsors/wika.png"
+                  alt="Platinum sponsor 1"
+                  width={250}
+                  height={200}
+                  className="w-auto h-auto"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-4 md:py-6 bg-transparent">
+        <div className="flex justify-center">
+          <NextImage
+            src="/sponsors/additional/section2.jpeg"
+            alt="Sponsor section divider"
+            width={1000}
+            height={100}
+            className="w-full object-cover max-h-140"
+          />
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-transparent">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="mb-12">
+            <div className="border-t-2 border-white mb-6"></div>
+            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">BRONZE SPONSORS</h2>
+            <div className="border-b-2 border-white"></div>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-12">
+            <div className="text-center flex-shrink-0">
+              <div className="flex justify-center mb-6">
+                <NextImage
+                  src="/sponsors/IPBTH.png"
+                  alt="AKHISHOP"
+                  width={250}
+                  height={200}
+                  className="w-auto h-auto"
+                />
+              </div>
+            </div>
+            <div className="text-center flex-shrink-0">
+              <div className="flex justify-center mb-6">
+                <NextImage
+                  src="/sponsors/Fure.png"
+                  alt="ARL"
+                  width={250}
+                  height={200}
+                  className="w-auto h-auto"
+                />
+              </div>
+            </div>
+            <div className="text-center flex-shrink-0">
+              <div className="flex justify-center mb-6">
+                <NextImage
+                  src="/sponsors/GrahaPintar.png"
+                  alt="APD"
+                  width={250}
+                  height={200}
+                  className="w-auto h-auto"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-transparent">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="mb-12">
+            <div className="border-t-2 border-white mb-6"></div>
+            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">WINNER SPONSORS</h2>
+            <div className="border-b-2 border-white"></div>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-12">
+            <div className="text-center flex-shrink-0">
+              <div className="flex justify-center mb-6">
+                <NextImage
+                  src="/sponsors/gajelas.png"
+                  alt="Winner sponsor 1"
+                  width={250}
+                  height={200}
+                  className="w-auto h-auto"
+                />
+              </div>
+            </div>
+            <div className="text-center flex-shrink-0">
+              <div className="flex justify-center mb-6">
+                <NextImage
+                  src="/sponsors/ARL.png"
+                  alt="Winner sponsor 1"
+                  width={250}
+                  height={200}
+                  className="w-auto h-auto"
+                />
+              </div>
+            </div>
+            <div className="text-center flex-shrink-0">
+              <div className="flex justify-center mb-6">
+                <NextImage
+                  src="/sponsors/APD.png"
+                  alt="Winner sponsor 1"
+                  width={250}
+                  height={200}
+                  className="w-auto h-auto"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section className="py-4 md:py-6 bg-transparent">
+        <div className="flex justify-center">
+          <NextImage
+            src="/sponsors/additional/section3.jpg"
+            alt="Sponsor section divider"
+            width={1000}
+            height={100}
+            className="w-full object-cover max-h-140"
+          />
+        </div>
+      </section>
+
+      {/* Aeroval Supporters Section */}
+      <section className="py-16 md:py-24 bg-transparent">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="mb-12">
+            <div className="border-t-2 border-white mb-6"></div>
+            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">AEROVAL SUPPORTERS</h2>
+            <div className="border-b-2 border-white"></div>
+          </div>
+          {/* Row 1: 4 items */}
+          <div className="flex justify-center gap-8 flex-wrap mb-8">
+            <div className="text-center min-w-[120px]">
+              <p className="text-white text-2xl font-semibold">MAS REZI</p>
+              <p className="text-gray-400 text-base">(MR. KING REZI)</p>
+            </div>
+            <div className="text-center min-w-[120px]">
+              <p className="text-white text-2xl font-semibold">MAS FARELL</p>
+              <p className="text-gray-400 text-base">(FARELL)</p>
+            </div>
+            <div className="text-center min-w-[120px]">
+              <p className="text-white text-2xl font-semibold">JONATHAN ELOHIM</p>
+            </div>
+            <div className="text-center min-w-[120px]">
+              <p className="text-white text-2xl font-semibold">MAS JAHFAL</p>
+              <p className="text-gray-400 text-base">(JAPALL)</p>
             </div>
           </div>
 
-          <div className="relative flex items-center justify-center lg:justify-end mt-16">
-            <div className="md:absolute md:inset-0 flex justify-center lg:justify-end items-center space-x-4">
-              <div className="inline-block overflow-hidden">
-                <NextImage
-                  src="/images/arch/arch3.webp"
-                  alt="current projects"
-                  width={500}
-                  height={300}
-                  className="max-w-full h-auto block rounded-4xl"
-                />
-              </div>
+          {/* Row 2: 3 items */}
+          <div className="flex justify-center gap-8 flex-wrap mb-8">
+            <div className="text-center min-w-[120px]">
+              <p className="text-white text-2xl font-semibold">MAS HAFIDZ</p>
+              <p className="text-gray-400 text-base">(PEMUDA ARAB)</p>
+            </div>
+            <div className="text-center min-w-[120px]">
+              <p className="text-white text-2xl font-semibold">M NURCHOLIS</p>
+            </div>
+            <div className="text-center min-w-[120px]">
+              <p className="text-white text-2xl font-semibold">DHARMOXXK LAPINDO</p>
+            </div>
+          </div>
+
+          {/* Row 3: 1 item */}
+          <div className="flex justify-center gap-8">
+            <div className="text-center min-w-[120px]">
+              <p className="text-white text-2xl font-semibold">AJAY</p>
             </div>
           </div>
         </div>

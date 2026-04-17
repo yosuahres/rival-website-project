@@ -88,11 +88,48 @@ const Footer = () => {
             </Typography>
           </div>
           <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
-            <Typography variant="h6" className="mb-4 text-center w-full">
+            <Typography variant="h6" className="mb-10 text-center w-full">
               With support from our partners
             </Typography>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 w-full justify-items-center">
+            
+            {/* Top row - 2 large sponsors */}
+            <div className="flex gap-8 mb-6 w-full justify-center">
+              <div className="w-40 h-28 flex items-center justify-center">
+                <NextImage
+                  src="/sponsors/AndiSobolangit.png"
+                  alt="AndiSobolangit"
+                  width={320}
+                  height={320}
+                  className="object-contain"
+              />
+              </div>
+              <div className="w-40 h-28 flex items-center justify-center">
+                <NextImage
+                  src="/sponsors/ancuk.png"
+                  alt="Triguna"
+                  width={320}
+                  height={320}
+                  className="object-contain"
+                />
+              </div>
+            </div>
+            
+            {/* Middle row - 1 medium sponsor */}
+            <div className="mb-6 w-full flex justify-center">
               <div className="w-32 h-20 flex items-center justify-center">
+                <NextImage
+                  src="/sponsors/wika.png"
+                  alt="wika"
+                  width={320}
+                  height={320}
+                  className="object-contain"
+                />
+              </div>
+            </div>
+            
+            {/* Bottom grid - 3x2 smaller sponsors */}
+            <div className="grid grid-cols-3 gap-4 w-full justify-items-center">
+              <div className="w-28 h-16 flex items-center justify-center">
                 <NextImage
                   src="/sponsors/APD.png"
                   alt="APD"
@@ -101,7 +138,7 @@ const Footer = () => {
                   className="object-contain"
                 />
               </div>
-              <div className="w-32 h-20 flex items-center justify-center">
+              <div className="w-28 h-16 flex items-center justify-center">
                 <NextImage
                   src="/sponsors/ARL.png"
                   alt="ARL"
@@ -110,7 +147,7 @@ const Footer = () => {
                   className="object-contain"
                 />
               </div>
-              <div className="w-32 h-20 flex items-center justify-center">
+              <div className="w-28 h-16 flex items-center justify-center">
                 <NextImage
                   src="/sponsors/gajelas.png"
                   alt="Akhishop"
@@ -119,16 +156,7 @@ const Footer = () => {
                   className="object-contain"
                 />
               </div>
-              <div className="w-32 h-20 flex items-center justify-center">
-                <NextImage
-                  src="/sponsors/AndiSobolangit.png"
-                  alt="AndiSobolangit"
-                  width={320}
-                  height={320}
-                  className="object-contain"
-                />
-              </div>
-              <div className="w-32 h-20 flex items-center justify-center">
+              <div className="w-28 h-16 flex items-center justify-center">
                 <NextImage
                   src="/sponsors/Fure.png"
                   alt="Fure"
@@ -137,7 +165,7 @@ const Footer = () => {
                   className="object-contain"
                 />
               </div>
-              <div className="w-32 h-20 flex items-center justify-center">
+              <div className="w-28 h-16 flex items-center justify-center">
                 <NextImage
                   src="/sponsors/GrahaPintar.png"
                   alt="GrahaPintar"
@@ -146,30 +174,12 @@ const Footer = () => {
                   className="object-contain"
                 />
               </div>
-              <div className="w-32 h-20 flex items-center justify-center">
+              <div className="w-28 h-16 flex items-center justify-center">
                 <NextImage
                   src="/sponsors/IPBTH.png"
                   alt="IPBTH"
                   width={800}
                   height={357}
-                  className="object-contain"
-                />
-              </div>
-              <div className="w-32 h-20 flex items-center justify-center">
-                <NextImage
-                  src="/sponsors/Triguna.png"
-                  alt="Triguna"
-                  width={320}
-                  height={320}
-                  className="object-contain"
-                />
-              </div>
-              <div className="w-32 h-20 flex items-center justify-center">
-                <NextImage
-                  src="/sponsors/wika.png"
-                  alt="wika"
-                  width={320}
-                  height={320}
                   className="object-contain"
                 />
               </div>

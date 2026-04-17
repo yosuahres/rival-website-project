@@ -87,10 +87,10 @@ export default function IndonesianRobotContestPage() {
 
       <section className="relative w-full min-h-[180px] sm:min-h-[300px] flex items-center justify-center py-8 sm:py-14 overflow-hidden">
         <Image
-          src="/images/fototeam1.webp"
+          src="/images/arch-team.jpeg"
           alt="Stats background"
           className="absolute inset-0 mx-auto max-w-2xl sm:max-w-7xl w-full h-full object-cover object-center z-0"
-          style={{ objectPosition: "center 60%", opacity: 0.3 }}
+          style={{ objectPosition: "center 30%", opacity: 0.3 }}
           fill={true}
         />
 

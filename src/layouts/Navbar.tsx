@@ -98,9 +98,7 @@ export default function Navbar() {
               </button>
               {isProjectsOpen && (
                 <div
-                  className="absolute top-full left-0 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50 mt-2"
-                  onMouseEnter={() => setIsProjectsOpen(true)}
-                  onMouseLeave={() => setIsProjectsOpen(false)}
+                  className="absolute top-full left-0 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50 mt-0"
                   role="menu"
                 >
                   <Link
