@@ -111,20 +111,20 @@ export default function Teams() {
       position: "Staff of Mechanical",
       offset: { x: -10, y: 25 },
     },
-
-    {
-      name: "Moh. Wildan Risqi Maulidi",
-      image: "/personal-data/prog-wildan.png",
-      role: "programming team",
-      position: "Leader of Programming",
-      offset: { x: -5, y: 20 },
-    },
+    
     {
       name: "Zalfa Nafila Khairunnisa",
       image: "/personal-data/prog-zalfa.png",
       role: "programming team",
-      position: "Staff of Programming",
+      position: "Leader of Programming",
       offset: { x: 10, y: 0 },
+    },
+    {
+      name: "Moh. Wildan Risqi Maulidi",
+      image: "/personal-data/prog-wildan.png",
+      role: "programming team",
+      position: "Staff of Programming",
+      offset: { x: -5, y: 20 },
     },
     {
       name: "Naufal Daffa Alfa Zain",
