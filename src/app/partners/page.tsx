@@ -235,7 +235,6 @@ export default function Sponsors() {
         </div>
       </section>
 
-      {/* Aeroval Supporters Section */}
       <section className="py-16 md:py-24 bg-transparent">
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-12">
@@ -243,30 +242,24 @@ export default function Sponsors() {
             <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">AEROVAL SUPPORTERS</h2>
             <div className="border-b-2 border-white"></div>
           </div>
-          {/* Row 1: 4 items */}
           <div className="flex justify-center gap-8 flex-wrap mb-8">
             <div className="text-center min-w-[120px]">
-              <p className="text-white text-2xl font-semibold">MAS REZI</p>
-              <p className="text-gray-400 text-base">(MR. KING REZI)</p>
+              <p className="text-white text-2xl font-semibold">MR. KING REZI</p>
             </div>
             <div className="text-center min-w-[120px]">
-              <p className="text-white text-2xl font-semibold">MAS FARELL</p>
-              <p className="text-gray-400 text-base">(FARELL)</p>
+              <p className="text-white text-2xl font-semibold">FARELL</p>
             </div>
             <div className="text-center min-w-[120px]">
               <p className="text-white text-2xl font-semibold">JONATHAN ELOHIM</p>
             </div>
             <div className="text-center min-w-[120px]">
-              <p className="text-white text-2xl font-semibold">MAS JAHFAL</p>
-              <p className="text-gray-400 text-base">(JAPALL)</p>
+              <p className="text-white text-2xl font-semibold">JAPALL</p>
             </div>
           </div>
 
-          {/* Row 2: 3 items */}
           <div className="flex justify-center gap-8 flex-wrap mb-8">
             <div className="text-center min-w-[120px]">
-              <p className="text-white text-2xl font-semibold">MAS HAFIDZ</p>
-              <p className="text-gray-400 text-base">(PEMUDA ARAB)</p>
+              <p className="text-white text-2xl font-semibold">PEMUDA ARAB</p>
             </div>
             <div className="text-center min-w-[120px]">
               <p className="text-white text-2xl font-semibold">M NURCHOLIS</p>
@@ -276,10 +269,12 @@ export default function Sponsors() {
             </div>
           </div>
 
-          {/* Row 3: 1 item */}
           <div className="flex justify-center gap-8">
             <div className="text-center min-w-[120px]">
               <p className="text-white text-2xl font-semibold">AJAY</p>
+            </div>
+            <div className="text-center min-w-[120px]">
+              <p className="text-white text-2xl font-semibold">BEZAVENT LAVENTIO</p>
             </div>
           </div>
         </div>

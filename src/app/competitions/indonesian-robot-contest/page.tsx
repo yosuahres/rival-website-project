@@ -11,6 +11,7 @@ const indonesianRobotContestTasks = [
     description:
       "Robot 2 autonomously sorts waste items moving along the vibrating conveyor into five categories — ferro, nonferro, leaf, paper, and plastic. Each correctly sorted item earns 1 point.",
     image: "/images/task-kri1.webp",
+    videoLink: "https://www.youtube.com/live/jGzVkDfhV1g",
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ const indonesianRobotContestTasks = [
     description:
       "Robot 1 is responsible for manually moving the trash bin to the vibrating conveyor..",
     image: "/images/task-kri2.webp",
+    videoLink: "https://www.youtube.com/live/9n7s8l3Xo2g",
   },
 ];
 

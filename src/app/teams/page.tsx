@@ -30,28 +30,28 @@ export default function Teams() {
       name: "Valencia Stevie F. H.",
       image: "/personal-data/elc-tip.png",
       role: "electrical team",
-      position: "Staff of Electrical",
+      position: "Expert Staff of Electrical",
       offset: { x: 20, y: 0 },
     },
     {
       name: "Melyana Putri Tiyarno",
       image: "/personal-data/elc-melyana.png",
       role: "electrical team",
-      position: "Staff of Electrical",
+      position: "Expert Staff of Electrical",
       offset: { x: -20, y: 0 },
     },
     {
       name: "Evan Javier Firdausi Malik",
       image: "/personal-data/elc-evan.png",
       role: "electrical team",
-      position: "Staff of Electrical",
+      position: "Expert Staff of Electrical",
       offset: { x: -20, y: 0 },
     },
     {
       name: "Ademas Fazri Sunaryo",
       image: "/personal-data/elc-ademas.png",
       role: "electrical team",
-      position: "Staff of Electrical",
+      position: "Expert Staff of Electrical",
       offset: { x: -10, y: 0 },
     },
     {
@@ -80,14 +80,14 @@ export default function Teams() {
       name: "Andreas Agung Servia Pintarta",
       image: "/personal-data/mech-andre.png",
       role: "mechanical team",
-      position: "Staff of Mechanical",
+      position: "Expert Staff of Mechanical",
       offset: { x: 5, y: 10 },
     },
     {
       name: "Muhammad Rizal Hakim",
       image: "/personal-data/mech-rizal.png",
       role: "mechanical team",
-      position: "Staff of Mechanical",
+      position: "Expert Staff of Mechanical",
       offset: { x: -10, y: 0 },
     },
     {
@@ -123,21 +123,21 @@ export default function Teams() {
       name: "Moh. Wildan Risqi Maulidi",
       image: "/personal-data/prog-wildan.png",
       role: "programming team",
-      position: "Staff of Programming",
+      position: "Expert Staff of Programming",
       offset: { x: -5, y: 20 },
     },
     {
       name: "Naufal Daffa Alfa Zain",
       image: "/personal-data/prog-naufal.png",
       role: "programming team",
-      position: "Staff of Programming",
+      position: "Expert Staff of Programming",
       offset: { x: 15, y: 0 },
     },
     {
       name: "Raditya Zhafran Pranuja",
       image: "/personal-data/prog-radit.png",
       role: "programming team",
-      position: "Staff of Programming",
+      position: "Expert Staff of Programming",
       offset: { x: -5, y: 0 },
     },
     {
@@ -157,50 +157,50 @@ export default function Teams() {
     {
       name: "Karina Maheswari",
       image: "/personal-data/ofc-kar.png",
-      role: "outreach",
-      position: "Leader of Outreach",
+      role: "non-tech",
+      position: "Leader of Non-Tech",
       offset: { x: 0, y: 0 },
     },
     {
       name: "Oktavian Rifki Danendra",
       image: "/personal-data/ofc-rifki.png",
-      role: "outreach",
-      position: "Staff of Outreach",
+      role: "non-tech",
+      position: "Expert Staff of Non-Tech",
       offset: { x: -10, y: 0 },
     },
     {
       name: "Alif Gibran",
       image: "/personal-data/ofc-gib.png",
-      role: "outreach",
-      position: "Staff of Outreach",
+      role: "non-tech",
+      position: "Expert Staff of Non-Tech",
       offset: { x: -10, y: 0 },
     },
     {
       name: "Kaysa Tsana Adilah",
       image: "/personal-data/ofc-kay.png",
-      role: "outreach",
-      position: "Staff of Outreach",
+      role: "non-tech",
+      position: "Expert Staff of Non-Tech",
       offset: { x: 0, y: 0 },
     },
     {
       name: "Enno Ajeng Larasati",
       image: "/personal-data/ofc-enno.png",
-      role: "outreach",
-      position: "Staff of Outreach",
-      offset: { x: 0, y: 30 },
+      role: "non-tech",
+      position: "Staff of Non-Tech",
+      offset: { x: 0, y: 0 },
     },
     {
       name: "Daffa Ramadhani Nugroho",
       image: "/personal-data/ofc-dap.png",
-      role: "outreach",
-      position: "Staff of Outreach",
+      role: "non-tech",
+      position: "Staff of Non-Tech",
       offset: { x: 0, y: 0 },
     },
     {
       name: "Dion Hardi Saputra",
       image: "/personal-data/ofc-dion.png",
-      role: "outreach",
-      position: "Staff of Outreach",
+      role: "non-tech",
+      position: "Staff of Non-Tech",
       offset: { x: 5, y: 0 },
     },
   ];
@@ -211,13 +211,12 @@ export default function Teams() {
     "electrical team",
     "mechanical team",
     "programming team",
-    "outreach",
+    "non-tech",
   ];
 
   return (
     <div className="flex flex-col min-h-full">
       <section className="py-80 sm:py-96 relative overflow-hidden mt-10 sm:mt-15" style={{clipPath: "polygon(0 0, 100% 0, 100% 88%, 80% 93%, 50% 96%, 20% 93%, 0 88%)"}}>
-        {/* Background Image */}
         <div className="absolute inset-0 -z-50">
           <Image
             src="/personal-data/hero-teams.png"
