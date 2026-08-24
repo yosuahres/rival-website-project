@@ -1,5 +1,5 @@
 // apps/web/src/hooks/use-mobile.ts
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
 const MOBILE_BREAKPOINT = 1024;
 
@@ -8,16 +8,16 @@ export function useIsMobile() {
 
   useEffect(() => {
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-    
+
     const onChange = () => {
       setIsMobile(mql.matches);
     };
 
-    mql.addEventListener('change', onChange);
+    mql.addEventListener("change", onChange);
     setIsMobile(mql.matches);
 
-    return () => mql.removeEventListener('change', onChange);
+    return () => mql.removeEventListener("change", onChange);
   }, []);
 
   return !!isMobile;
-}                  
+}
