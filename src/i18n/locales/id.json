@@ -9,8 +9,10 @@
     "projects": "Proyek",
     "irc": "Kontes Robot Indonesia",
     "arc": "Australian Rover Challenge",
+    "about": "Tentang Kami",
     "news": "Berita",
     "teams": "Tim Kami",
+    "achievements": "Prestasi",
     "partnership": "Kemitraan",
     "recruitment": "Rekrutmen",
     "contact": "Hubungi Kami",
@@ -20,7 +22,17 @@
     "projectsDropdown": "Menu Proyek"
   },
   "footer": {
-    "address": "Institut Teknologi Sepuluh Nopember, Surabaya, Indonesia",
-    "partners": "Didukung oleh para mitra kami"
+    "building": "ITS Robotics Center 2nd Floor",
+    "street": "Jl. Raya ITS, Sukolilo, Surabaya 60111",
+    "address": "Institut Teknologi Sepuluh Nopember",
+    "aboutUs": "Tentang Kami",
+    "navigations": "Navigasi",
+    "socialMedia": "Media Sosial",
+    "rights": "Seluruh Hak Cipta Dilindungi"
+  },
+  "achievements": {
+    "title": "Hall of Fame",
+    "place": "PLACE",
+    "heroAlt": "Tim RIVAL ITS merayakan hasil kompetisi"
   }
 }

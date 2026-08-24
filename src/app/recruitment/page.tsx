@@ -436,15 +436,21 @@ export default function Recruitment() {
             src="/images/recruitment/hero-background.webp"
             alt="RIVAL ITS team"
             fill
-            className="object-cover object-center opacity-60"
+            className="object-cover object-center grayscale"
             priority
           />
-          <div className="absolute inset-0 bg-[#121317]/40"></div>
+          {/* Keeps the title legible over the brightest part of the photo and
+              blends the frame's bottom edge into the black section beneath it. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70"
+          ></div>
         </div>
 
         <div className="relative z-[1] max-w-4xl mx-auto text-center">
-          {/* Visually hidden: the page still needs one h1 for a11y and search. */}
-          <h1 className="sr-only">RIVAL ITS Open Recruitment 2026</h1>
+          <h1 className="text-5xl md:text-7xl font-bold text-white">
+            Recruitment
+          </h1>
         </div>
       </section>
 

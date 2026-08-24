@@ -214,56 +214,33 @@ export default function Teams() {
 
   return (
     <div className="flex flex-col min-h-full">
-      <section
-        className="py-80 sm:py-96 relative mx-3 md:mx-4 overflow-hidden rounded-t-4xl"
-        style={{
-          clipPath:
-            "polygon(0 0, 100% 0, 100% 88%, 80% 93%, 50% 96%, 20% 93%, 0 88%)",
-        }}
-      >
+      <section className="py-80 sm:py-96 relative mx-3 md:mx-4 overflow-hidden rounded-4xl">
         <div className="absolute inset-0 -z-50">
           <Image
             src="/images/teams/hero-background.png"
             alt="Team background"
             fill
-            className="object-cover object-center opacity-50"
+            className="object-cover object-center grayscale"
             priority
+          />
+          {/* Keeps the title legible over the brightest part of the photo and
+              blends the frame's bottom edge into the black section beneath it. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70"
           />
         </div>
 
         <div className="w-full relative z-10">
           <div className="w-full">
             <div className="text-center">
-              <h1 className="text-white font-black text-4xl sm:text-6xl mb-6 sm:mb-8">
+              <h1 className="text-white font-black text-5xl md:text-7xl mb-6 sm:mb-8">
                 Meet the Team
               </h1>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Traces the clipped bottom edge of the hero, so it has to carry the
-          same horizontal inset as the hero panel above it. */}
-      <div
-        className="relative z-10 mx-3 md:mx-4"
-        style={{ marginTop: "-105px" }}
-      >
-        <svg
-          aria-hidden="true"
-          className="block w-full"
-          viewBox="0 0 100 30"
-          preserveAspectRatio="none"
-          style={{ height: "80px" }}
-        >
-          <polyline
-            points="0,0 20,15 50,28 80,15 100,0"
-            stroke="white"
-            strokeWidth="3"
-            fill="none"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
 
       <section className="flex-1">
         <div className="w-full">

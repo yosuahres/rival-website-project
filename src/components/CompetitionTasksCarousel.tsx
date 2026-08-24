@@ -304,7 +304,7 @@ export default function CompetitionTasksCarousel({
   };
 
   return (
-    <section className="py-12 px-4 md:py-20 md:px-8 bg-gray-900 relative overflow-hidden">
+    <section className="py-12 px-4 md:py-20 md:px-8 bg-black relative overflow-hidden">
       {/* Rendered through next/image rather than a CSS url() so the optimizer
           can downscale and re-encode it per device. */}
       {backgroundImage && (
@@ -315,9 +315,12 @@ export default function CompetitionTasksCarousel({
             fill
             sizes="100vw"
             quality={50}
-            className="object-cover object-center"
+            className="object-cover object-center grayscale"
           />
-          <div className="absolute inset-0 bg-gray-900 opacity-70"></div>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-black/70"
+          ></div>
         </>
       )}
       <div className="max-w-6xl mx-auto relative z-10">

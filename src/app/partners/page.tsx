@@ -1,5 +1,6 @@
 "use client";
 import NextImage from "@/components/NextImage";
+import { WHATSAPP_URL } from "@/lib/site";
 
 export default function Sponsors() {
   return (
@@ -11,9 +12,14 @@ export default function Sponsors() {
             alt="Rover robot"
             width={1920}
             height={1080}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover grayscale"
           />
-          <div className="absolute inset-0"></div>
+          {/* Keeps the title legible over the brightest part of the photo and
+              blends the frame's bottom edge into the black section beneath it. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70"
+          ></div>
         </div>
 
         <div className="relative z-10 text-center px-6 max-w-4xl">
@@ -39,7 +45,9 @@ export default function Sponsors() {
           </p>
           <div className="flex justify-center">
             <a
-              href="/contact"
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block bg-[#398561] text-white font-bold py-6 px-16 rounded-lg hover:bg-[#021507] transition duration-300 text-xl"
             >
               Contact Us

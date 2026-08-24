@@ -35,9 +35,15 @@ export default function IndonesianRobotContestPage() {
             quality={50}
             priority
             sizes="100vw"
-            className="w-full h-full object-cover object-center"
-            style={{ opacity: 0.5, objectPosition: "center 55%" }}
+            className="w-full h-full object-cover object-center grayscale"
+            style={{ objectPosition: "center 55%" }}
             fill={true}
+          />
+          {/* Keeps the title legible over the brightest part of the photo and
+              blends the frame's bottom edge into the black section beneath it. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70"
           />
         </div>
         <div className="relative z-10 text-center text-white">

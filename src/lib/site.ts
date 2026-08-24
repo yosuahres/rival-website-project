@@ -50,6 +50,9 @@ export const CONTACT_EMAIL = "official.krtmiits@gmail.com";
 
 export const CONTACT_PHONE = "+62882003127741";
 
+/** wa.me deep link for CONTACT_PHONE — the API takes bare digits, no `+`. */
+export const WHATSAPP_URL = `https://wa.me/${CONTACT_PHONE.replace(/\D/g, "")}`;
+
 export const ADDRESS = {
   locality: "Surabaya",
   region: "East Java",

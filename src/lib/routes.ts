@@ -33,7 +33,7 @@ export const INDEXABLE_ROUTES: readonly SitemapEntry[] = [
     changeFrequency: "monthly",
   },
   { path: "/teams", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/achievements", priority: 0.7, changeFrequency: "monthly" },
   { path: "/news", priority: 0.7, changeFrequency: "weekly" },
   { path: "/partners", priority: 0.6, changeFrequency: "monthly" },
-  { path: "/contact", priority: 0.5, changeFrequency: "yearly" },
 ] as const;

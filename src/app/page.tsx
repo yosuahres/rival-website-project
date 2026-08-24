@@ -1,8 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import HomeHeroCarousel from "@/components/HomeHeroCarousel";
+import {
+  PARTNERS_FEATURE,
+  PARTNERS_LEAD,
+  PARTNERS_SUPPORTING,
+  type Partner,
+} from "@/lib/partners";
+import { SOCIALS } from "@/lib/socials";
 
 const ACHIEVEMENTS = [
   {
@@ -20,23 +28,21 @@ const ACHIEVEMENTS = [
   { rank: "1st", scope: "Indonesian rover team", detail: "", year: "2026" },
 ];
 
-const SOCIALS = [
-  {
-    label: "Instagram",
-    href: "https://instagram.com/rival_its",
-    path: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z",
-  },
-  {
-    label: "LinkedIn",
-    href: "https://linkedin.com/company/rival-its",
-    path: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
-  },
-  {
-    label: "TikTok",
-    href: "https://tiktok.com/@rival_its",
-    path: "M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.1 1.75 2.9 2.9 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z",
-  },
-];
+/**
+ * Logo heights, by tier. Top-tier sponsors render larger; within a tier a wide
+ * wordmark is a step shorter than a square mark, since at equal height it runs
+ * several times wider and reads as oversized.
+ */
+const LOGO_HEIGHTS = {
+  lead: { normal: "h-40 md:h-60", wide: "h-24 md:h-36" },
+  base: { normal: "h-24 md:h-36", wide: "h-14 md:h-20" },
+} as const;
+
+const logoClass = (
+  partner: Partner,
+  tier: keyof typeof LOGO_HEIGHTS = "base",
+) =>
+  `w-auto max-w-full object-contain ${LOGO_HEIGHTS[tier][partner.wide ? "wide" : "normal"]}`;
 
 export default function Home() {
   const teamSectionRef = useRef<HTMLDivElement>(null);
@@ -78,7 +84,7 @@ export default function Home() {
           <h2 className="mb-5 font-medium text-[1.65rem] text-white leading-tight md:mb-6 md:text-4xl lg:text-5xl">
             Designing, Building, and Competing in Advanced Robotics Systems
           </h2>
-          <p className="mx-auto text-base text-white md:text-lg">
+          <p className="mx-auto max-w-[60rem] text-base text-white md:text-lg">
             RIVAL ITS is a student robotic team based in Indonesia, dedicated to
             design and build advanced robots for national and international
             competitions. Our mission is to push the boundaries of technology
@@ -88,10 +94,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#121317] px-5 md:px-6">
+      <section className="bg-[#121317] px-4 md:px-6">
         <div
           ref={teamSectionRef}
-          className="relative mx-auto h-[320px] w-full max-w-6xl overflow-hidden rounded-2xl shadow-lg md:h-[480px] lg:h-[600px]"
+          className="relative mx-auto h-[320px] w-full max-w-7xl overflow-hidden rounded-2xl shadow-lg md:h-[480px] lg:h-[600px]"
         >
           <Image
             src="/images/home/team-showcase.webp"
@@ -111,13 +117,13 @@ export default function Home() {
               key={`${achievement.rank}-${achievement.scope}`}
               className="flex flex-1 flex-col items-center"
             >
-              <span className="font-bold text-4xl text-white leading-none sm:text-5xl md:text-[8vw]">
+              <span className="font-bold text-3xl text-white leading-none sm:text-4xl md:text-[5.5vw]">
                 {achievement.rank}
               </span>
-              <span className="mt-3 mb-3 text-center font-medium text-base text-white sm:mt-6 sm:mb-6 sm:text-xl md:text-3xl">
+              <span className="mt-3 mb-3 text-center font-medium text-sm text-white sm:mt-5 sm:mb-5 sm:text-lg md:text-2xl">
                 {achievement.scope}
               </span>
-              <span className="text-center text-gray-300 text-xs sm:text-base md:text-xl">
+              <span className="text-center text-gray-300 text-xs sm:text-sm md:text-base">
                 {achievement.detail && (
                   <>
                     {achievement.detail}
@@ -131,24 +137,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Closing statement: heading across the top, supporting copy bottom
-          left, and the team still anchored to the bottom right. */}
+      {/* Closing statement: heading across the top with the supporting copy
+          directly beneath it, and the team anchored to the bottom right. */}
       <section className="px-4 pb-24 md:px-6">
-        <div className="mx-auto max-w-7xl rounded-3xl bg-[#1c1d23] px-6 py-16 md:px-12 md:py-20">
-          <h2 className="font-bold text-2xl text-white md:text-4xl lg:text-5xl">
+        {/* The whole card is the link to the team page, so the "Learn more"
+            pill is a span — an <a> inside an <a> is invalid. */}
+        <Link
+          href="/teams"
+          className="group relative mx-auto block max-w-7xl cursor-pointer overflow-hidden rounded-3xl bg-[#16171b] px-6 py-10 md:px-12 md:py-12"
+        >
+          <h2 className="max-w-lg font-bold text-base text-white leading-tight md:text-xl lg:text-2xl">
             Through student leadership and teamwork,
-            <br className="hidden md:block" />{" "}
-            <span className="text-gray-400">we innovate and excel.</span>
+            <br /> we innovate and excel.
           </h2>
 
-          <div className="mt-16 grid items-end gap-10 md:grid-cols-2 md:gap-12">
-            <p className="order-2 max-w-xl font-base text-base text-gray-300 md:order-1 md:text-lg">
-              We design, build, and test the next generation of robots right
-              here in Indonesia - and inspire future generations to do the same.
-            </p>
-            <div className="relative order-1 aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-lg md:order-2">
+          <p className="max-w-lg font-bold text-base text-gray-500 leading-tight md:text-xl lg:text-2xl">
+            We design, build, and test the next generation of robots right here
+            in Indonesia - and inspire future generations to do the same.
+          </p>
+
+          <div className="mt-6 grid items-end gap-8 md:grid-cols-2 md:gap-12">
+            <div className="order-2 md:order-1">
+              <span className="inline-block rounded-full bg-white px-6 py-3 font-medium text-black text-sm transition-colors group-hover:bg-gray-200">
+                Learn more
+              </span>
+            </div>
+            <div className="relative order-1 aspect-square w-full overflow-hidden rounded-2xl shadow-lg md:order-2">
               <Image
-                src="/images/recruitment/hero-background.webp"
+                src="/archive/images/arch3.webp"
                 alt=""
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
@@ -156,7 +172,13 @@ export default function Home() {
               />
             </div>
           </div>
-        </div>
+
+          {/* White wash on hover, over the card and the photo alike. */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-white/0 transition-colors duration-300 group-hover:bg-white/[0.06]"
+          />
+        </Link>
       </section>
 
       <section className="px-4 pb-24 md:px-6">
@@ -183,6 +205,64 @@ export default function Home() {
               </svg>
             </a>
           ))}
+        </div>
+      </section>
+
+      {/* Sponsor wall. Rows mirror the footer's grouping — two lead, one
+          feature, then three across. */}
+      <section className="px-4 pb-24 md:px-6">
+        <div className="mx-auto max-w-7xl px-2 py-8 md:px-6 md:py-12">
+          <p className="text-center font-semibold text-gray-400 text-xs uppercase tracking-[0.2em]">
+            Sponsors &amp; Partners
+          </p>
+          <h2 className="mt-4 text-center font-bold text-3xl text-white md:text-5xl">
+            Thank You for Supporting Us
+          </h2>
+
+          {/* Rows mirror the footer's old grouping — two lead, one feature,
+              then three across. Every logo is sized by a shared HEIGHT rather
+              than a shared box: the files range from square marks to wide
+              wordmarks, so matching boxes would render the wordmarks tiny. */}
+          <div className="mt-20 flex flex-col items-center">
+            <div className="flex w-full flex-wrap items-center justify-center gap-x-16">
+              {PARTNERS_LEAD.map((partner) => (
+                <Image
+                  key={partner.src}
+                  src={partner.src}
+                  alt={partner.alt}
+                  width={partner.width}
+                  height={partner.height}
+                  className={logoClass(partner, "lead")}
+                />
+              ))}
+            </div>
+
+            <div className="flex w-full flex-wrap items-center justify-center gap-x-16">
+              {PARTNERS_FEATURE.map((partner) => (
+                <Image
+                  key={partner.src}
+                  src={partner.src}
+                  alt={partner.alt}
+                  width={partner.width}
+                  height={partner.height}
+                  className={logoClass(partner, "lead")}
+                />
+              ))}
+            </div>
+
+            <div className="mx-auto grid w-fit max-w-full grid-cols-3 items-center justify-items-center gap-x-14 gap-y-8 md:gap-x-24 md:gap-y-12">
+              {PARTNERS_SUPPORTING.map((partner) => (
+                <Image
+                  key={partner.src}
+                  src={partner.src}
+                  alt={partner.alt}
+                  width={partner.width}
+                  height={partner.height}
+                  className={logoClass(partner)}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </>
