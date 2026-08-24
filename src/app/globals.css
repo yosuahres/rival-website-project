@@ -1,54 +1,67 @@
 @import "tailwindcss";
 
-@keyframes fall {
-  0% {
-    transform: translateY(-100vh);
+/* Splash logo: it simply resolves where it sits, dead centre, rather than
+   travelling in from offscreen. Kept as a keyframe rather than a mount-time
+   class swap so the first frame is reliably transparent. */
+@keyframes logo-fade-in {
+  from {
+    opacity: 0;
   }
-  100% {
-    transform: translateY(0);
+  to {
+    opacity: 1;
   }
 }
 
-.animate-fall {
-  animation: fall 1s ease-out forwards;
+.animate-logo-fade-in {
+  animation: logo-fade-in 700ms ease-out forwards;
+}
+
+/* Safari paints a large start-playback button over any <video> that has not
+   begun playing, whether or not `controls` is set. On a decorative backdrop
+   there is nothing for a visitor to press, so it is suppressed here and the
+   poster underneath carries the frame instead. Scoped to a class so a real
+   player elsewhere keeps its controls. */
+.video-chromeless::-webkit-media-controls,
+.video-chromeless::-webkit-media-controls-start-playback-button,
+.video-chromeless::-webkit-media-controls-play-button,
+.video-chromeless::-webkit-media-controls-panel,
+.video-chromeless::-webkit-media-controls-overlay-play-button {
+  /* biome-ignore lint/complexity/noImportantStyles: WebKit's UA shadow styles
+     for media controls outrank author rules, so nothing else removes it. */
+  display: none !important;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 :root {
   --phamily-green: #398561;
   --phamily-green-dark: #021507;
-  --phamily-green-light: #4FA578;
-  --phamily-green-lighter: #57B894;
-  --background: #021507;
+  --phamily-green-light: #4fa578;
+  --phamily-green-lighter: #57b894;
+  --background: #121317;
   --foreground: #ffffff;
-  --accent-gold: #D4AF37;
-  --accent-light: #E8F2EA;
+  --accent-gold: #d4af37;
+  --accent-light: #e8f2ea;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
 }
 
 body {
-  background: linear-gradient(
-    135deg,
-    var(--phamily-green-dark) 0%,
-    var(--phamily-green) 100%
-  ); /* Removed light green for less contrast */
-  background-size: 100% 100%;
-  background-attachment: fixed;
+  background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
-
 .green-container {
-  background: linear-gradient(135deg, #021507 0%, #398561 50%, #021507 100%);
+  background: var(--background);
   border-radius: 0;
   position: relative;
   width: 100vw;
@@ -72,9 +85,21 @@ body {
   display: inline-block;
 }
 
+/* The hero wordmark: locked caps, so it is drawn on Roboto Flex's widest
+   width axis. The width does most of the work here, so the weight sits at a
+   plain bold — pushed heavier, the widened caps go slab-like and the counters
+   close up. Extended caps hold together as one lockup, where the default
+   width leaves gaps that tracking alone cannot close. */
+.hero-wordmark {
+  font-family: var(--font-roboto-flex), var(--font-inter), sans-serif;
+  font-weight: 700;
+  font-stretch: 151%;
+  font-variation-settings: "wdth" 151;
+}
+
 .logo-text {
   position: relative;
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-inter), sans-serif;
 }
 
 .logo-text::before {
@@ -187,10 +212,77 @@ a[class*="bg-"]:hover {
   transform-origin: center;
 }
 
+/* The site bar sits on the page's own background instead of on top of a hero
+   image. It repaints the page background so the strip reads as plain page
+   background while still being opaque enough for content to scroll underneath
+   it. */
+.site-navbar-surface {
+  background-color: var(--background);
+}
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+@keyframes lightbox-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lightbox-zoom-in {
+  from {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-lightbox-fade-in {
+  animation: lightbox-fade-in 0.2s ease-out;
+}
+
+.animate-lightbox-zoom-in {
+  animation: lightbox-zoom-in 0.25s ease-out;
+}
+
+/* Tailwind v4's preflight sets interactive elements to `cursor: default`.
+   Restore the pointer site-wide so every button reads as clickable. Scoped to
+   @layer base so per-element utilities (e.g. disabled:cursor-not-allowed on the
+   contact form) still win. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  label[for],
+  summary,
+  select {
+    cursor: pointer;
+  }
+}
+
+/* Home hero reel geometry. The card width and the gutter between cards drive
+   both the card itself and the transform that steps the track, so they live
+   here as custom properties rather than as JS constants — a media query can
+   reach them, an inline style cannot. Mobile runs a narrower card so more of
+   the neighbouring cards peek out of either edge. */
+.hero-reel {
+  --card-w: 92;
+  --gap-w: 1;
+}
+
+@media (max-width: 767px) {
+  .hero-reel {
+    --card-w: 87;
+    --gap-w: 1.5;
+  }
 }

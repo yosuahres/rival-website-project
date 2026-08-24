@@ -4,10 +4,10 @@ import NextImage from "@/components/NextImage";
 export default function Sponsors() {
   return (
     <>
-      <section className="relative w-full min-h-[750px] flex items-center justify-center overflow-hidden">
+      <section className="relative mx-3 md:mx-4 min-h-[700px] flex items-center justify-center overflow-hidden rounded-4xl">
         <div className="absolute inset-0 z-0">
           <NextImage
-            src="/sponsors/additional/hero.jpg"
+            src="/images/partners/hero-background.jpg"
             alt="Rover robot"
             width={1920}
             height={1080}
@@ -21,8 +21,6 @@ export default function Sponsors() {
             Sponsors & Partners
           </h1>
         </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-2 bg-white z-20"></div>
       </section>
 
       <section className="py-16 md:py-24 bg-transparent">
@@ -31,18 +29,18 @@ export default function Sponsors() {
             Become A Sponsor
           </h2>
           <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-8">
-              We offer four different sponsorship packages: SILVER, BRONZE,
-              WINNER, PLATINUM, and GOLD. Each one has been carefully designed
-              to provide unique benefits tailored to the needs of our partners.
-              Depending on the chosen package, sponsors can expect a variety of
-              promotional opportunities, including the addition of promotional
-              materials to the club's social media, logo exposure on
-              promotional. Email us for more details!
+            We offer four different sponsorship packages: SILVER, BRONZE,
+            WINNER, PLATINUM, and GOLD. Each one has been carefully designed to
+            provide unique benefits tailored to the needs of our partners.
+            Depending on the chosen package, sponsors can expect a variety of
+            promotional opportunities, including the addition of promotional
+            materials to the club's social media, logo exposure on promotional.
+            Email us for more details!
           </p>
           <div className="flex justify-center">
             <a
               href="/contact"
-              className="inline-block bg-white text-black font-bold py-6 px-16 rounded-lg hover:bg-gray-200 transition duration-300 text-xl"
+              className="inline-block bg-[#398561] text-white font-bold py-6 px-16 rounded-lg hover:bg-[#021507] transition duration-300 text-xl"
             >
               Contact Us
             </a>
@@ -54,29 +52,31 @@ export default function Sponsors() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-12">
             <div className="border-t-2 border-white mb-6"></div>
-            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">PLATINUM SPONSORS</h2>
+            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">
+              PLATINUM SPONSORS
+            </h2>
             <div className="border-b-2 border-white"></div>
           </div>
-          <div className="flex flex-wrap justify-center items-center gap-12">
+          <div className="grid grid-cols-2 items-center justify-items-center gap-8 [&>*:last-child:nth-child(odd)]:col-span-2 md:flex md:flex-wrap md:justify-center md:gap-12">
             <div className="text-center flex-shrink-0">
               <div className="flex justify-center mb-6">
                 <NextImage
-                  src="/sponsors/AndiSobolangit.png"
+                  src="/images/partners/platinum/andi-sobolangit.png"
                   alt="Platinum sponsor 1"
                   width={250}
                   height={200}
-                  className="w-auto h-auto"
+                  className="h-auto w-auto max-w-full"
                 />
               </div>
             </div>
             <div className="text-center flex-shrink-0">
               <div className="flex justify-center mb-6">
                 <NextImage
-                  src="/sponsors/ancuk.png"
+                  src="/images/partners/platinum/ancuk.png"
                   alt="Platinum sponsor 2"
                   width={250}
                   height={200}
-                  className="w-auto h-auto"
+                  className="h-auto w-auto max-w-full"
                 />
               </div>
             </div>
@@ -87,7 +87,7 @@ export default function Sponsors() {
       <section className="py-4 md:py-6 bg-transparent">
         <div className="flex justify-center">
           <NextImage
-            src="/sponsors/additional/section1.jpg"
+            src="/images/partners/divider-1.jpg"
             alt="Sponsor section divider"
             width={1000}
             height={100}
@@ -101,18 +101,20 @@ export default function Sponsors() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-12">
             <div className="border-t-2 border-white mb-6"></div>
-            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">SILVER SPONSORS</h2>
+            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">
+              SILVER SPONSORS
+            </h2>
             <div className="border-b-2 border-white"></div>
           </div>
-          <div className="flex flex-wrap justify-center items-center gap-12">
+          <div className="grid grid-cols-2 items-center justify-items-center gap-8 [&>*:last-child:nth-child(odd)]:col-span-2 md:flex md:flex-wrap md:justify-center md:gap-12">
             <div className="text-center flex-shrink-0">
               <div className="flex justify-center mb-6">
                 <NextImage
-                  src="/sponsors/wika.png"
+                  src="/images/partners/silver/wika.png"
                   alt="Platinum sponsor 1"
                   width={250}
                   height={200}
-                  className="w-auto h-auto"
+                  className="h-auto w-auto max-w-full"
                 />
               </div>
             </div>
@@ -123,7 +125,7 @@ export default function Sponsors() {
       <section className="py-4 md:py-6 bg-transparent">
         <div className="flex justify-center">
           <NextImage
-            src="/sponsors/additional/section2.jpeg"
+            src="/images/partners/divider-2.jpeg"
             alt="Sponsor section divider"
             width={1000}
             height={100}
@@ -136,40 +138,42 @@ export default function Sponsors() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-12">
             <div className="border-t-2 border-white mb-6"></div>
-            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">BRONZE SPONSORS</h2>
+            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">
+              BRONZE SPONSORS
+            </h2>
             <div className="border-b-2 border-white"></div>
           </div>
-          <div className="flex flex-wrap justify-center items-center gap-12">
+          <div className="grid grid-cols-2 items-center justify-items-center gap-8 [&>*:last-child:nth-child(odd)]:col-span-2 md:flex md:flex-wrap md:justify-center md:gap-12">
             <div className="text-center flex-shrink-0">
               <div className="flex justify-center mb-6">
                 <NextImage
-                  src="/sponsors/IPBTH.png"
+                  src="/images/partners/bronze/ipbth.png"
                   alt="AKHISHOP"
                   width={250}
                   height={200}
-                  className="w-auto h-auto"
+                  className="h-auto w-auto max-w-full"
                 />
               </div>
             </div>
             <div className="text-center flex-shrink-0">
               <div className="flex justify-center mb-6">
                 <NextImage
-                  src="/sponsors/Fure.png"
+                  src="/images/partners/bronze/fure.png"
                   alt="ARL"
                   width={250}
                   height={200}
-                  className="w-auto h-auto"
+                  className="h-auto w-auto max-w-full"
                 />
               </div>
             </div>
             <div className="text-center flex-shrink-0">
               <div className="flex justify-center mb-6">
                 <NextImage
-                  src="/sponsors/GrahaPintar.png"
+                  src="/images/partners/bronze/graha-pintar.png"
                   alt="APD"
                   width={250}
                   height={200}
-                  className="w-auto h-auto"
+                  className="h-auto w-auto max-w-full"
                 />
               </div>
             </div>
@@ -181,40 +185,42 @@ export default function Sponsors() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-12">
             <div className="border-t-2 border-white mb-6"></div>
-            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">WINNER SPONSORS</h2>
+            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">
+              WINNER SPONSORS
+            </h2>
             <div className="border-b-2 border-white"></div>
           </div>
-          <div className="flex flex-wrap justify-center items-center gap-12">
+          <div className="grid grid-cols-2 items-center justify-items-center gap-8 [&>*:last-child:nth-child(odd)]:col-span-2 md:flex md:flex-wrap md:justify-center md:gap-12">
             <div className="text-center flex-shrink-0">
               <div className="flex justify-center mb-6">
                 <NextImage
-                  src="/sponsors/gajelas.png"
+                  src="/images/partners/winner/gajelas.png"
                   alt="Winner sponsor 1"
                   width={250}
                   height={200}
-                  className="w-auto h-auto"
+                  className="h-auto w-auto max-w-full"
                 />
               </div>
             </div>
             <div className="text-center flex-shrink-0">
               <div className="flex justify-center mb-6">
                 <NextImage
-                  src="/sponsors/ARL.png"
+                  src="/images/partners/winner/arl.png"
                   alt="Winner sponsor 1"
                   width={250}
                   height={200}
-                  className="w-auto h-auto"
+                  className="h-auto w-auto max-w-full"
                 />
               </div>
             </div>
             <div className="text-center flex-shrink-0">
               <div className="flex justify-center mb-6">
                 <NextImage
-                  src="/sponsors/APD.png"
+                  src="/images/partners/winner/apd.png"
                   alt="Winner sponsor 1"
                   width={250}
                   height={200}
-                  className="w-auto h-auto"
+                  className="h-auto w-auto max-w-full"
                 />
               </div>
             </div>
@@ -222,11 +228,10 @@ export default function Sponsors() {
         </div>
       </section>
 
-
       <section className="py-4 md:py-6 bg-transparent">
         <div className="flex justify-center">
           <NextImage
-            src="/sponsors/additional/section3.jpg"
+            src="/images/partners/divider-3.jpg"
             alt="Sponsor section divider"
             width={1000}
             height={100}
@@ -239,7 +244,9 @@ export default function Sponsors() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-12">
             <div className="border-t-2 border-white mb-6"></div>
-            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">AEROVAL SUPPORTERS</h2>
+            <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-6">
+              AEROVAL SUPPORTERS
+            </h2>
             <div className="border-b-2 border-white"></div>
           </div>
           <div className="flex justify-center gap-8 flex-wrap mb-8">
@@ -250,7 +257,9 @@ export default function Sponsors() {
               <p className="text-white text-2xl font-semibold">FARELL</p>
             </div>
             <div className="text-center min-w-[120px]">
-              <p className="text-white text-2xl font-semibold">JONATHAN ELOHIM</p>
+              <p className="text-white text-2xl font-semibold">
+                JONATHAN ELOHIM
+              </p>
             </div>
             <div className="text-center min-w-[120px]">
               <p className="text-white text-2xl font-semibold">JAPALL</p>
@@ -265,7 +274,9 @@ export default function Sponsors() {
               <p className="text-white text-2xl font-semibold">M NURCHOLIS</p>
             </div>
             <div className="text-center min-w-[120px]">
-              <p className="text-white text-2xl font-semibold">DHARMOXXK LAPINDO</p>
+              <p className="text-white text-2xl font-semibold">
+                DHARMOXXK LAPINDO
+              </p>
             </div>
           </div>
 
@@ -274,7 +285,9 @@ export default function Sponsors() {
               <p className="text-white text-2xl font-semibold">AJAY</p>
             </div>
             <div className="text-center min-w-[120px]">
-              <p className="text-white text-2xl font-semibold">BEZAVENT LAVENTIO</p>
+              <p className="text-white text-2xl font-semibold">
+                BEZAVENT LAVENTIO
+              </p>
             </div>
           </div>
         </div>

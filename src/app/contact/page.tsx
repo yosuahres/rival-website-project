@@ -1,15 +1,15 @@
 "use client";
 
 import ContactForm from "./ContactForm";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Contact() {
-  const isMobile = useIsMobile();
   return (
     <div className="min-h-screen">
       <div
-        className="relative px-8 py-20 sm:px-16 sm:py-24 md:px-24 md:py-28 lg:px-32 lg:py-32 xl:px-40 xl:py-36 2xl:px-80 2xl:py-40 bg-black bg-cover bg-center min-h-[300px] md:min-h-[400px] lg:min-h-[500px]"
-        style={{ backgroundImage: `url('/images/contact.webp')` }}
+        className="relative mx-3 md:mx-4 overflow-hidden rounded-4xl px-8 py-20 sm:px-16 sm:py-24 md:px-24 md:py-28 lg:px-32 lg:py-32 xl:px-40 xl:py-36 2xl:px-80 2xl:py-40 bg-black bg-cover bg-center min-h-[300px] md:min-h-[400px] lg:min-h-[500px]"
+        style={{
+          backgroundImage: `url('/images/contact/hero-background.webp')`,
+        }}
       >
         <div
           className="absolute inset-0 bg-black/80"

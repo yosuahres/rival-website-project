@@ -11,7 +11,7 @@ const newsData = [
     description:
       "Pertegas kehebatannya di bidang robotika, Institut Teknologi Sepuluh Nopember (ITS) kembali berjaya dengan membawa pulang gelar Juara Umum untuk kali keenam pada ajang Kontes Robot Indonesia (KRI) 2024.",
     link: "https://share.google/M0yHCGKkA072weOaZ",
-    image: "/news/its-kri.jpg",
+    image: "/images/news/its-kri.jpg",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const newsData = [
     description:
       "RIVAL ITS team from Institut Teknologi Sepuluh Nopember (ITS) achieved the prestigious Best Rookie Team award at the Australian Rover Challenge.",
     link: "https://share.google/OQUUIVQCaTW0vqb0N",
-    image: "/news/tempo.jpg",
+    image: "/images/news/tempo.jpg",
   },
   {
     id: 3,
@@ -31,9 +31,41 @@ const newsData = [
     description:
       "RIVAL ITS continues to represent Institut Teknologi Sepuluh Nopember with distinction in robotics competitions and international platforms.",
     link: "https://share.google/0lUcd9oB65gW3Er26",
-    image: "/news/its.jpeg",
+    image: "/images/news/its.jpeg",
   },
 ];
+
+// A small right-pointing chevron that nudges forward on hover, mirroring the
+// "Learn more ›" affordance used across the site's link rows.
+function Arrow() {
+  return (
+    <svg
+      className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  );
+}
+
+function MetaRow({ source, date }: { source: string; date: string }) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-400">
+      <span>{date}</span>
+      <span>{source}</span>
+      <span className="flex items-center gap-2 text-gray-200 group-hover:text-white transition-colors">
+        Learn more
+        <Arrow />
+      </span>
+    </div>
+  );
+}
 
 export default function News() {
   const [mounted, setMounted] = useState(false);
@@ -46,50 +78,83 @@ export default function News() {
     return null;
   }
 
+  // The newest item anchors the page as the large left-hand feature; everything
+  // else stacks in the compact right-hand rail.
+  const [featured, ...rest] = newsData;
+
   return (
-    <div className="min-h-screen bg-[#021507]">
-      {/* News Cards Section */}
-      <div className="pt-32 pb-20 px-8 md:px-16 lg:px-32">
-        <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {newsData.map((news) => (
+    <div className="min-h-screen bg-transparent">
+      <div className="pt-16 pb-24 px-8 md:px-16 lg:px-32">
+        {/* Page header */}
+        <header className="mb-16 lg:mb-20">
+          <h1 className="text-white text-4xl md:text-5xl font-medium tracking-tight">
+            News
+          </h1>
+          {/* The break is explicit so the subtitle always sets as two lines on
+              wide screens instead of wrapping into three. */}
+          <p className="mt-2 text-3xl md:text-4xl lg:text-5xl font-light leading-tight text-gray-400 max-w-5xl">
+            Discover our latest robotics breakthroughs,
+            <br className="hidden md:inline" /> projects, and updates
+          </p>
+        </header>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-16">
+          {/* Featured story */}
+          {/* The negative margin cancels the card padding, so the resting
+              headline still lines up with the page header; only the hovered
+              card grows outward. */}
+          <Link
+            href={featured.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block rounded-3xl p-6 -m-6 ring-1 ring-transparent transition duration-300 hover:bg-white/[0.04] hover:ring-white/15"
+          >
+            <h2 className="text-white text-3xl md:text-4xl lg:text-[2.75rem] font-medium leading-tight tracking-tight">
+              {featured.title}
+            </h2>
+
+            <div className="mt-6">
+              <MetaRow source={featured.source} date={featured.date} />
+            </div>
+
             <div
-              key={news.id}
-              className="flex flex-col items-center text-center"
-            >
-              {/* Image */}
-              <div
-                className="w-full h-48 bg-cover bg-center mb-6 rounded"
-                style={{
-                  backgroundImage: `url('${news.image}')`,
-                }}
-              />
+              className="mt-8 w-full aspect-[4/5] bg-cover bg-center rounded-2xl"
+              style={{ backgroundImage: `url('${featured.image}')` }}
+              role="img"
+              aria-label={featured.title}
+            />
+          </Link>
 
-              {/* Date and Source */}
-              <p className="text-gray-400 text-sm font-mono mb-4">
-                {news.source} • {news.date}
-              </p>
-
-              {/* Headline */}
-              <h3 className="text-white text-2xl font-bold leading-tight mb-4 text-red-500 font-serif">
-                {news.title}
-              </h3>
-
-              {/* Description */}
-              <p className="text-gray-300 text-sm leading-relaxed mb-6 line-clamp-3">
-                {news.description}
-              </p>
-
-              {/* Read More */}
+          {/* Remaining stories */}
+          <div className="flex flex-col">
+            {rest.map((news, index) => (
               <Link
+                key={news.id}
                 href={news.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-red-500 hover:text-red-400 font-semibold text-sm underline transition-colors"
+                className={`group flex items-start justify-between gap-6 py-8 ${
+                  index === 0 ? "lg:pt-0" : "border-t border-white/10"
+                }`}
               >
-                Read More
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-white text-xl md:text-2xl font-medium leading-snug tracking-tight group-hover:text-red-500 transition-colors">
+                    {news.title}
+                  </h3>
+                  <div className="mt-5">
+                    <MetaRow source={news.source} date={news.date} />
+                  </div>
+                </div>
+
+                <div
+                  className="shrink-0 w-28 h-28 md:w-44 md:h-44 bg-cover bg-center rounded-2xl"
+                  style={{ backgroundImage: `url('${news.image}')` }}
+                  role="img"
+                  aria-label={news.title}
+                />
               </Link>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

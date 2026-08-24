@@ -1,50 +1,49 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface SplashScreenProps {
   onFinish: () => void;
 }
 
+// Fade the logo up in place (700ms), let it sit for a beat, then hand over.
+const HOLD_MS = 1200;
+
 export default function SplashScreen({ onFinish }: SplashScreenProps) {
-  const [isVisible, setIsVisible] = useState(true);
-  const [isFalling, setIsFalling] = useState(true);
+  const [isLeaving, setIsLeaving] = useState(false);
+
+  // Held in a ref so a re-render of the parent (which rebuilds the callback)
+  // can't restart the timer and replay the splash.
+  const onFinishRef = useRef(onFinish);
+  onFinishRef.current = onFinish;
 
   useEffect(() => {
-    const fallTimer = setTimeout(() => {
-      setIsFalling(false);
-      const fadeTimer = setTimeout(() => {
-        setIsVisible(false);
-        const finishTimer = setTimeout(() => {
-          onFinish();
-        }, 600);
-        return () => clearTimeout(finishTimer);
-      }, 700);
-      return () => clearTimeout(fadeTimer);
-    }, 700);
+    const timer = setTimeout(() => {
+      // Both at once: the splash fades out while Layout fades the page in
+      // underneath, so the two cross-fade instead of flashing bare background.
+      setIsLeaving(true);
+      onFinishRef.current();
+    }, HOLD_MS);
 
-    return () => clearTimeout(fallTimer);
-  }, [onFinish]);
-
-  if (!isVisible) {
-    return null;
-  }
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-700 ${
-        isVisible ? "opacity-100" : "opacity-0"
+      className={`fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-400 ease-out ${
+        isLeaving ? "opacity-0" : "opacity-100"
       }`}
     >
       <Image
-        src="/images/vertical.webp"
-        alt="Logo"
-        width={200}
-        height={200}
-        className={`transition-transform duration-700 ease-out ${
-          isFalling ? "animate-fall" : "translate-y-0"
-        }`}
+        src="/images/brand/logo-vertical.webp"
+        alt="RIVAL ITS Logo"
+        width={280}
+        height={280}
+        priority
+        // Rendered at 120px (140px from md up); the source stays oversized so
+        // the mark keeps its edges on high-density screens.
+        className="animate-logo-fade-in w-[120px] md:w-[140px] h-auto"
       />
     </div>
   );

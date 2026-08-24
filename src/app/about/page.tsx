@@ -1,9 +1,6 @@
 "use client";
 
-import { useIsMobile } from "@/hooks/use-mobile";
-
 export default function About() {
-  const isMobile = useIsMobile();
   return (
     <div className="min-h-screen flex flex-col">
       <section className="flex-1 flex items-center justify-center px-8 py-4">

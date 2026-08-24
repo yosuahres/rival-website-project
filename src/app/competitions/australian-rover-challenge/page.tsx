@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import CompetitionTasksCarousel from "@/components/CompetitionTasksCarousel";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const indonesianRobotContestTasks = [
   {
@@ -10,7 +9,8 @@ const indonesianRobotContestTasks = [
     title: "Post Landing Tasks",
     description:
       "The rover must perform a series of activities immediately after landing to establish an operational In-Situ Resource Utilisation (ISRU) outpost, including conducting system checks, evaluating supply caches, performing maintenance, and connecting propellant hoses.",
-    image: "/images/arch/arch5.webp",
+    image:
+      "/images/competitions/australian-rover-challenge/task-1-post-landing.webp",
     videoLink: "https://www.youtube.com/live/OL-GZQfJ3AQ?si=ddnjgknbIWuNDhUe",
   },
   {
@@ -18,7 +18,8 @@ const indonesianRobotContestTasks = [
     title: "Space Resources Task",
     description:
       "The rover must evaluate, collect, and extract critical lunar resources—specifically prospecting for ilmenite and icy regolith, and processing the icy regolith to extract the highest possible amount of liquid water.",
-    image: "/images/arch/arch1.webp",
+    image:
+      "/images/competitions/australian-rover-challenge/task-2-space-resources.webp",
     videoLink: "https://www.youtube.com/live/Oe0o9es1_Q8?si=QY5_XCorFn6xtLQK",
   },
   {
@@ -26,7 +27,8 @@ const indonesianRobotContestTasks = [
     title: "Excavation and Construction Task",
     description:
       "The rover must prepare a landing site by clearing hazardous rocks, excavating regolith to construct a protective berm, and deploying dust-mitigating pavers.",
-    image: "/images/arch/arch4.webp",
+    image:
+      "/images/competitions/australian-rover-challenge/task-3-excavation-and-construction.webp",
     videoLink: "https://www.youtube.com/live/MWcUxFiwad8?si=2w9qcM4wgIs_YjDI",
   },
   {
@@ -34,27 +36,30 @@ const indonesianRobotContestTasks = [
     title: "Mapping and Autonomous Task",
     description:
       "The rover is required to autonomously navigate to predefined landmarks and subsequently explore the area to construct a comprehensive map, reporting the coordinates of previously unknown landmarks",
-    image: "/images/arch/arch6auto.webp",
+    image:
+      "/images/competitions/australian-rover-challenge/task-4-mapping-and-autonomous.webp",
     videoLink: "https://www.youtube.com/live/HbswUp7gHko?si=MMiIoeLgElbGIzMU",
   },
 ];
 
 export default function IndonesianRobotContestPage() {
-  const isMobile = useIsMobile();
   return (
     <div className="min-h-screen">
-      <section className="relative h-[60vh] flex items-center justify-center">
+      <section className="relative mx-3 md:mx-4 h-[60vh] flex items-center justify-center overflow-hidden rounded-4xl">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <Image
-            src="/images/arch/archfamily.webp"
+            src="/images/competitions/australian-rover-challenge/hero-background.webp"
             alt="Competition background"
+            quality={50}
+            priority
+            sizes="100vw"
             className="w-full h-full object-cover object-center"
             style={{ opacity: 0.5, objectPosition: "center 20%" }}
             fill={true}
           />
         </div>
         <div className="relative z-10 text-center text-white">
-          <h1 className="text-2xl md:text-5xl font-bold mb-6 mt-15">
+          <h1 className="text-2xl md:text-5xl font-bold mb-6">
             Australian Rover Challenge 2026
           </h1>
           <a
@@ -87,8 +92,10 @@ export default function IndonesianRobotContestPage() {
 
       <section className="relative w-full min-h-[180px] sm:min-h-[300px] flex items-center justify-center py-8 sm:py-14 overflow-hidden">
         <Image
-          src="/images/arch-team.jpeg"
+          src="/images/competitions/australian-rover-challenge/stats-background.webp"
           alt="Stats background"
+          quality={50}
+          sizes="(max-width: 640px) 100vw, 1280px"
           className="absolute inset-0 mx-auto max-w-2xl sm:max-w-7xl w-full h-full object-cover object-center z-0"
           style={{ objectPosition: "center 30%", opacity: 0.3 }}
           fill={true}
@@ -115,7 +122,7 @@ export default function IndonesianRobotContestPage() {
 
       <CompetitionTasksCarousel
         tasks={indonesianRobotContestTasks}
-        backgroundImage="/images/fototeam2.webp"
+        backgroundImage="/images/competitions/australian-rover-challenge/tasks-background.webp"
       />
     </div>
   );

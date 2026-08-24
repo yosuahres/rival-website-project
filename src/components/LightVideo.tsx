@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 interface LightVideoProps {
   src: string; // Path to video (e.g., '/videos/demo.mp4')
@@ -27,19 +27,17 @@ export default function LightVideo({
 }: LightVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
         if (entry.isIntersecting && autoplay) {
           videoRef.current?.play();
         } else {
           videoRef.current?.pause();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     if (containerRef.current) {

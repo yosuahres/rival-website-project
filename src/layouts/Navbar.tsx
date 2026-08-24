@@ -2,24 +2,121 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useTranslation } from "@/i18n";
 
 export default function Navbar() {
+  const { t } = useTranslation();
   const [isProjectsOpen, setIsProjectsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProjectsSubMenu, setIsProjectsSubMenu] = useState(false); // NEW
+  const [scrolledDown, setScrolledDown] = useState(false);
+  const [atTop, setAtTop] = useState(true);
+
+  // Hide the bar while scrolling down, bring it back on the way up.
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const y = window.scrollY;
+      // Resting at the top the bar has nothing but page background behind it,
+      // so it shows none of the scrolled treatment. Tracked separately from
+      // the direction below, which deliberately ignores small movements.
+      setAtTop(y <= 20);
+      const delta = y - lastY;
+      // Ignore jitter: only react once the page has actually moved a few
+      // pixels, so a trackpad twitch can't flap the bar in and out. lastY is
+      // left alone below the threshold so small moves accumulate.
+      if (Math.abs(delta) < 6) return;
+      // Near the top there is nothing to gain by hiding, and elastic
+      // overscroll can report a downward delta while bouncing back.
+      setScrolledDown(y > 80 && delta > 0);
+      lastY = y;
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(update);
+    };
+
+    // Restoring a page mid-scroll should not start out looking untouched.
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  // Never slide away with a menu open — it would drag the open panel offscreen.
+  const hideNavbar = scrolledDown && !isMobileMenuOpen && !isProjectsOpen;
+
+  // Publish whether the bar is on screen, so a page that pins a bar of its own
+  // to the top (see the recruitment page) can step out of the way when this one
+  // slides back in. Written onto the body rather than shared through context:
+  // the two bars sit in separate layouts with no common provider between them.
+  useEffect(() => {
+    document.body.dataset.siteNavbarState = hideNavbar ? "hidden" : "shown";
+    return () => {
+      delete document.body.dataset.siteNavbarState;
+    };
+  }, [hideNavbar]);
 
   return (
     <>
-      <nav className="w-full fixed top-0 left-0 z-50 bg-[#021507]/30 backdrop-blur-xl px-4 md:px-8 py-3">
-        <div className="max-w-[1400px] mx-auto flex items-center justify-between">
+      {/* The bar keeps a row of the page's own background to itself rather than
+          floating over the hero: it is part of the flow, so every page's first
+          image starts below it. Sticky rather than fixed so it still rides
+          along once the page scrolls. */}
+      <nav
+        data-site-navbar
+        className={`w-full sticky top-0 left-0 z-50 px-4 md:px-8 py-4 transition-transform duration-300 ease-out ${
+          hideNavbar ? "-translate-y-[calc(100%_+_1.5rem)]" : "translate-y-0"
+        }`}
+      >
+        {/* At rest the bar simply continues the page background — nothing is
+            behind it to blur or darken. The two layers below cross-fade with
+            it as soon as the page moves and content starts passing underneath. */}
+        <div
+          aria-hidden="true"
+          className={`site-navbar-surface pointer-events-none absolute inset-0 transition-opacity duration-300 ${
+            atTop ? "opacity-100" : "opacity-0"
+          }`}
+        />
+        {/* Blur that fades out towards the bottom. backdrop-filter cannot be
+            graded on its own, so the blurring layer is masked with a gradient
+            and extends past the bar so the falloff has room to happen. */}
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-x-0 top-0 -bottom-6 backdrop-blur-lg transition-opacity duration-300 ${
+            atTop ? "opacity-0" : "opacity-100"
+          }`}
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%)",
+          }}
+        />
+        {/* Matching dark scrim, so the links stay legible over bright content
+            without a hard edge where the bar ends. */}
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-x-0 top-0 -bottom-6 bg-gradient-to-b from-[#121317]/90 via-[#121317]/45 to-transparent transition-opacity duration-300 ${
+            atTop ? "opacity-0" : "opacity-100"
+          }`}
+        />
+        <div className="relative max-w-[1400px] mx-auto flex items-center justify-between">
           <Link
             href="/"
             className="hover:opacity-80 transition-opacity flex items-center"
           >
             <Image
-              src="/images/vertical.webp"
-              alt="RIVAL ITS Logo"
+              src="/images/brand/logo-vertical.webp"
+              alt={t("nav.logoAlt")}
               width={50}
               height={30}
               className="object-contain"
@@ -33,7 +130,7 @@ export default function Navbar() {
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-white focus:outline-none"
-              aria-label="Toggle mobile menu"
+              aria-label={t("nav.toggleMenu")}
             >
               <svg
                 className="w-6 h-6"
@@ -78,7 +175,7 @@ export default function Navbar() {
                 aria-haspopup="true"
                 aria-expanded={isProjectsOpen ? "true" : "false"}
               >
-                Projects
+                {t("nav.projects")}
                 <svg
                   className={`w-4 h-4 transition-transform ${isProjectsOpen ? "rotate-180" : ""}`}
                   fill="none"
@@ -87,7 +184,9 @@ export default function Navbar() {
                   role="img"
                   aria-labelledby="projects-dropdown-icon"
                 >
-                  <title id="projects-dropdown-icon">Projects Dropdown</title>
+                  <title id="projects-dropdown-icon">
+                    {t("nav.projectsDropdown")}
+                  </title>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -105,13 +204,13 @@ export default function Navbar() {
                     href="/competitions/indonesian-robot-contest"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
                   >
-                    Indonesian Robot Contest
+                    {t("nav.irc")}
                   </Link>
                   <Link
                     href="/competitions/australian-rover-challenge"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
                   >
-                    Australian Rover Challenge
+                    {t("nav.arc")}
                   </Link>
                 </div>
               )}
@@ -121,47 +220,36 @@ export default function Navbar() {
               href="/news"
               className="text-white hover:opacity-80 transition-opacity text-lg font-medium"
             >
-              News
+              {t("nav.news")}
             </Link>
             <Link
               href="/teams"
               className="text-white hover:opacity-80 transition-opacity text-lg font-medium"
             >
-              Our Team
+              {t("nav.teams")}
             </Link>
             <Link
               href="/partners"
               className="text-white hover:opacity-80 transition-opacity text-lg font-medium"
             >
-              Partnership
+              {t("nav.partnership")}
+            </Link>
+            <Link
+              href="/recruitment"
+              className="text-white hover:opacity-80 transition-opacity text-lg font-medium"
+            >
+              {t("nav.recruitment")}
             </Link>
             <Link
               href="/contact"
               className="text-white hover:opacity-80 transition-opacity text-lg font-medium"
             >
-              Contact Us
+              {t("nav.contact")}
             </Link>
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-6 h-4 rounded overflow-hidden border border-white">
-                <Image
-                  src="https://flagcdn.com/w20/id.webp"
-                  alt="Polish"
-                  width={25}
-                  height={18}
-                />
-              </span>
-              <span className="inline-block w-6 h-4 rounded overflow-hidden border border-white">
-                <Image
-                  src="https://flagcdn.com/w20/us.webp"
-                  alt="English"
-                  width={25}
-                  height={18}
-                />
-              </span>
-            </div>
+            <LanguageSwitcher />
             <a
               href="https://instagram.com/rival_its"
               target="_blank"
@@ -228,8 +316,8 @@ export default function Navbar() {
             {/* Logo center */}
             <div className="flex justify-center">
               <Image
-                src="/images/vertical.webp"
-                alt="RIVAL ITS Logo"
+                src="/images/brand/logo-vertical.webp"
+                alt={t("nav.logoAlt")}
                 width={70}
                 height={50}
                 className="object-contain"
@@ -240,7 +328,7 @@ export default function Navbar() {
             <button
               type="button"
               className="text-white text-3xl absolute right-6"
-              aria-label="Close menu"
+              aria-label={t("nav.closeMenu")}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               &times;
@@ -256,7 +344,7 @@ export default function Navbar() {
                   aria-expanded={isProjectsOpen ? "true" : "false"}
                   onClick={() => setIsProjectsSubMenu(true)} // OPEN SUBMENU
                 >
-                  Projects
+                  {t("nav.projects")}
                   <svg
                     className="w-6 h-6 transition-transform"
                     fill="none"
@@ -266,7 +354,7 @@ export default function Navbar() {
                     aria-labelledby="projects-dropdown-icon-mobile"
                   >
                     <title id="projects-dropdown-icon-mobile">
-                      Projects Dropdown
+                      {t("nav.projectsDropdown")}
                     </title>
                     <path
                       strokeLinecap="round"
@@ -282,49 +370,39 @@ export default function Navbar() {
                 className="text-white hover:opacity-80 transition-opacity text-2xl font-medium text-right w-full"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                News
+                {t("nav.news")}
               </Link>
               <Link
                 href="/teams"
                 className="text-white hover:opacity-80 transition-opacity text-2xl font-medium text-right w-full"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Our Team
+                {t("nav.teams")}
               </Link>
               <Link
                 href="/partners"
                 className="text-white hover:opacity-80 transition-opacity text-2xl font-medium text-right w-full"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Partnership
+                {t("nav.partnership")}
+              </Link>
+              <Link
+                href="/recruitment"
+                className="text-white hover:opacity-80 transition-opacity text-2xl font-medium text-right w-full"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t("nav.recruitment")}
               </Link>
               <Link
                 href="/contact"
                 className="text-white hover:opacity-80 transition-opacity text-2xl font-medium text-right w-full"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Contact Us
+                {t("nav.contact")}
               </Link>
             </div>
             <div className="flex items-center gap-4 mt-auto self-end">
-              <div className="flex items-center gap-2">
-                <span className="inline-block w-8 h-6 rounded overflow-hidden border border-white">
-                  <Image
-                    src="https://flagcdn.com/w20/id.webp"
-                    alt="Indonesian"
-                    width={30}
-                    height={20}
-                  />
-                </span>
-                <span className="inline-block w-8 h-6 rounded overflow-hidden border border-white">
-                  <Image
-                    src="https://flagcdn.com/w20/us.webp"
-                    alt="English"
-                    width={30}
-                    height={20}
-                  />
-                </span>
-              </div>
+              <LanguageSwitcher size="lg" />
               <a
                 href="https://instagram.com/rival_its"
                 target="_blank"
@@ -386,84 +464,81 @@ export default function Navbar() {
 
       {/* Projects Sub-Menu Overlay */}
       {isMobileMenuOpen && isProjectsSubMenu && (
-        <div className="md:hidden fixed inset-0 z-[110] bg-black flex h-full">
-          {/* Right-sided drawer */}
-          <div className="ml-auto w-full max-w-[90vw] sm:max-w-[400px] h-full flex flex-col">
-            {/* Top bar with logo and close, centered */}
-            <div className="flex items-center justify-center w-full pt-6 pb-10 px-6 relative">
-              {/* Logo center */}
-              <div className="flex justify-center">
-                <Image
-                  src="/images/vertical.webp"
-                  alt="RIVAL ITS Logo"
-                  width={70}
-                  height={50}
-                  className="object-contain"
-                  priority
-                />
-              </div>
-              {/* Close button - absolute positioned */}
-              <button
-                type="button"
-                className="text-white text-3xl absolute right-6"
-                aria-label="Close menu"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  setIsProjectsSubMenu(false);
-                }}
-              >
-                &times;
-              </button>
+        <div className="md:hidden fixed inset-0 z-[110] bg-black flex flex-col">
+          {/* Top bar with logo and close, centered */}
+          <div className="flex items-center justify-center w-full pt-6 pb-10 px-6 relative">
+            {/* Logo center */}
+            <div className="flex justify-center">
+              <Image
+                src="/images/brand/logo-vertical.webp"
+                alt={t("nav.logoAlt")}
+                width={70}
+                height={50}
+                className="object-contain"
+                priority
+              />
             </div>
-            {/* Project links with Back as first item, right-aligned */}
-            <div className="flex flex-col items-end px-6 space-y-8 mt-8">
-              <button
-                type="button"
-                className="text-white text-2xl font-medium opacity-50 hover:opacity-80 transition-opacity flex items-center gap-2 justify-end w-full"
-                onClick={() => setIsProjectsSubMenu(false)}
-              >
-                <span className="flex items-center gap-2">
-                  <svg
-                    width="28"
-                    height="28"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    viewBox="0 0 24 24"
-                    role="img"
-                    aria-labelledby="back-icon-title"
-                  >
-                    <title id="back-icon-title">Back Icon</title>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                  Back
-                </span>
-              </button>
-              <Link
-                href="/competitions/indonesian-robot-contest"
-                className="text-white text-3xl md:text-4xl font-medium hover:opacity-80 transition-opacity text-right w-full"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  setIsProjectsSubMenu(false);
-                }}
-              >
-                Indonesian Robot Contest
-              </Link>
-              <Link
-                href="/competitions/australian-rover-challenge"
-                className="text-white text-3xl md:text-4xl font-medium hover:opacity-80 transition-opacity text-right w-full"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  setIsProjectsSubMenu(false);
-                }}
-              >
-                Australian Rover Challenge
-              </Link>
-            </div>
+            {/* Close button - absolute positioned */}
+            <button
+              type="button"
+              className="text-white text-3xl absolute right-6"
+              aria-label={t("nav.closeMenu")}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setIsProjectsSubMenu(false);
+              }}
+            >
+              &times;
+            </button>
+          </div>
+          {/* Project links with Back as first item, right-aligned */}
+          <div className="flex flex-col items-end px-6 space-y-8 mt-8">
+            <button
+              type="button"
+              className="text-white text-2xl font-medium opacity-50 hover:opacity-80 transition-opacity flex items-center gap-2 justify-end w-full"
+              onClick={() => setIsProjectsSubMenu(false)}
+            >
+              <span className="flex items-center gap-2">
+                <svg
+                  width="28"
+                  height="28"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
+                  role="img"
+                  aria-labelledby="back-icon-title"
+                >
+                  <title id="back-icon-title">{t("nav.back")}</title>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+                {t("nav.back")}
+              </span>
+            </button>
+            <Link
+              href="/competitions/indonesian-robot-contest"
+              className="text-white text-3xl md:text-4xl font-medium hover:opacity-80 transition-opacity text-right w-full"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setIsProjectsSubMenu(false);
+              }}
+            >
+              {t("nav.irc")}
+            </Link>
+            <Link
+              href="/competitions/australian-rover-challenge"
+              className="text-white text-3xl md:text-4xl font-medium hover:opacity-80 transition-opacity text-right w-full"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setIsProjectsSubMenu(false);
+              }}
+            >
+              {t("nav.arc")}
+            </Link>
           </div>
         </div>
       )}

@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import CompetitionTasksCarousel from "@/components/CompetitionTasksCarousel";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const indonesianRobotContestTasks = [
   {
@@ -10,7 +9,8 @@ const indonesianRobotContestTasks = [
     title: "Autonomous Waste Sorting",
     description:
       "Robot 2 autonomously sorts waste items moving along the vibrating conveyor into five categories — ferro, nonferro, leaf, paper, and plastic. Each correctly sorted item earns 1 point.",
-    image: "/images/task-kri1.webp",
+    image:
+      "/images/competitions/indonesian-robot-contest/task-1-autonomous-waste-sorting.webp",
     videoLink: "https://www.youtube.com/live/jGzVkDfhV1g",
   },
   {
@@ -18,27 +18,30 @@ const indonesianRobotContestTasks = [
     title: "Trash Bin Transfer",
     description:
       "Robot 1 is responsible for manually moving the trash bin to the vibrating conveyor..",
-    image: "/images/task-kri2.webp",
+    image:
+      "/images/competitions/indonesian-robot-contest/task-2-trash-bin-transfer.webp",
     videoLink: "https://www.youtube.com/live/9n7s8l3Xo2g",
   },
 ];
 
 export default function IndonesianRobotContestPage() {
-  const isMobile = useIsMobile();
   return (
     <div className="min-h-screen">
-      <section className="relative h-[60vh] flex items-center justify-center">
+      <section className="relative mx-3 md:mx-4 h-[60vh] flex items-center justify-center overflow-hidden rounded-4xl">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <Image
-            src="/images/foreground-kri.webp"
+            src="/images/competitions/indonesian-robot-contest/hero-background.webp"
             alt="Competition background"
+            quality={50}
+            priority
+            sizes="100vw"
             className="w-full h-full object-cover object-center"
             style={{ opacity: 0.5, objectPosition: "center 55%" }}
             fill={true}
           />
         </div>
         <div className="relative z-10 text-center text-white">
-          <h1 className="text-2xl md:text-5xl font-bold mb-6 mt-15">
+          <h1 className="text-2xl md:text-5xl font-bold mb-6">
             Indonesian Robot Contest
           </h1>
           <a
@@ -71,8 +74,10 @@ export default function IndonesianRobotContestPage() {
       {/* Stats Section */}
       <section className="relative w-full min-h-[180px] sm:min-h-[300px] flex items-center justify-center py-8 sm:py-14 overflow-hidden">
         <Image
-          src="/images/foreground-kri2.webp"
+          src="/images/competitions/indonesian-robot-contest/stats-background.webp"
           alt="Stats background"
+          quality={50}
+          sizes="(max-width: 640px) 100vw, 1280px"
           className="absolute inset-0 mx-auto max-w-2xl sm:max-w-7xl w-full h-full object-cover object-center z-0"
           style={{ objectPosition: "center 60%", opacity: 0.3 }}
           fill={true}
@@ -132,7 +137,7 @@ export default function IndonesianRobotContestPage() {
 
       <CompetitionTasksCarousel
         tasks={indonesianRobotContestTasks}
-        backgroundImage="/images/foreground-kri3.webp"
+        backgroundImage="/images/competitions/indonesian-robot-contest/tasks-background.webp"
       />
     </div>
   );
