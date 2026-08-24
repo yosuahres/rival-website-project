@@ -80,6 +80,14 @@ interface VideoLightboxProps {
 }
 
 function VideoLightbox({ videoId, title, onClose }: VideoLightboxProps) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  // Move focus into the overlay so the close control — and nothing behind it —
+  // is where the keyboard lands.
+  useEffect(() => {
+    closeRef.current?.focus();
+  }, []);
+
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
@@ -104,18 +112,25 @@ function VideoLightbox({ videoId, title, onClose }: VideoLightboxProps) {
       role="dialog"
       aria-modal="true"
       aria-label={title}
-      onClick={onClose}
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 animate-lightbox-fade-in"
     >
-      <div
-        onClick={(event) => event.stopPropagation()}
-        className="relative w-[min(92vw,calc(80vh*16/9))] animate-lightbox-zoom-in"
-      >
+      {/* Click-anywhere-to-dismiss, as a real button rather than a handler on
+          the backdrop div — the close control above carries the accessible
+          affordance, and Escape covers the keyboard. */}
+      <button
+        type="button"
+        onClick={onClose}
+        aria-hidden="true"
+        tabIndex={-1}
+        className="absolute inset-0 cursor-default"
+      />
+
+      <div className="relative w-[min(92vw,calc(80vh*16/9))] animate-lightbox-zoom-in">
         <button
+          ref={closeRef}
           type="button"
           onClick={onClose}
           aria-label="Close video"
-          autoFocus
           className={`${ARROW_BASE} absolute -top-14 right-0 flex w-11 h-11`}
         >
           <svg
