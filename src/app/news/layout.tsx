@@ -1,10 +1,17 @@
-import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: "News",
   description:
     "Latest announcements, press coverage, and competition results from RIVAL ITS.",
-};
+  path: "/news",
+  keywords: [
+    "RIVAL ITS news",
+    "competition results",
+    "robotics press coverage",
+    "ITS robotics achievements",
+  ],
+});
 
 export default function NewsLayout({
   children,

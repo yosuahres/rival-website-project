@@ -62,6 +62,15 @@ export default function Home() {
 
   return (
     <>
+      {/* The visible hero is a rotating reel whose largest word is just the
+          wordmark, so the document's one real heading is carried here: it
+          states what the site is for a crawler and a screen reader without
+          competing with the reel's typography. */}
+      <h1 className="sr-only">
+        RIVAL ITS — Robotics Rover Research Team of Institut Teknologi Sepuluh
+        Nopember
+      </h1>
+
       <HomeHeroCarousel />
 
       <section className="px-5 pt-4 pb-14 md:px-2 md:pt-25 md:pb-25">

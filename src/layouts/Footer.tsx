@@ -49,7 +49,7 @@ const Footer = () => {
 
             {/* Top row - 2 large sponsors */}
             <div className="flex gap-8 mb-6 w-full justify-center">
-              <div className="w-40 h-28 flex items-center justify-center">
+              <div className="w-[7.5rem] h-[5.25rem] flex items-center justify-center">
                 <NextImage
                   src="/images/partners/platinum/andi-sobolangit.png"
                   alt="AndiSobolangit"
@@ -58,7 +58,7 @@ const Footer = () => {
                   className="object-contain"
                 />
               </div>
-              <div className="w-40 h-28 flex items-center justify-center">
+              <div className="w-[7.5rem] h-[5.25rem] flex items-center justify-center">
                 <NextImage
                   src="/images/partners/platinum/ancuk.png"
                   alt="Triguna"
@@ -71,7 +71,7 @@ const Footer = () => {
 
             {/* Middle row - 1 medium sponsor */}
             <div className="mb-6 w-full flex justify-center">
-              <div className="w-32 h-20 flex items-center justify-center">
+              <div className="w-24 h-[3.75rem] flex items-center justify-center">
                 <NextImage
                   src="/images/partners/silver/wika.png"
                   alt="wika"
@@ -84,7 +84,7 @@ const Footer = () => {
 
             {/* Bottom grid - 3x2 smaller sponsors */}
             <div className="grid grid-cols-3 gap-4 w-full justify-items-center">
-              <div className="w-28 h-16 flex items-center justify-center">
+              <div className="w-[5.25rem] h-12 flex items-center justify-center">
                 <NextImage
                   src="/images/partners/winner/apd.png"
                   alt="APD"
@@ -93,7 +93,7 @@ const Footer = () => {
                   className="object-contain"
                 />
               </div>
-              <div className="w-28 h-16 flex items-center justify-center">
+              <div className="w-[5.25rem] h-12 flex items-center justify-center">
                 <NextImage
                   src="/images/partners/winner/arl.png"
                   alt="ARL"
@@ -102,7 +102,7 @@ const Footer = () => {
                   className="object-contain"
                 />
               </div>
-              <div className="w-28 h-16 flex items-center justify-center">
+              <div className="w-[5.25rem] h-12 flex items-center justify-center">
                 <NextImage
                   src="/images/partners/winner/gajelas.png"
                   alt="Akhishop"
@@ -111,7 +111,7 @@ const Footer = () => {
                   className="object-contain"
                 />
               </div>
-              <div className="w-28 h-16 flex items-center justify-center">
+              <div className="w-[5.25rem] h-12 flex items-center justify-center">
                 <NextImage
                   src="/images/partners/bronze/fure.png"
                   alt="Fure"
@@ -120,7 +120,7 @@ const Footer = () => {
                   className="object-contain"
                 />
               </div>
-              <div className="w-28 h-16 flex items-center justify-center">
+              <div className="w-[5.25rem] h-12 flex items-center justify-center">
                 <NextImage
                   src="/images/partners/bronze/graha-pintar.png"
                   alt="GrahaPintar"
@@ -129,7 +129,7 @@ const Footer = () => {
                   className="object-contain"
                 />
               </div>
-              <div className="w-28 h-16 flex items-center justify-center">
+              <div className="w-[5.25rem] h-12 flex items-center justify-center">
                 <NextImage
                   src="/images/partners/bronze/ipbth.png"
                   alt="IPBTH"

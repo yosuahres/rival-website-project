@@ -250,8 +250,13 @@ export default function HomeHeroCarousel() {
                     <>
                       {/* The centred card is the brand wordmark, so it gets the
                           extended caps treatment; the tighter tracking keeps
-                          the widened letters reading as one word. */}
-                      <h1
+                          the widened letters reading as one word.
+
+                          Deliberately a <p>, not a heading: the reel repeats
+                          SLIDES three times, so a heading here would put six
+                          duplicate <h1>s in the document. The page's real
+                          heading lives in app/page.tsx. */}
+                      <p
                         className={
                           topLeft
                             ? "max-w-[24ch] font-semibold text-[clamp(1.35rem,1.9vw,1.9rem)] text-white leading-tight"
@@ -259,7 +264,7 @@ export default function HomeHeroCarousel() {
                         }
                       >
                         {slide.title}
-                      </h1>
+                      </p>
                       {slide.subtitle && (
                         <p
                           className={

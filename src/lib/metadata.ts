@@ -1,68 +1,54 @@
 import type { Metadata } from "next";
+import { SITE_NAME } from "./site";
 
-interface PageMetadata {
+interface PageMetadataInput {
+  /** Route-level title. The root layout wraps it as "<title> | RIVAL ITS". */
   title: string;
   description: string;
+  /**
+   * Site-relative path this page canonicalises to, e.g. "/teams".
+   * Resolved against `metadataBase`, so a page is never mistaken for a
+   * duplicate of the same content reached through a different URL.
+   */
+  path: string;
   keywords?: readonly string[];
-  ogImage?: string;
 }
 
-export function generatePageMetadata({
+/**
+ * Builds the metadata for a route: canonical URL plus the Open Graph and
+ * Twitter blocks that social crawlers read.
+ *
+ * Open Graph images are deliberately *not* set here — the generated
+ * `opengraph-image`/`twitter-image` at the app root applies to every route
+ * that does not override it, so setting images here would shadow it.
+ */
+export function buildMetadata({
   title,
   description,
+  path,
   keywords,
-  ogImage = "/images/brand/logo-vertical.webp",
-}: PageMetadata): Metadata {
+}: PageMetadataInput): Metadata {
   return {
     title,
     description,
-    keywords: keywords ? [...keywords].join(", ") : undefined,
+    keywords: keywords ? [...keywords] : undefined,
+    alternates: {
+      canonical: path,
+    },
     openGraph: {
-      title: `${title} | RIVAL ITS`,
+      // og:title carries the full, unwrapped name: a social card has no tab
+      // strip to give the "| RIVAL ITS" suffix its context.
+      title: `${title} | ${SITE_NAME}`,
       description,
-      images: [ogImage],
+      url: path,
+      siteName: SITE_NAME,
       type: "website",
+      locale: "en_US",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | RIVAL ITS`,
+      title: `${title} | ${SITE_NAME}`,
       description,
-      images: [ogImage],
     },
   };
 }
-
-// Common metadata templates
-export const metadataTemplates = {
-  home: {
-    title: "Home",
-    description:
-      "Welcome to RIVAL ITS - Indonesia's premier robotic team pushing boundaries in technology and innovation.",
-    keywords: [
-      "robotics",
-      "indonesia",
-      "technology",
-      "innovation",
-      "ITS",
-      "engineering",
-    ],
-  },
-  about: {
-    title: "About Us",
-    description:
-      "Learn more about RIVAL ITS - our mission, vision, and the passionate team behind Indonesia's leading robotics innovation.",
-    keywords: ["about", "team", "mission", "vision", "robotics", "indonesia"],
-  },
-  teams: {
-    title: "Our Teams",
-    description:
-      "Meet the talented teams that make up RIVAL ITS - from mechanical design to software development, each team brings unique expertise.",
-    keywords: ["teams", "mechanical", "software", "electronics", "engineering"],
-  },
-  contact: {
-    title: "Contact Us",
-    description:
-      "Get in touch with RIVAL ITS - reach out for collaborations, partnerships, or to learn more about our robotics projects.",
-    keywords: ["contact", "collaboration", "partnership", "robotics"],
-  },
-} as const;
