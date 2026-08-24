@@ -14,14 +14,13 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.75.0",
     "@types/js-cookie": "^3.0.6",
-    "@types/nodemailer": "^7.0.2",
     "axios": "^1.12.2",
     "clsx": "^2.1.1",
     "js-cookie": "^3.0.5",
     "next": "^16.2.2",
-    "nodemailer": "^7.0.9",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "resend": "^6.22.0",
     "tailwind-merge": "^3.3.1",
     "typecheck": "^0.1.2",
     "zustand": "^5.0.8"
