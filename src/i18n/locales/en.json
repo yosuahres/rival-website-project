@@ -1,0 +1,26 @@
+{
+  "lang": {
+    "id": "Bahasa Indonesia",
+    "en": "English",
+    "switchTo": "Switch to {{language}}"
+  },
+  "nav": {
+    "logoAlt": "RIVAL ITS Logo",
+    "projects": "Projects",
+    "irc": "Indonesian Robot Contest",
+    "arc": "Australian Rover Challenge",
+    "news": "News",
+    "teams": "Our Team",
+    "partnership": "Partnership",
+    "recruitment": "Recruitment",
+    "contact": "Contact Us",
+    "back": "Back",
+    "toggleMenu": "Toggle mobile menu",
+    "closeMenu": "Close menu",
+    "projectsDropdown": "Projects Dropdown"
+  },
+  "footer": {
+    "address": "Institut Teknologi Sepuluh Nopember, Surabaya, Indonesia",
+    "partners": "With support from our partners"
+  }
+}
