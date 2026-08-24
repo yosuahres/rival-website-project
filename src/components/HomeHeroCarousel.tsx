@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 type Slide = {
@@ -16,10 +15,6 @@ type Slide = {
   logo?: { src: string; alt: string };
   /** Where the card's content sits. Defaults to the centred treatment. */
   align?: "center" | "top-left";
-  /** Filled pill under the copy — the card's primary destination. */
-  cta?: { label: string; href: string };
-  /** Quieter chevron link sitting under the pill. */
-  secondary?: { label: string; href: string };
   /** Read out on the control that steps to this card. */
   label: string;
 };
@@ -34,8 +29,6 @@ const SLIDES: Slide[] = [
     },
     title: "RIVAL",
     subtitle: "ITS Robotics Team",
-    cta: { label: "Learn more", href: "/about" },
-    secondary: { label: "Meet the team", href: "/teams" },
     label: "the RIVAL ITS team profile",
   },
   {
@@ -43,7 +36,6 @@ const SLIDES: Slide[] = [
     media: { kind: "image", src: "/images/home/hero-background.jpg" },
     logo: { src: "/images/brand/logo-vertical.webp", alt: "RIVAL ITS logo" },
     align: "top-left",
-    cta: { label: "Join the team", href: "/recruitment" },
     label: "the RIVAL ITS brand lockup",
   },
   {
@@ -55,14 +47,6 @@ const SLIDES: Slide[] = [
     title: "Australian Rover Challenge",
     subtitle: "6th worldwide, 1st among Indonesian rover teams",
     align: "top-left",
-    cta: {
-      label: "Learn more",
-      href: "/competitions/australian-rover-challenge",
-    },
-    secondary: {
-      label: "Indonesian Robot Contest",
-      href: "/competitions/indonesian-robot-contest",
-    },
     label: "the Australian Rover Challenge",
   },
 ];
@@ -288,50 +272,6 @@ export default function HomeHeroCarousel() {
                         </p>
                       )}
                     </>
-                  )}
-
-                  {(slide.cta || slide.secondary) && (
-                    <div
-                      className={`mt-5 flex flex-col gap-3 md:mt-7 ${
-                        topLeft ? "items-start" : "items-center"
-                      }`}
-                    >
-                      {slide.cta && (
-                        <Link
-                          href={slide.cta.href}
-                          // A card that is only peeking is spoken over by the
-                          // stepping control laid across it, so its links stay
-                          // out of the tab order until it is the active card.
-                          tabIndex={isActive ? undefined : -1}
-                          className="rounded-full bg-white px-5 py-2.5 font-medium text-[#121317] text-sm transition-colors hover:bg-white/85 md:text-base"
-                        >
-                          {slide.cta.label}
-                        </Link>
-                      )}
-                      {slide.secondary && (
-                        <Link
-                          href={slide.secondary.href}
-                          tabIndex={isActive ? undefined : -1}
-                          className="inline-flex items-center gap-1 font-medium text-sm text-white transition-opacity hover:opacity-75 md:text-base"
-                        >
-                          {slide.secondary.label}
-                          <svg
-                            aria-hidden="true"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            className="h-4 w-4"
-                          >
-                            <path
-                              d="m9 5 7 7-7 7"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </Link>
-                      )}
-                    </div>
                   )}
                 </div>
 

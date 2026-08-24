@@ -174,7 +174,7 @@ function DivisionSection({
 }) {
   return (
     <section id={id} className="py-16 md:py-24 scroll-mt-24">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="w-full px-6 md:px-12">
         <FadeIn>
           <div className="border-t-2 border-white mb-6"></div>
           <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-6">
@@ -606,7 +606,7 @@ export default function Recruitment() {
 
       {/* Required documents */}
       <section id="documents" className="py-16 md:py-24 scroll-mt-24">
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="w-full px-6 md:px-12">
           <FadeIn>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-10">
               Required Documents
