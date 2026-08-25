@@ -316,10 +316,10 @@ export default function Achievements() {
       <section className="px-4 py-16 md:px-6 md:py-24">
         <div className="mx-auto max-w-[1800px]">
           <FadeIn>
-            {/* Four across from `lg` up, two on tablets, one on phones. Wrapping flex rather
-                than a grid so a part-full last row centres under the ones
-                above it — eleven badges four-up would otherwise leave the last
-                three hanging off to the left.
+            {/* Four across from `lg` up, two below that — phones included.
+                Wrapping flex rather than a grid so a part-full last row
+                centres under the ones above it — eleven badges four-up would
+                otherwise leave the last three hanging off to the left.
 
                 The row is capped well short of the page: four columns of a
                 full-width container would make each badge 400px-odd, and these
@@ -330,13 +330,19 @@ export default function Achievements() {
 
                 Four-up waits for `lg` rather than `md` because the cap has not
                 bound yet at `md`: the container is the viewport there, so four
-                columns would give 150px badges and a 6px competition line. */}
+                columns would give 150px badges and a 6px competition line.
+
+                Phones stay two-up as well: a badge is its own query container,
+                so at roughly 155px on a 375px screen the wreath and its
+                lettering shrink together and the pair still reads — and two
+                columns keep the wall looking like a wall rather than a
+                single-file list eleven screens long. */}
             <ul className="mx-auto flex max-w-[1360px] flex-wrap justify-center gap-x-8 gap-y-10 md:gap-y-12">
               {WALL.map((achievement) => (
                 <AchievementBadge
                   key={`${achievement.title}-${achievement.event}`}
                   record={achievement}
-                  className="w-full sm:w-[calc(50%-16px)] lg:w-[calc(25%-24px)]"
+                  className="w-[calc(50%-16px)] lg:w-[calc(25%-24px)]"
                 />
               ))}
             </ul>
