@@ -5,7 +5,7 @@ import { WHATSAPP_URL } from "@/lib/site";
 export default function Sponsors() {
   return (
     <>
-      <section className="relative mx-3 md:mx-4 min-h-[700px] flex items-center justify-center overflow-hidden rounded-4xl">
+      <section className="relative mx-3 md:mx-4 aspect-[6/7] md:aspect-auto md:min-h-[700px] flex items-center justify-center overflow-hidden rounded-4xl">
         <div className="absolute inset-0 z-0">
           <NextImage
             src="/images/partners/hero-background.jpg"

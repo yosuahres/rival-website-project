@@ -214,7 +214,7 @@ export default function Teams() {
 
   return (
     <div className="flex flex-col min-h-full">
-      <section className="py-80 sm:py-96 relative mx-3 md:mx-4 overflow-hidden rounded-4xl">
+      <section className="relative mx-3 md:mx-4 flex aspect-[6/7] items-center justify-center overflow-hidden rounded-4xl md:aspect-auto md:py-96">
         <div className="absolute inset-0 -z-50">
           <Image
             src="/images/teams/hero-background.png"

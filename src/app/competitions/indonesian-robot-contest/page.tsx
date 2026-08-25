@@ -27,7 +27,7 @@ const indonesianRobotContestTasks = [
 export default function IndonesianRobotContestPage() {
   return (
     <div className="min-h-screen">
-      <section className="relative mx-3 md:mx-4 h-[60vh] flex items-center justify-center overflow-hidden rounded-4xl">
+      <section className="relative mx-3 md:mx-4 aspect-[6/7] md:aspect-auto md:h-[60vh] flex items-center justify-center overflow-hidden rounded-4xl">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <Image
             src="/images/competitions/indonesian-robot-contest/hero-background.webp"

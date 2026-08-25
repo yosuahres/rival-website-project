@@ -306,12 +306,14 @@ export default function HomeHeroCarousel() {
         <span className="text-base text-white/80 md:text-lg">
           Explore the latest
         </span>
-        <div className="flex items-center gap-2 md:gap-3">
+        {/* One pill rather than two buttons: the arrows read as a single
+            control, and each one takes a circular highlight on hover. */}
+        <div className="flex items-center gap-1 rounded-full border border-[#398561] bg-[#398561] p-1 text-white">
           <button
             type="button"
             onClick={() => step(-1)}
             aria-label="Previous slide"
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-[#398561] bg-[#398561] text-white transition-colors hover:bg-[#021507] hover:border-[#021507] md:h-11 md:w-11"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-[#021507] md:h-11 md:w-11"
           >
             <svg
               aria-hidden="true"
@@ -332,7 +334,7 @@ export default function HomeHeroCarousel() {
             type="button"
             onClick={() => step(1)}
             aria-label="Next slide"
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-[#398561] bg-[#398561] text-white transition-colors hover:bg-[#021507] hover:border-[#021507] md:h-11 md:w-11"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-[#021507] md:h-11 md:w-11"
           >
             <svg
               aria-hidden="true"
