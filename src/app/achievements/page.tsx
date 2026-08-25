@@ -66,6 +66,40 @@ const WALL = BY_TIER.filter((a) => !a.solo);
 const SOLO = BY_TIER.filter((a) => a.solo);
 
 /**
+ * The indent that centres a short last row.
+ *
+ * The wall is laid on a track of twice as many columns as it shows cards,
+ * every card spanning two of them. Spanned that way a card measures exactly
+ * what it would in the plain track — the half-columns fall inside the cards,
+ * not between them — so nothing about a full row changes. What the finer track
+ * buys is the half-card step, which is precisely the indent a row one card
+ * short of full needs to sit centred: each missing card pushes the row half a
+ * card to the right, and a half card is one sub-column plus one gutter.
+ *
+ * So the offset is read off the remainder, per breakpoint, and lands on the
+ * card that opens the last row. It is `col-start`, which only the opening card
+ * needs — the rest of the row flows on behind it.
+ */
+function lastRowOffset(index: number): string {
+  const classes: string[] = [];
+
+  // Two-up: at most one card can be left over, and it wants half a card of
+  // indent — one step of the four-column track.
+  if (WALL.length % 2 === 1 && index === WALL.length - 1) {
+    classes.push("md:col-start-2");
+  }
+
+  // Three-up: one card over wants a full card of indent (two steps), two
+  // cards over want half of one (a single step).
+  const overflow = WALL.length % 3;
+  if (overflow > 0 && index === WALL.length - overflow) {
+    classes.push(overflow === 1 ? "lg:col-start-3" : "lg:col-start-2");
+  }
+
+  return classes.join(" ");
+}
+
+/**
  * The two wreaths, and where each one's opening will take a line of type.
  *
  * The wreath now carries the placing and nothing else — a single short row —
@@ -264,22 +298,25 @@ export default function Achievements() {
       <section className="px-4 py-16 md:px-6 md:py-24">
         <div className="mx-auto max-w-[1800px]">
           <FadeIn>
-            {/* Three across from `lg` up, two at `md`, one on phones. A grid
-                rather than the wrapping flex the stacked badges used: these
-                cards are wide, and a row of them wants its plaques starting on
-                the same vertical line, which equal columns give and a centred
-                flex row does not.
+            {/* Three across from `lg` up, two at `md`, one on phones — though
+                the track is written at six and four, each card spanning two, so
+                a last row that comes up short can be centred on the half-card
+                step that buys (see `lastRowOffset`). A grid rather than the
+                wrapping flex the stacked badges used: these cards are wide, and
+                a row of them wants its plaques starting on the same vertical
+                line, which equal columns give and a centred flex row does not.
 
                 The cap is what fixes the card size, the column count following
                 from it — three columns of 1240px less the gutters is about
                 390px a card, so the wreath lands near 170px and the plaque
                 gets the rest. Below `md` a single column is right: at two-up on
                 a phone the plaque would be narrower than the words on it. */}
-            <ul className="mx-auto grid max-w-[1240px] grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2 md:gap-y-10 lg:grid-cols-3">
-              {WALL.map((achievement) => (
+            <ul className="mx-auto grid max-w-[1240px] grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-4 md:gap-y-10 lg:grid-cols-6">
+              {WALL.map((achievement, index) => (
                 <AchievementBadge
                   key={`${achievement.title}-${achievement.event}`}
                   record={achievement}
+                  className={`md:col-span-2 ${lastRowOffset(index)}`}
                 />
               ))}
             </ul>
