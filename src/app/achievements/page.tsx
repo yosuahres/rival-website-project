@@ -180,7 +180,7 @@ function AchievementBadge({
 
   return (
     <li
-      className={`flex flex-col items-center ${className}`}
+      className={`flex flex-col items-center opacity-100 transition-opacity duration-300 hover:opacity-60 ${className}`}
       style={
         {
           // Declared inline rather than with Tailwind's `@container`, so the

@@ -130,6 +130,12 @@ export default function Navbar() {
 
             {/* Main navigation links - hidden on small, flex on medium and up */}
             <div className="hidden md:flex items-center gap-1">
+              <Link
+                href="/"
+                className="rounded-full border border-transparent px-4 py-2 text-sm font-medium text-white transition-colors hover:border-white/25"
+              >
+                {t("nav.home")}
+              </Link>
               <div
                 className="relative"
                 onMouseEnter={() => setIsProjectsOpen(true)}
@@ -303,6 +309,13 @@ export default function Navbar() {
           </div>
           <div className="flex flex-col items-end p-6 pt-6 space-y-8 h-full overflow-y-auto">
             <div className="flex flex-col items-end space-y-4 w-full">
+              <Link
+                href="/"
+                className="text-white hover:opacity-80 transition-opacity text-2xl font-medium text-right w-full"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t("nav.home")}
+              </Link>
               <div className="relative w-full flex flex-col items-end">
                 <button
                   type="button"

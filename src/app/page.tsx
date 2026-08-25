@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import DotImage from "@/components/DotImage";
 import HomeHeroCarousel from "@/components/HomeHeroCarousel";
 import {
   PARTNERS_FEATURE,
@@ -162,13 +163,10 @@ export default function Home() {
                 Learn more
               </span>
             </div>
-            <div className="relative order-1 aspect-square w-full overflow-hidden rounded-2xl shadow-lg md:order-2">
-              <Image
-                src="/archive/images/arch3.webp"
-                alt=""
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover object-center"
+            <div className="relative order-1 aspect-square w-full overflow-hidden rounded-2xl border border-white/15 bg-[#0d3b28] shadow-lg md:order-2">
+              <DotImage
+                src="/archive/images/arm2.webp"
+                className="absolute inset-0 h-full w-full"
               />
             </div>
           </div>

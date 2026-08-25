@@ -13,7 +13,6 @@ const Footer = () => {
   const { t } = useTranslation();
 
   const aboutLinks = [
-    { label: t("nav.about"), href: "/about" },
     { label: t("nav.teams"), href: "/teams" },
     { label: t("nav.achievements"), href: "/achievements" },
     { label: t("nav.irc"), href: "/competitions/indonesian-robot-contest" },
