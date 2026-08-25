@@ -85,15 +85,22 @@ function lastRowOffset(index: number): string {
 
   // Two-up: at most one card can be left over, and it wants half a card of
   // indent — one step of the four-column track.
-  if (WALL.length % 2 === 1 && index === WALL.length - 1) {
-    classes.push("md:col-start-2");
-  }
+  const opensTwoUp = WALL.length % 2 === 1 && index === WALL.length - 1;
+  if (opensTwoUp) classes.push("md:col-start-2");
 
   // Three-up: one card over wants a full card of indent (two steps), two
   // cards over want half of one (a single step).
   const overflow = WALL.length % 3;
-  if (overflow > 0 && index === WALL.length - overflow) {
+  const opensThreeUp = overflow > 0 && index === WALL.length - overflow;
+  if (opensThreeUp) {
     classes.push(overflow === 1 ? "lg:col-start-3" : "lg:col-start-2");
+  } else if (opensTwoUp) {
+    // The two rows come up short in different places, so the card that opens
+    // the short row at two-up need not be the one that opens it at three-up.
+    // When it isn't, its `md` indent has to be lifted again: left standing it
+    // would drag a card that should flow on mid-row back to a column already
+    // behind it, and the grid answers that by breaking the row.
+    classes.push("lg:col-start-auto");
   }
 
   return classes.join(" ");
