@@ -98,11 +98,26 @@ const FOOTER_LIFT = 50;
 const PER_SCREEN = 3;
 /** Every piece is a canvas full of dots, so the page gets a budget. */
 const MAX_PIECES = 10;
+/** How long after mount the choice of pieces is still open, in milliseconds. */
+const SETTLE_DELAY = 800;
 
 type Side = "left" | "right";
 type Band = { from: number; to: number };
+/** A painted span, remembering what painted it. */
+type Span = Band & { element: Element };
+/** A bare stretch, remembering what closed the span above it. */
+type Free = Band & { after: Element | null };
 type Slot = {
   top: number;
+  /**
+   * What the piece is pinned to, and how far below that element's edge it
+   * sits. Re-reading the anchor is how a piece stays with its part of the page
+   * as images load in and push everything below them down — without it, a
+   * fresh plan is drawn each time and the pieces appear to wander.
+   */
+  anchor: Element | null;
+  anchorEdge: "top" | "bottom";
+  offset: number;
   width: number;
   height: number;
   side: Side;
@@ -143,25 +158,35 @@ function paints(element: Element) {
 }
 
 /** The stretches of a side left over once the painted spans are merged. */
-function freeBands(spans: Band[], pageHeight: number): Band[] {
+function freeBands(spans: Span[], pageHeight: number): Free[] {
   const sorted = [...spans].sort((a, b) => a.from - b.from);
-  const merged: Band[] = [];
+  const merged: Span[] = [];
   for (const span of sorted) {
     const last = merged.at(-1);
-    if (last && span.from <= last.to) last.to = Math.max(last.to, span.to);
-    else merged.push({ ...span });
+    if (!last || span.from > last.to) {
+      merged.push({ ...span });
+    } else if (span.to > last.to) {
+      // The span that reaches furthest down is the one whose bottom edge the
+      // band below is measured from.
+      last.to = span.to;
+      last.element = span.element;
+    }
   }
 
-  const bands: Band[] = [];
+  const bands: Free[] = [];
   let cursor = 0;
+  let after: Element | null = null;
   for (const span of merged) {
     if (span.from - cursor >= MIN_BAND) {
-      bands.push({ from: cursor, to: span.from });
+      bands.push({ from: cursor, to: span.from, after });
     }
-    cursor = Math.max(cursor, span.to);
+    if (span.to > cursor) {
+      cursor = span.to;
+      after = span.element;
+    }
   }
   if (pageHeight - cursor >= MIN_BAND) {
-    bands.push({ from: cursor, to: pageHeight });
+    bands.push({ from: cursor, to: pageHeight, after });
   }
   return bands;
 }
@@ -206,7 +231,7 @@ function plan(footerOnly: boolean): Slot[] {
       left: { from: 0, to: width / 2 },
       right: { from: width / 2, to: width },
     };
-    const painted: Record<Side, Band[]> = { left: [], right: [] };
+    const painted: Record<Side, Span[]> = { left: [], right: [] };
     /** Stretches a page has asked to have its piece face the other way in. */
     const flipped: Band[] = [];
 
@@ -232,6 +257,7 @@ function plan(footerOnly: boolean): Slot[] {
         painted[side].push({
           from: rect.top + offset,
           to: rect.bottom + offset,
+          element,
         });
       }
     }
@@ -256,11 +282,19 @@ function plan(footerOnly: boolean): Slot[] {
           const middle = band.from + CLEARANCE + (room * (index + 0.5)) / count;
           candidates.push({
             top: middle - height / 2,
+            anchor: band.after,
+            anchorEdge: "bottom",
+            offset: middle - height / 2 - band.from,
             width: boxWidth,
             height,
             side,
+            // Overlap, not containment: a piece is centred on its band, and
+            // a band commonly starts above the section that marked it — the
+            // gap opens where the last card ended, not where the copy begins.
             flipped: flipped.some(
-              (band) => middle >= band.from && middle <= band.to,
+              (band) =>
+                middle + height / 2 > band.from &&
+                middle - height / 2 < band.to,
             ),
           });
         }
@@ -292,16 +326,21 @@ function plan(footerOnly: boolean): Slot[] {
   // The footer piece is placed rather than found, so every page ends on one
   // whatever the body above it did. Centred on the footer, or on the foot of
   // the page if there is somehow no footer to centre on.
-  const footer = document.querySelector("footer")?.getBoundingClientRect();
-  const middle = footer
-    ? footer.top +
+  const footer = document.querySelector("footer");
+  const box = footer?.getBoundingClientRect();
+  const middle = box
+    ? box.top +
       offset +
-      footer.height * FOOTER_ANCHOR -
+      box.height * FOOTER_ANCHOR -
       boxHeight / 2 -
       FOOTER_LIFT
     : pageHeight - boxHeight - CLEARANCE;
+  const top = Math.max(0, middle);
   const anchored: Slot = {
-    top: Math.max(0, middle),
+    top,
+    anchor: footer ?? null,
+    anchorEdge: "top",
+    offset: box ? top - (box.top + offset) : top,
     width: boxWidth,
     height: boxHeight,
     side: FOOTER_SIDE,
@@ -351,22 +390,53 @@ export default function CadBackdrop() {
   // plan below is always measured against the page currently on screen.
   useEffect(() => {
     let frame = 0;
-    const remeasure = () => {
+
+    /**
+     * Choose the pieces and where they go. Only ever run while the page is
+     * still arriving, and on a resize — running it again later is what made
+     * the pieces wander, since a page that has grown gives a different set of
+     * bands and so a different set of choices.
+     */
+    const replan = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => setSlots(plan(footerOnly)));
     };
 
-    remeasure();
-    // Images and fonts land after the first paint and move everything below
-    // them, so the page is worth a second look once it has settled.
-    window.addEventListener("load", remeasure);
-    // Catches the rest: a resize, a lazy section, a route that grew.
-    const observer = new ResizeObserver(remeasure);
+    /**
+     * Keep the pieces already chosen with the part of the page they were put
+     * against. Nothing is re-chosen here: each one is simply re-read off its
+     * anchor, so a lazily loaded card pushing the page down carries its piece
+     * along instead of stranding it.
+     */
+    const restick = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        setSlots((current) =>
+          current.map((slot) => {
+            if (!slot.anchor?.isConnected) return slot;
+            const rect = slot.anchor.getBoundingClientRect();
+            const edge = slot.anchorEdge === "top" ? rect.top : rect.bottom;
+            const top = Math.max(0, edge + window.scrollY + slot.offset);
+            return top === slot.top ? slot : { ...slot, top };
+          }),
+        );
+      });
+    };
+
+    replan();
+    window.addEventListener("load", replan);
+    window.addEventListener("resize", replan);
+    // The last word on the arriving page, after which the choice is settled.
+    const settle = window.setTimeout(replan, SETTLE_DELAY);
+    // From then on the document may keep growing; the pieces travel with it.
+    const observer = new ResizeObserver(restick);
     observer.observe(document.body);
 
     return () => {
       cancelAnimationFrame(frame);
-      window.removeEventListener("load", remeasure);
+      window.clearTimeout(settle);
+      window.removeEventListener("load", replan);
+      window.removeEventListener("resize", replan);
       observer.disconnect();
     };
   }, [footerOnly]);
@@ -392,9 +462,10 @@ export default function CadBackdrop() {
         const away = slot.side === "left" ? "right" : "left";
         return (
           <div
-            // Position is the identity here: two slots can legitimately show
-            // the same piece, and a slot keeps its place across a re-measure.
-            key={`${slot.side}-${slot.top}`}
+            // Keyed by where it sits in the plan rather than by its position:
+            // a restick moves the top, and remounting on that would tear the
+            // canvas down and sample the drawing again for no reason.
+            key={`${slot.side}-${index}`}
             className="cad-piece absolute"
             style={{
               top: slot.top,
