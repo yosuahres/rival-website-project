@@ -166,9 +166,9 @@
     "nav": {
       "label": "Bagian halaman",
       "requirements": "Persyaratan Umum",
-      "timeline": "Linimasa",
+      "timeline": "Timeline",
       "divisions": "Divisi",
-      "documents": "Dokumen Wajib",
+      "documents": "Required Documents",
       "apply": "Daftar Sekarang",
       "faq": "FAQ"
     },
@@ -180,7 +180,7 @@
       "r4": "Berkomitmen, bertanggung jawab, dan berdedikasi untuk berkontribusi bagi RIVAL ITS.",
       "r5": "Bersedia mengikuti seluruh tahap rekrutmen dan program magang."
     },
-    "timelineTitle": "Linimasa",
+    "timelineTitle": "Timeline",
     "timeline": {
       "openRegistration": {
         "title": "Pendaftaran Dibuka",
@@ -259,7 +259,7 @@
         "skill4": "Manajemen waktu dan acara"
       }
     },
-    "documentsTitle": "Dokumen Wajib",
+    "documentsTitle": "Required Documents",
     "documents": {
       "cv": "Curriculum Vitae (CV) (format ATS atau kreatif).",
       "motivation": "Motivation Letter (minimal 500 kata) yang memuat:",
@@ -269,9 +269,9 @@
       "motivation4": "Kontribusi dan inovasi yang dapat kamu berikan pada divisi pilihanmu",
       "portfolio": "Portofolio (opsional, namun disarankan)"
     },
-    "applyTitle": "Siap Membangun Masa Depan? Bergabunglah.",
-    "applyBody": "Mulai langkah pertamamu bersama RIVAL ITS. Kirimkan dokumenmu, pilih divisimu, dan berkembanglah bersama tim yang mewujudkan ide menjadi robot kompetisi nyata. Pendaftaran ditutup 24 September 2026.",
-    "applyCta": "Daftar Sekarang",
+    "applyTitle": "Ready to Build the Future? Join Us.",
+    "applyBody": "Take your first step with RIVAL ITS. Submit your documents, choose your division, and grow with a team that turns ideas into real competition robots. Registration closes 24 September 2026.",
+    "applyCta": "Apply Now",
     "faqTitle": "Pertanyaan yang Sering Diajukan",
     "faqToggle": "Buka/tutup jawaban",
     "faq": {
