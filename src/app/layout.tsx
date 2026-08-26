@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Inter, Roboto_Flex, Space_Grotesk } from "next/font/google";
 import "./globals.css";
@@ -131,6 +132,7 @@ export default function RootLayout({
         <JsonLd schema={organizationSchema()} />
         <JsonLd schema={websiteSchema()} />
         <Layout>{children}</Layout>
+        <Analytics />
       </body>
     </html>
   );
