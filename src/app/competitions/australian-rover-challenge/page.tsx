@@ -105,10 +105,7 @@ export default function AustralianRoverChallengePage() {
           >
             <div className="flex flex-col items-center justify-center">
               <div className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2">
-                6
-                <sup className="text-lg sm:text-xl md:text-3xl">
-                  {t("common.ordinal.th")}
-                </sup>
+                6<sup className="text-lg sm:text-xl md:text-3xl">th</sup>
               </div>
               <div className="text-2xl sm:text-4xl md:text-5xl font-extrabold mt-2">
                 2026

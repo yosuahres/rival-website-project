@@ -35,12 +35,6 @@
     "learnMore": "Selengkapnya",
     "contactUs": "Hubungi Kami",
     "followUs": "Ikuti kami",
-    "ordinal": {
-      "st": "",
-      "nd": "",
-      "rd": "",
-      "th": ""
-    },
     "videoUnsupported": "Browser Anda tidak mendukung tag video."
   },
   "hero": {
@@ -100,33 +94,6 @@
     "subtitleLine1": "Temukan terobosan robotika terbaru kami,",
     "subtitleLine2": "proyek, dan pembaruan"
   },
-  "teams": {
-    "heroAlt": "Latar belakang tim",
-    "title": "Kenali Tim Kami",
-    "memberAlt": "Anggota tim {{name}}",
-    "empty": "Belum ada anggota {{role}}.",
-    "role": {
-      "advisor": "penasihat tim",
-      "leader": "ketua tim",
-      "electrical": "tim elektrikal",
-      "mechanical": "tim mekanikal",
-      "programming": "tim pemrograman",
-      "nonTech": "non-teknis"
-    },
-    "division": {
-      "electrical": "Elektrikal",
-      "mechanical": "Mekanikal",
-      "programming": "Pemrograman",
-      "nonTech": "Non-Teknis"
-    },
-    "position": {
-      "advisor": "Penasihat Tim",
-      "teamLeader": "Ketua Tim",
-      "leader": "Ketua Divisi {{division}}",
-      "expert": "Staf Ahli {{division}}",
-      "staff": "Staf {{division}}"
-    }
-  },
   "partners": {
     "heroAlt": "Robot rover",
     "title": "Sponsor & Mitra",
@@ -144,27 +111,6 @@
       "silver": "Silver",
       "bronze": "Bronze",
       "winner": "Winner"
-    }
-  },
-  "achievements": {
-    "title": "Hall of Fame",
-    "place": "JUARA",
-    "heroAlt": "Tim RIVAL ITS merayakan hasil kompetisi",
-    "award": {
-      "best": "TERBAIK",
-      "rookieTeam": "TIM PENDATANG BARU",
-      "worldwide": "DUNIA",
-      "bestRank": "PERINGKAT TERBAIK",
-      "national": "NASIONAL",
-      "regional": "REGIONAL",
-      "design": "DESAIN",
-      "strategy": "STRATEGI"
-    },
-    "event": {
-      "arc": "Australian Rover Challenge {{year}}",
-      "erc": "European Rover Challenge Remote {{year}}",
-      "krtmi": "Kontes Robot Tematik Indonesia {{year}}",
-      "krtmiNational": "Kontes Robot Tematik Indonesia, Nasional {{year}}"
     }
   },
   "competitions": {

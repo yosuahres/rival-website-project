@@ -3,12 +3,9 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import FadeIn from "@/components/FadeIn";
-import type { TranslationKey } from "@/i18n";
-import { useTranslation } from "@/i18n";
 import {
   ACHIEVEMENTS,
   type Achievement,
-  type Ordinal,
   TIER_ORDER,
   type Tier,
 } from "@/lib/achievements";
@@ -21,18 +18,6 @@ import {
  * identical geometry — the opening measurements the layout depends on hold
  * whichever metal is showing.
  */
-/**
- * The suffix beside a placing digit, per locale. English sets "1st"; a locale
- * with no such suffix maps every entry to an empty string and the digit is
- * left to stand on its own.
- */
-const ORDINAL_KEYS = {
-  st: "common.ordinal.st",
-  nd: "common.ordinal.nd",
-  rd: "common.ordinal.rd",
-  th: "common.ordinal.th",
-} as const satisfies Record<Ordinal, TranslationKey>;
-
 const TIERS: Record<Tier, { ink: string; inkMuted: string }> = {
   gold: { ink: "#EDB63C", inkMuted: "#D9A441" },
   silver: { ink: "#E9ECEE", inkMuted: "#BFC4C9" },
@@ -189,8 +174,7 @@ function AchievementBadge({
   record: Achievement;
   className?: string;
 }) {
-  const { t } = useTranslation();
-  const { rank, lead, title, event } = record;
+  const { rank, lead, title, titleLine2, event } = record;
   const tier = tierOf(record);
   const { ink, inkMuted } = TIERS[tier];
   // Only the records set apart wear the olive; the wall keeps the laurel.
@@ -240,12 +224,12 @@ function AchievementBadge({
                   separation the pair needs is then set deliberately. */}
               <span className="flex flex-col items-start gap-[0.8cqw]">
                 <span className={`font-extrabold leading-[0.72] ${f.ordinal}`}>
-                  {t(ORDINAL_KEYS[rank.ordinal])}
+                  {rank.ordinal}
                 </span>
                 <span
                   className={`font-extrabold leading-[0.85] tracking-[0.02em] ${f.place}`}
                 >
-                  {t("achievements.place")}
+                  PLACE
                 </span>
               </span>
             </div>
@@ -255,7 +239,7 @@ function AchievementBadge({
               that fills the opening the rank row would have. */}
           {!rank && lead && (
             <p className={`font-extrabold uppercase leading-[0.9] ${f.lead}`}>
-              {t(lead)}
+              {lead}
             </p>
           )}
         </div>
@@ -269,10 +253,14 @@ function AchievementBadge({
           the right arm instead hides the corner in foliage. */}
       <div className="-ml-[7%] min-w-0 flex-1 rounded-2xl border border-white/10 bg-white/[0.05] py-[4cqw] pr-[5cqw] pl-[12cqw]">
         <p className="font-extrabold text-[5.2cqw] text-[color:var(--ink)] uppercase leading-[1.1]">
-          {t(title)}
+          {/* An award that spent its lead word inside the wreath is named by
+              the title alone here; a ranked record's two title lines run on
+              as one phrase, there being width for it beside the wreath. */}
+          {title}
+          {titleLine2 && ` ${titleLine2}`}
         </p>
         <p className="mt-[1.6cqw] text-[3.3cqw] text-white/60 leading-[1.35]">
-          {t(event.key, { year: event.year })}
+          {event}
         </p>
       </div>
     </li>
@@ -280,8 +268,6 @@ function AchievementBadge({
 }
 
 export default function Achievements() {
-  const { t } = useTranslation();
-
   return (
     <>
       {/* Hero: same construction as the partners page — a photograph drained
@@ -291,7 +277,7 @@ export default function Achievements() {
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/achievements/hero-background.webp"
-            alt={t("achievements.heroAlt")}
+            alt="RIVAL ITS team celebrating a competition result"
             width={1920}
             height={1080}
             priority
@@ -307,7 +293,7 @@ export default function Achievements() {
 
         <div className="relative z-10 text-center px-6 max-w-4xl">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-8">
-            {t("achievements.title")}
+            Hall of Fame
           </h1>
         </div>
       </section>
@@ -331,7 +317,7 @@ export default function Achievements() {
             <ul className="mx-auto grid max-w-[1240px] grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-4 md:gap-y-10 lg:grid-cols-6">
               {WALL.map((achievement, index) => (
                 <AchievementBadge
-                  key={`${achievement.title}-${achievement.event.key}-${achievement.event.year}`}
+                  key={`${achievement.title}-${achievement.event}`}
                   record={achievement}
                   className={`md:col-span-2 ${lastRowOffset(index)}`}
                 />
@@ -345,7 +331,7 @@ export default function Achievements() {
               <ul className="mx-auto mt-14 grid max-w-[390px] grid-cols-1 gap-y-8 md:mt-20">
                 {SOLO.map((achievement) => (
                   <AchievementBadge
-                    key={`${achievement.title}-${achievement.event.key}-${achievement.event.year}`}
+                    key={`${achievement.title}-${achievement.event}`}
                     record={achievement}
                   />
                 ))}

@@ -22,36 +22,35 @@ import { SOCIALS } from "@/lib/socials";
 const ARM_PHOTO = "/archive/images/arm2.webp";
 
 /**
- * The three-column results strip. The placing and the year read the same in
- * every language; the scope line and the contest under it come from the
- * dictionary, and so does the suffix beside the digit — English sets "1st",
- * a locale without such a suffix leaves it empty.
+ * The three-column results strip. The placing, its suffix and the year read
+ * the same in every language and stay in English; the scope line and the
+ * contest under it come from the dictionary.
  */
 const ACHIEVEMENTS = [
   {
     digit: "1",
-    ordinal: "common.ordinal.st",
+    ordinal: "st",
     scope: "home.stats.s1.scope",
     detail: "home.stats.s1.detail",
     year: "2024",
   },
   {
     digit: "6",
-    ordinal: "common.ordinal.th",
+    ordinal: "th",
     scope: "home.stats.s2.scope",
     detail: "home.stats.s2.detail",
     year: "2026",
   },
   {
     digit: "1",
-    ordinal: "common.ordinal.st",
+    ordinal: "st",
     scope: "home.stats.s3.scope",
     detail: "home.stats.s3.detail",
     year: "2026",
   },
 ] as const satisfies readonly {
   digit: string;
-  ordinal: TranslationKey;
+  ordinal: string;
   scope: TranslationKey;
   detail: TranslationKey;
   year: string;
@@ -175,7 +174,7 @@ export default function Home() {
               >
                 <span className="font-bold text-3xl text-white leading-none sm:text-4xl md:text-[5.5vw]">
                   {achievement.digit}
-                  {t(achievement.ordinal)}
+                  {achievement.ordinal}
                 </span>
                 <span className="mt-3 mb-3 text-center font-medium text-sm text-white sm:mt-5 sm:mb-5 sm:text-lg md:text-2xl">
                   {t(achievement.scope)}

@@ -90,10 +90,7 @@ export default function IndonesianRobotContestPage() {
           >
             <div className="flex flex-col items-center justify-center">
               <div className="text-5xl sm:text-7xl md:text-9xl font-extrabold mb-2">
-                1
-                <sup className="text-xl sm:text-2xl md:text-4xl">
-                  {t("common.ordinal.st")}
-                </sup>
+                1<sup className="text-xl sm:text-2xl md:text-4xl">st</sup>
               </div>
               <div
                 className="text-sm sm:text-sm
@@ -109,10 +106,7 @@ export default function IndonesianRobotContestPage() {
             <div className="flex flex-row items-end gap-2 sm:gap-4">
               <div className="flex flex-col items-center justify-end mx-2 sm:mx-6">
                 <div className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2">
-                  4
-                  <sup className="text-lg sm:text-xl md:text-3xl">
-                    {t("common.ordinal.th")}
-                  </sup>
+                  4<sup className="text-lg sm:text-xl md:text-3xl">th</sup>
                 </div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold mt-2">
                   2023
@@ -120,10 +114,7 @@ export default function IndonesianRobotContestPage() {
               </div>
               <div className="flex flex-col items-center justify-end mx-2 sm:mx-6">
                 <div className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2">
-                  1
-                  <sup className="text-lg sm:text-xl md:text-3xl">
-                    {t("common.ordinal.st")}
-                  </sup>
+                  1<sup className="text-lg sm:text-xl md:text-3xl">st</sup>
                 </div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold mt-2">
                   2022
@@ -131,10 +122,7 @@ export default function IndonesianRobotContestPage() {
               </div>
               <div className="flex flex-col items-center justify-end mx-2 sm:mx-6">
                 <div className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2">
-                  1
-                  <sup className="text-lg sm:text-xl md:text-3xl">
-                    {t("common.ordinal.st")}
-                  </sup>
+                  1<sup className="text-lg sm:text-xl md:text-3xl">st</sup>
                 </div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold mt-2">
                   2021

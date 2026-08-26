@@ -35,12 +35,6 @@
     "learnMore": "Learn more",
     "contactUs": "Contact Us",
     "followUs": "Follow us",
-    "ordinal": {
-      "st": "st",
-      "nd": "nd",
-      "rd": "rd",
-      "th": "th"
-    },
     "videoUnsupported": "Your browser does not support the video tag."
   },
   "hero": {
@@ -100,33 +94,6 @@
     "subtitleLine1": "Discover our latest robotics breakthroughs,",
     "subtitleLine2": "projects, and updates"
   },
-  "teams": {
-    "heroAlt": "Team background",
-    "title": "Meet the Team",
-    "memberAlt": "Team member {{name}}",
-    "empty": "No {{role}} members available.",
-    "role": {
-      "advisor": "team advisor",
-      "leader": "team leader",
-      "electrical": "electrical team",
-      "mechanical": "mechanical team",
-      "programming": "programming team",
-      "nonTech": "non-tech"
-    },
-    "division": {
-      "electrical": "Electrical",
-      "mechanical": "Mechanical",
-      "programming": "Programming",
-      "nonTech": "Non-Tech"
-    },
-    "position": {
-      "advisor": "Team Advisor",
-      "teamLeader": "Team Leader",
-      "leader": "Leader of {{division}}",
-      "expert": "Expert Staff of {{division}}",
-      "staff": "Staff of {{division}}"
-    }
-  },
   "partners": {
     "heroAlt": "Rover robot",
     "title": "Sponsors & Partners",
@@ -144,27 +111,6 @@
       "silver": "Silver",
       "bronze": "Bronze",
       "winner": "Winner"
-    }
-  },
-  "achievements": {
-    "title": "Hall of Fame",
-    "place": "PLACE",
-    "heroAlt": "RIVAL ITS team celebrating a competition result",
-    "award": {
-      "best": "BEST",
-      "rookieTeam": "ROOKIE TEAM",
-      "worldwide": "WORLDWIDE",
-      "bestRank": "BEST RANK",
-      "national": "NATIONAL",
-      "regional": "REGIONAL",
-      "design": "DESIGN",
-      "strategy": "STRATEGY"
-    },
-    "event": {
-      "arc": "Australian Rover Challenge {{year}}",
-      "erc": "European Rover Challenge Remote {{year}}",
-      "krtmi": "Indonesian Thematic Robot Contest {{year}}",
-      "krtmiNational": "Indonesian Thematic Robot Contest, National {{year}}"
     }
   },
   "competitions": {

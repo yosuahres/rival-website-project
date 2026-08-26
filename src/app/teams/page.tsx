@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { type TranslationKey, useTranslation } from "@/i18n";
 import { BLUR_PLACEHOLDERS } from "@/lib/blur-placeholders";
 
 // The roster art is a set of 2828x4000 cut-outs rendered into circles no
@@ -12,17 +11,17 @@ const AVATAR_SIZES = "(min-width: 640px) 256px, 144px";
 /**
  * The groups the roster is walked in, and the order they appear on the page.
  *
- * The id is what the section anchor and the member records are keyed on, so it
- * stays put whichever language is showing; the heading beside it is looked up.
+ * The id is what the section anchor and the member records are keyed on; the
+ * label beside it is the heading shown above the row.
  */
 const ROLES = [
-  { id: "advisor", label: "teams.role.advisor" },
-  { id: "leader", label: "teams.role.leader" },
-  { id: "electrical", label: "teams.role.electrical" },
-  { id: "mechanical", label: "teams.role.mechanical" },
-  { id: "programming", label: "teams.role.programming" },
-  { id: "nonTech", label: "teams.role.nonTech" },
-] as const satisfies readonly { id: string; label: TranslationKey }[];
+  { id: "advisor", label: "team advisor" },
+  { id: "leader", label: "team leader" },
+  { id: "electrical", label: "electrical team" },
+  { id: "mechanical", label: "mechanical team" },
+  { id: "programming", label: "programming team" },
+  { id: "nonTech", label: "non-tech" },
+] as const satisfies readonly { id: string; label: string }[];
 
 type RoleId = (typeof ROLES)[number]["id"];
 
@@ -34,20 +33,21 @@ type RoleId = (typeof ROLES)[number]["id"];
 type Rank = "advisor" | "teamLeader" | "leader" | "expert" | "staff";
 
 /** The division name each rank is phrased against. */
-const DIVISION_KEYS = {
-  electrical: "teams.division.electrical",
-  mechanical: "teams.division.mechanical",
-  programming: "teams.division.programming",
-  nonTech: "teams.division.nonTech",
-} as const satisfies Partial<Record<RoleId, TranslationKey>>;
+const DIVISIONS = {
+  electrical: "Electrical",
+  mechanical: "Mechanical",
+  programming: "Programming",
+  nonTech: "Non-Tech",
+} as const satisfies Partial<Record<RoleId, string>>;
 
-const RANK_KEYS = {
-  advisor: "teams.position.advisor",
-  teamLeader: "teams.position.teamLeader",
-  leader: "teams.position.leader",
-  expert: "teams.position.expert",
-  staff: "teams.position.staff",
-} as const satisfies Record<Rank, TranslationKey>;
+/** How each rank reads. The division-scoped ones take the name as a suffix. */
+const RANKS = {
+  advisor: () => "Team Advisor",
+  teamLeader: () => "Team Leader",
+  leader: (division: string) => `Leader of ${division}`,
+  expert: (division: string) => `Expert Staff of ${division}`,
+  staff: (division: string) => `Staff of ${division}`,
+} as const satisfies Record<Rank, (division: string) => string>;
 
 type Member = {
   name: string;
@@ -259,26 +259,21 @@ const TEAM_MEMBERS: Member[] = [
   },
 ];
 
+// "Leader of Electrical" and the like are built from the two halves rather
+// than stored whole, so each rank and each division is written once.
+const positionOf = (member: Member) => {
+  const division = DIVISIONS[member.role as keyof typeof DIVISIONS];
+  return RANKS[member.rank](division ?? "");
+};
+
 export default function Teams() {
-  const { t } = useTranslation();
-
-  // "Leader of Electrical" and the like are built from the two halves rather
-  // than stored whole, so a locale writes each rank and each division once and
-  // can put them in whichever order it reads best.
-  const positionOf = (member: Member) => {
-    const division = DIVISION_KEYS[member.role as keyof typeof DIVISION_KEYS];
-    return division
-      ? t(RANK_KEYS[member.rank], { division: t(division) })
-      : t(RANK_KEYS[member.rank]);
-  };
-
   return (
     <div className="flex flex-col min-h-full">
       <section className="relative mx-3 md:mx-4 flex aspect-[6/7] items-center justify-center overflow-hidden rounded-4xl md:aspect-auto md:py-96">
         <div className="absolute inset-0 -z-50">
           <Image
             src="/images/teams/hero-background.webp"
-            alt={t("teams.heroAlt")}
+            alt="Team background"
             fill
             sizes="100vw"
             placeholder="blur"
@@ -300,7 +295,7 @@ export default function Teams() {
           <div className="w-full">
             <div className="text-center">
               <h1 className="text-white font-black text-5xl md:text-7xl mb-6 sm:mb-8">
-                {t("teams.title")}
+                Meet the Team
               </h1>
             </div>
           </div>
@@ -319,7 +314,7 @@ export default function Teams() {
                   <div key={role.id}>
                     <div id={role.id} className="mb-8 sm:mb-12">
                       <h2 className="text-white font-bold text-2xl sm:text-4xl mt-8 sm:mt-12 mb-6 sm:mb-8 capitalize text-center">
-                        {t(role.label)}
+                        {role.label}
                       </h2>
                       <div
                         className={
@@ -337,9 +332,7 @@ export default function Teams() {
                               <div className="w-36 h-36 sm:w-64 sm:h-64 rounded-full overflow-hidden flex items-center justify-center mb-3 sm:mb-4 bg-white/10 relative">
                                 <Image
                                   src={member.image}
-                                  alt={t("teams.memberAlt", {
-                                    name: member.name,
-                                  })}
+                                  alt={`Team member ${member.name}`}
                                   fill
                                   sizes={AVATAR_SIZES}
                                   placeholder="blur"
@@ -364,7 +357,7 @@ export default function Teams() {
                           ))
                         ) : (
                           <p className="text-[#398561] col-span-full">
-                            {t("teams.empty", { role: t(role.label) })}
+                            {`No ${role.label} members available.`}
                           </p>
                         )}
                       </div>
