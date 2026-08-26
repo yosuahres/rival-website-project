@@ -23,13 +23,13 @@ export type Partner = {
 /** Two headline sponsors, on the top row. */
 export const PARTNERS_LEAD: Partner[] = [
   {
-    src: "/images/partners/platinum/andi-sobolangit.png",
+    src: "/images/partners/platinum/andi-sobolangit.webp",
     alt: "AndiSobolangit",
     width: 320,
     height: 320,
   },
   {
-    src: "/images/partners/platinum/ancuk.png",
+    src: "/images/partners/platinum/ancuk.webp",
     alt: "Triguna",
     width: 320,
     height: 320,
@@ -39,7 +39,7 @@ export const PARTNERS_LEAD: Partner[] = [
 /** Single mid-tier sponsor, centred on its own row. */
 export const PARTNERS_FEATURE: Partner[] = [
   {
-    src: "/images/partners/silver/wika.png",
+    src: "/images/partners/silver/wika.webp",
     alt: "wika",
     width: 320,
     height: 320,
@@ -49,38 +49,38 @@ export const PARTNERS_FEATURE: Partner[] = [
 /** The remaining sponsors, laid out three to a row. */
 export const PARTNERS_SUPPORTING: Partner[] = [
   {
-    src: "/images/partners/winner/apd.png",
+    src: "/images/partners/winner/apd.webp",
     alt: "APD",
     width: 240,
     height: 300,
   },
   {
-    src: "/images/partners/winner/arl.png",
+    src: "/images/partners/winner/arl.webp",
     alt: "ARL",
     width: 320,
     height: 320,
   },
   {
-    src: "/images/partners/winner/gajelas.png",
+    src: "/images/partners/winner/gajelas.webp",
     alt: "Akhishop",
     width: 800,
     height: 302,
     wide: true,
   },
   {
-    src: "/images/partners/bronze/fure.png",
+    src: "/images/partners/bronze/fure.webp",
     alt: "Fure",
     width: 320,
     height: 320,
   },
   {
-    src: "/images/partners/bronze/graha-pintar.png",
+    src: "/images/partners/bronze/graha-pintar.webp",
     alt: "GrahaPintar",
     width: 320,
     height: 320,
   },
   {
-    src: "/images/partners/bronze/ipbth.png",
+    src: "/images/partners/bronze/ipbth.webp",
     alt: "IPBTH",
     width: 800,
     height: 357,

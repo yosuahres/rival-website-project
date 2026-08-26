@@ -2,6 +2,20 @@
 
 import { useCallback, useEffect, useRef } from "react";
 
+/**
+ * The opaque region of the source, as fractions of the file (0-1), plus its
+ * true aspect ratio in pixels. The stipple is fitted to this box rather than
+ * to the file, so a caller wanting to line another rendering of the same
+ * artwork up with the dots needs it.
+ */
+export type DotImageBounds = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  aspect: number;
+};
+
 type Props = {
   /** Source artwork. Needs a transparent background — alpha drives the dots. */
   src: string;
@@ -10,6 +24,8 @@ type Props = {
   className?: string;
   /** Dot colours, cycled by a positional hash so the mix stays stable. */
   palette?: { body: string[]; edge: string[] };
+  /** Called once per source, with the box the dots were fitted to. */
+  onBounds?: (bounds: DotImageBounds) => void;
 };
 
 /** Longest edge of the sampling buffer. Bigger reads finer, costs more. */
@@ -19,7 +35,8 @@ const ALPHA_FLOOR = 28;
 /** Grid pitch in CSS pixels: the smaller, the denser the stipple. */
 const PITCH = 4;
 /** Share of the box left empty around the artwork. */
-const INSET = 0.06;
+export const DOT_IMAGE_INSET = 0.06;
+const INSET = DOT_IMAGE_INSET;
 
 /**
  * Source luminance below this reads as a drawn edge rather than a lit face.
@@ -93,8 +110,15 @@ export default function DotImage({
   alt = "",
   className,
   palette = DEFAULT_PALETTE,
+  onBounds,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // Held in a ref so a caller passing an inline callback doesn't force the
+  // source to be sampled again on every render.
+  const onBoundsRef = useRef(onBounds);
+  useEffect(() => {
+    onBoundsRef.current = onBounds;
+  });
   /** Sampled alpha map of the source, kept across resizes. */
   const sampleRef = useRef<{
     alpha: Uint8ClampedArray;
@@ -225,6 +249,13 @@ export default function DotImage({
             };
 
       sampleRef.current = { alpha, luma, width: sw, height: sh, box };
+      onBoundsRef.current?.({
+        x: box.x / sw,
+        y: box.y / sh,
+        width: box.width / sw,
+        height: box.height / sh,
+        aspect: box.width / box.height,
+      });
       draw();
     };
 

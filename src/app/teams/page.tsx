@@ -1,225 +1,290 @@
 "use client";
 import Image from "next/image";
+import { type TranslationKey, useTranslation } from "@/i18n";
+import { BLUR_PLACEHOLDERS } from "@/lib/blur-placeholders";
+
+// The roster art is a set of 2828x4000 cut-outs rendered into circles no
+// wider than 256px, so `sizes` is what stops next/image handing the browser
+// a multi-megabyte original for a thumbnail. Without it `fill` assumes the
+// image spans the viewport and picks the largest variant it has.
+const AVATAR_SIZES = "(min-width: 640px) 256px, 144px";
+
+/**
+ * The groups the roster is walked in, and the order they appear on the page.
+ *
+ * The id is what the section anchor and the member records are keyed on, so it
+ * stays put whichever language is showing; the heading beside it is looked up.
+ */
+const ROLES = [
+  { id: "advisor", label: "teams.role.advisor" },
+  { id: "leader", label: "teams.role.leader" },
+  { id: "electrical", label: "teams.role.electrical" },
+  { id: "mechanical", label: "teams.role.mechanical" },
+  { id: "programming", label: "teams.role.programming" },
+  { id: "nonTech", label: "teams.role.nonTech" },
+] as const satisfies readonly { id: string; label: TranslationKey }[];
+
+type RoleId = (typeof ROLES)[number]["id"];
+
+/**
+ * A member's standing within their division. The advisor and the team leader
+ * head the whole team rather than a division, so they carry their own titles;
+ * everyone else's reads as a rank applied to a division name.
+ */
+type Rank = "advisor" | "teamLeader" | "leader" | "expert" | "staff";
+
+/** The division name each rank is phrased against. */
+const DIVISION_KEYS = {
+  electrical: "teams.division.electrical",
+  mechanical: "teams.division.mechanical",
+  programming: "teams.division.programming",
+  nonTech: "teams.division.nonTech",
+} as const satisfies Partial<Record<RoleId, TranslationKey>>;
+
+const RANK_KEYS = {
+  advisor: "teams.position.advisor",
+  teamLeader: "teams.position.teamLeader",
+  leader: "teams.position.leader",
+  expert: "teams.position.expert",
+  staff: "teams.position.staff",
+} as const satisfies Record<Rank, TranslationKey>;
+
+type Member = {
+  name: string;
+  image: string;
+  role: RoleId;
+  rank: Rank;
+  offset: { x: number; y: number };
+};
+
+const TEAM_MEMBERS: Member[] = [
+  {
+    name: "Moh Ismarintan Zazuli",
+    image: "/images/teams/advisor/ismarintan.webp",
+    role: "advisor",
+    rank: "advisor",
+    offset: { x: 0, y: 0 },
+  },
+  {
+    name: "Aditya Dharma Saputra",
+    image: "/images/teams/leader/dharma.webp",
+    role: "leader",
+    rank: "teamLeader",
+    offset: { x: 0, y: 15 },
+  },
+  {
+    name: "Mochammad Rifki Al Syawal",
+    image: "/images/teams/electrical/syawal.webp",
+    role: "electrical",
+    rank: "leader",
+    offset: { x: 0, y: 15 },
+  },
+  {
+    name: "Valencia Stevie F. H.",
+    image: "/images/teams/electrical/tip.webp",
+    role: "electrical",
+    rank: "expert",
+    offset: { x: 20, y: 0 },
+  },
+  {
+    name: "Melyana Putri Tiyarno",
+    image: "/images/teams/electrical/melyana.webp",
+    role: "electrical",
+    rank: "expert",
+    offset: { x: -20, y: 0 },
+  },
+  {
+    name: "Evan Javier Firdausi Malik",
+    image: "/images/teams/electrical/evan.webp",
+    role: "electrical",
+    rank: "expert",
+    offset: { x: -20, y: 0 },
+  },
+  {
+    name: "Ademas Fazri Sunaryo",
+    image: "/images/teams/electrical/ademas.webp",
+    role: "electrical",
+    rank: "expert",
+    offset: { x: -10, y: 0 },
+  },
+  {
+    name: "I Ketut Pajar Mahensanjaya",
+    image: "/images/teams/electrical/pajar.webp",
+    role: "electrical",
+    rank: "staff",
+    offset: { x: -15, y: 20 },
+  },
+  {
+    name: "Ahmad Kagendra Nouval Arianto",
+    image: "/images/teams/electrical/nouval.webp",
+    role: "electrical",
+    rank: "staff",
+    offset: { x: 20, y: 20 },
+  },
+
+  {
+    name: "Rizal Khoirul Atok",
+    image: "/images/teams/mechanical/atok.webp",
+    role: "mechanical",
+    rank: "leader",
+    offset: { x: -10, y: 20 },
+  },
+  {
+    name: "Andreas Agung Servia Pintarta",
+    image: "/images/teams/mechanical/andre.webp",
+    role: "mechanical",
+    rank: "expert",
+    offset: { x: 5, y: 10 },
+  },
+  {
+    name: "Muhammad Rizal Hakim",
+    image: "/images/teams/mechanical/rizal.webp",
+    role: "mechanical",
+    rank: "expert",
+    offset: { x: -10, y: 0 },
+  },
+  {
+    name: "Naafi' Aziz Salam",
+    image: "/images/teams/mechanical/naafi.webp",
+    role: "mechanical",
+    rank: "staff",
+    offset: { x: 0, y: 0 },
+  },
+  {
+    name: "Wisnu Istiawan",
+    image: "/images/teams/mechanical/wisnu.webp",
+    role: "mechanical",
+    rank: "staff",
+    offset: { x: -10, y: 25 },
+  },
+  {
+    name: "Rifqi Haikal Zahran",
+    image: "/images/teams/mechanical/rifqi.webp",
+    role: "mechanical",
+    rank: "staff",
+    offset: { x: -10, y: 25 },
+  },
+
+  {
+    name: "Zalfa Nafila Khairunnisa",
+    image: "/images/teams/programming/zalfa.webp",
+    role: "programming",
+    rank: "leader",
+    offset: { x: 10, y: 0 },
+  },
+  {
+    name: "Moh. Wildan Risqi Maulidi",
+    image: "/images/teams/programming/wildan.webp",
+    role: "programming",
+    rank: "expert",
+    offset: { x: -5, y: 20 },
+  },
+  {
+    name: "Naufal Daffa Alfa Zain",
+    image: "/images/teams/programming/naufal.webp",
+    role: "programming",
+    rank: "expert",
+    offset: { x: 15, y: 0 },
+  },
+  {
+    name: "Raditya Zhafran Pranuja",
+    image: "/images/teams/programming/radit.webp",
+    role: "programming",
+    rank: "expert",
+    offset: { x: -5, y: 0 },
+  },
+  {
+    name: "Budiman Setiono",
+    image: "/images/teams/programming/budi.webp",
+    role: "programming",
+    rank: "staff",
+    offset: { x: -10, y: 0 },
+  },
+  {
+    name: "Narendra Andhi Putra Pratama",
+    image: "/images/teams/programming/naren.webp",
+    role: "programming",
+    rank: "staff",
+    offset: { x: 5, y: 10 },
+  },
+
+  {
+    name: "Karina Maheswari",
+    image: "/images/teams/non-tech/kar.webp",
+    role: "nonTech",
+    rank: "leader",
+    offset: { x: 0, y: 0 },
+  },
+  {
+    name: "Oktavian Rifki Danendra",
+    image: "/images/teams/non-tech/rifki.webp",
+    role: "nonTech",
+    rank: "expert",
+    offset: { x: -10, y: 0 },
+  },
+  {
+    name: "Alif Gibran",
+    image: "/images/teams/non-tech/gib.webp",
+    role: "nonTech",
+    rank: "expert",
+    offset: { x: -10, y: 0 },
+  },
+  {
+    name: "Kaysa Tsana Adilah",
+    image: "/images/teams/non-tech/kay.webp",
+    role: "nonTech",
+    rank: "expert",
+    offset: { x: 0, y: 0 },
+  },
+  {
+    name: "Enno Ajeng Larasati",
+    image: "/images/teams/non-tech/enno.webp",
+    role: "nonTech",
+    rank: "staff",
+    offset: { x: 0, y: 0 },
+  },
+  {
+    name: "Daffa Ramadhani Nugroho",
+    image: "/images/teams/non-tech/dap.webp",
+    role: "nonTech",
+    rank: "staff",
+    offset: { x: 0, y: 0 },
+  },
+  {
+    name: "Dion Hardi Saputra",
+    image: "/images/teams/non-tech/dion.webp",
+    role: "nonTech",
+    rank: "staff",
+    offset: { x: 5, y: 0 },
+  },
+];
 
 export default function Teams() {
-  const teamMembers = [
-    {
-      name: "Moh Ismarintan Zazuli",
-      image: "/images/teams/advisor/ismarintan.png",
-      role: "team advisor",
-      position: "Team Advisor",
-      offset: { x: 0, y: 0 },
-    },
-    {
-      name: "Aditya Dharma Saputra",
-      image: "/images/teams/leader/dharma.png",
-      role: "team leader",
-      position: "Team Leader",
-      offset: { x: 0, y: 15 },
-    },
-    {
-      name: "Mochammad Rifki Al Syawal",
-      image: "/images/teams/electrical/syawal.png",
-      role: "electrical team",
-      position: "Leader of Electrical",
-      offset: { x: 0, y: 15 },
-    },
-    {
-      name: "Valencia Stevie F. H.",
-      image: "/images/teams/electrical/tip.png",
-      role: "electrical team",
-      position: "Expert Staff of Electrical",
-      offset: { x: 20, y: 0 },
-    },
-    {
-      name: "Melyana Putri Tiyarno",
-      image: "/images/teams/electrical/melyana.png",
-      role: "electrical team",
-      position: "Expert Staff of Electrical",
-      offset: { x: -20, y: 0 },
-    },
-    {
-      name: "Evan Javier Firdausi Malik",
-      image: "/images/teams/electrical/evan.png",
-      role: "electrical team",
-      position: "Expert Staff of Electrical",
-      offset: { x: -20, y: 0 },
-    },
-    {
-      name: "Ademas Fazri Sunaryo",
-      image: "/images/teams/electrical/ademas.png",
-      role: "electrical team",
-      position: "Expert Staff of Electrical",
-      offset: { x: -10, y: 0 },
-    },
-    {
-      name: "I Ketut Pajar Mahensanjaya",
-      image: "/images/teams/electrical/pajar.png",
-      role: "electrical team",
-      position: "Staff of Electrical",
-      offset: { x: -15, y: 20 },
-    },
-    {
-      name: "Ahmad Kagendra Nouval Arianto",
-      image: "/images/teams/electrical/nouval.png",
-      role: "electrical team",
-      position: "Staff of Electrical",
-      offset: { x: 20, y: 20 },
-    },
+  const { t } = useTranslation();
 
-    {
-      name: "Rizal Khoirul Atok",
-      image: "/images/teams/mechanical/atok.png",
-      role: "mechanical team",
-      position: "Leader of Mechanical",
-      offset: { x: -10, y: 20 },
-    },
-    {
-      name: "Andreas Agung Servia Pintarta",
-      image: "/images/teams/mechanical/andre.png",
-      role: "mechanical team",
-      position: "Expert Staff of Mechanical",
-      offset: { x: 5, y: 10 },
-    },
-    {
-      name: "Muhammad Rizal Hakim",
-      image: "/images/teams/mechanical/rizal.png",
-      role: "mechanical team",
-      position: "Expert Staff of Mechanical",
-      offset: { x: -10, y: 0 },
-    },
-    {
-      name: "Naafi' Aziz Salam",
-      image: "/images/teams/mechanical/naafi.png",
-      role: "mechanical team",
-      position: "Staff of Mechanical",
-      offset: { x: 0, y: 0 },
-    },
-    {
-      name: "Wisnu Istiawan",
-      image: "/images/teams/mechanical/wisnu.png",
-      role: "mechanical team",
-      position: "Staff of Mechanical",
-      offset: { x: -10, y: 25 },
-    },
-    {
-      name: "Rifqi Haikal Zahran",
-      image: "/images/teams/mechanical/rifqi.png",
-      role: "mechanical team",
-      position: "Staff of Mechanical",
-      offset: { x: -10, y: 25 },
-    },
-
-    {
-      name: "Zalfa Nafila Khairunnisa",
-      image: "/images/teams/programming/zalfa.png",
-      role: "programming team",
-      position: "Leader of Programming",
-      offset: { x: 10, y: 0 },
-    },
-    {
-      name: "Moh. Wildan Risqi Maulidi",
-      image: "/images/teams/programming/wildan.png",
-      role: "programming team",
-      position: "Expert Staff of Programming",
-      offset: { x: -5, y: 20 },
-    },
-    {
-      name: "Naufal Daffa Alfa Zain",
-      image: "/images/teams/programming/naufal.png",
-      role: "programming team",
-      position: "Expert Staff of Programming",
-      offset: { x: 15, y: 0 },
-    },
-    {
-      name: "Raditya Zhafran Pranuja",
-      image: "/images/teams/programming/radit.png",
-      role: "programming team",
-      position: "Expert Staff of Programming",
-      offset: { x: -5, y: 0 },
-    },
-    {
-      name: "Budiman Setiono",
-      image: "/images/teams/programming/budi.png",
-      role: "programming team",
-      position: "Staff of Programming",
-      offset: { x: -10, y: 0 },
-    },
-    {
-      name: "Narendra Andhi Putra Pratama",
-      image: "/images/teams/programming/naren.png",
-      role: "programming team",
-      position: "Staff of Programming",
-      offset: { x: 5, y: 10 },
-    },
-    {
-      name: "Karina Maheswari",
-      image: "/images/teams/non-tech/kar.png",
-      role: "non-tech",
-      position: "Leader of Non-Tech",
-      offset: { x: 0, y: 0 },
-    },
-    {
-      name: "Oktavian Rifki Danendra",
-      image: "/images/teams/non-tech/rifki.png",
-      role: "non-tech",
-      position: "Expert Staff of Non-Tech",
-      offset: { x: -10, y: 0 },
-    },
-    {
-      name: "Alif Gibran",
-      image: "/images/teams/non-tech/gib.png",
-      role: "non-tech",
-      position: "Expert Staff of Non-Tech",
-      offset: { x: -10, y: 0 },
-    },
-    {
-      name: "Kaysa Tsana Adilah",
-      image: "/images/teams/non-tech/kay.png",
-      role: "non-tech",
-      position: "Expert Staff of Non-Tech",
-      offset: { x: 0, y: 0 },
-    },
-    {
-      name: "Enno Ajeng Larasati",
-      image: "/images/teams/non-tech/enno.png",
-      role: "non-tech",
-      position: "Staff of Non-Tech",
-      offset: { x: 0, y: 0 },
-    },
-    {
-      name: "Daffa Ramadhani Nugroho",
-      image: "/images/teams/non-tech/dap.png",
-      role: "non-tech",
-      position: "Staff of Non-Tech",
-      offset: { x: 0, y: 0 },
-    },
-    {
-      name: "Dion Hardi Saputra",
-      image: "/images/teams/non-tech/dion.png",
-      role: "non-tech",
-      position: "Staff of Non-Tech",
-      offset: { x: 5, y: 0 },
-    },
-  ];
-
-  const roles = [
-    "team advisor",
-    "team leader",
-    "electrical team",
-    "mechanical team",
-    "programming team",
-    "non-tech",
-  ];
+  // "Leader of Electrical" and the like are built from the two halves rather
+  // than stored whole, so a locale writes each rank and each division once and
+  // can put them in whichever order it reads best.
+  const positionOf = (member: Member) => {
+    const division = DIVISION_KEYS[member.role as keyof typeof DIVISION_KEYS];
+    return division
+      ? t(RANK_KEYS[member.rank], { division: t(division) })
+      : t(RANK_KEYS[member.rank]);
+  };
 
   return (
     <div className="flex flex-col min-h-full">
       <section className="relative mx-3 md:mx-4 flex aspect-[6/7] items-center justify-center overflow-hidden rounded-4xl md:aspect-auto md:py-96">
         <div className="absolute inset-0 -z-50">
           <Image
-            src="/images/teams/hero-background.png"
-            alt="Team background"
+            src="/images/teams/hero-background.webp"
+            alt={t("teams.heroAlt")}
             fill
+            sizes="100vw"
+            placeholder="blur"
+            blurDataURL={
+              BLUR_PLACEHOLDERS["/images/teams/hero-background.webp"]
+            }
             className="object-cover object-center grayscale"
             priority
           />
@@ -235,7 +300,7 @@ export default function Teams() {
           <div className="w-full">
             <div className="text-center">
               <h1 className="text-white font-black text-5xl md:text-7xl mb-6 sm:mb-8">
-                Meet the Team
+                {t("teams.title")}
               </h1>
             </div>
           </div>
@@ -246,18 +311,15 @@ export default function Teams() {
         <div className="w-full">
           <div className="w-full">
             <div className="text-center">
-              {roles.map((role, index) => {
-                const membersInRole = teamMembers.filter(
-                  (member) => member.role === role,
+              {ROLES.map((role, index) => {
+                const membersInRole = TEAM_MEMBERS.filter(
+                  (member) => member.role === role.id,
                 );
                 return (
-                  <div key={role}>
-                    <div
-                      id={role.replace(/\s+/g, "-")}
-                      className="mb-8 sm:mb-12"
-                    >
+                  <div key={role.id}>
+                    <div id={role.id} className="mb-8 sm:mb-12">
                       <h2 className="text-white font-bold text-2xl sm:text-4xl mt-8 sm:mt-12 mb-6 sm:mb-8 capitalize text-center">
-                        {role}
+                        {t(role.label)}
                       </h2>
                       <div
                         className={
@@ -275,8 +337,17 @@ export default function Teams() {
                               <div className="w-36 h-36 sm:w-64 sm:h-64 rounded-full overflow-hidden flex items-center justify-center mb-3 sm:mb-4 bg-white/10 relative">
                                 <Image
                                   src={member.image}
-                                  alt={`Team member ${member.name}`}
+                                  alt={t("teams.memberAlt", {
+                                    name: member.name,
+                                  })}
                                   fill
+                                  sizes={AVATAR_SIZES}
+                                  placeholder="blur"
+                                  blurDataURL={BLUR_PLACEHOLDERS[member.image]}
+                                  // The advisor and the team leader sit above
+                                  // the fold; everything below waits until it
+                                  // is scrolled near.
+                                  priority={index < 2}
                                   className="object-cover object-center"
                                   style={{
                                     transform: `translate(${member.offset.x}px, ${member.offset.y}px)`,
@@ -284,22 +355,21 @@ export default function Teams() {
                                 />
                               </div>
                               <p className="text-white font-medium text-base sm:text-xl text-center">
-                                {member.name.charAt(0).toUpperCase() +
-                                  member.name.slice(1)}
+                                {member.name}
                               </p>
                               <p className="text-white/70 text-xs sm:text-base text-center capitalize">
-                                {member.position}
+                                {positionOf(member)}
                               </p>
                             </div>
                           ))
                         ) : (
                           <p className="text-[#398561] col-span-full">
-                            No {role} members available.
+                            {t("teams.empty", { role: t(role.label) })}
                           </p>
                         )}
                       </div>
                     </div>
-                    {index < roles.length - 1 && (
+                    {index < ROLES.length - 1 && (
                       <svg
                         aria-hidden="true"
                         className="w-full h-16 my-8 sm:my-12 relative z-10"
