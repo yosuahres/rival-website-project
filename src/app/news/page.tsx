@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTranslation } from "@/i18n";
 
 const newsData = [
   {
@@ -55,12 +56,14 @@ function Arrow() {
 }
 
 function MetaRow({ source, date }: { source: string; date: string }) {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-400">
       <span>{date}</span>
       <span>{source}</span>
       <span className="flex items-center gap-2 text-gray-200 group-hover:text-white transition-colors">
-        Learn more
+        {t("common.learnMore")}
         <Arrow />
       </span>
     </div>
@@ -68,6 +71,7 @@ function MetaRow({ source, date }: { source: string; date: string }) {
 }
 
 export default function News() {
+  const { t } = useTranslation();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -88,13 +92,13 @@ export default function News() {
         {/* Page header */}
         <header className="mb-16 lg:mb-20">
           <h1 className="text-white text-4xl md:text-5xl font-medium tracking-tight">
-            News
+            {t("news.title")}
           </h1>
           {/* The break is explicit so the subtitle always sets as two lines on
               wide screens instead of wrapping into three. */}
           <p className="mt-2 text-3xl md:text-4xl lg:text-5xl font-light leading-tight text-gray-400 max-w-5xl">
-            Discover our latest robotics breakthroughs,
-            <br className="hidden md:inline" /> projects, and updates
+            {t("news.subtitleLine1")}
+            <br className="hidden md:inline" /> {t("news.subtitleLine2")}
           </p>
         </header>
 

@@ -56,10 +56,11 @@ export default function Navbar() {
   // Never slide away with a menu open — it would drag the open panel offscreen.
   const hideNavbar = scrolledDown && !isMobileMenuOpen && !isProjectsOpen;
 
-  // Publish whether the bar is on screen, so a page that pins a bar of its own
-  // to the top (see the recruitment page) can step out of the way when this one
-  // slides back in. Written onto the body rather than shared through context:
-  // the two bars sit in separate layouts with no common provider between them.
+  // Publish whether the bar is on screen, so a page that sticks a bar of its
+  // own to the top (see the recruitment page) can rest flush against the top
+  // while this one is away and drop back a row when it returns. Written onto
+  // the body rather than shared through context: the two bars sit in separate
+  // layouts with no common provider between them.
   useEffect(() => {
     document.body.dataset.siteNavbarState = hideNavbar ? "hidden" : "shown";
     return () => {

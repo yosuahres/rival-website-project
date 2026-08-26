@@ -1,3 +1,5 @@
+import type { TranslationKey } from "@/i18n/config";
+
 /**
  * The team's competition results, in the order the Hall of Fame shows them.
  *
@@ -9,8 +11,10 @@
  * Every entry is rendered inside the same laurel wreath, so the fields are
  * sized for that frame rather than for prose: `rank` is the one glyph that
  * reads from across the room, `title` the award in a word or two, and `event`
- * the line of fine print underneath. Keep each title line under ~9 characters
- * — longer runs past the leaves and crowds the wreath.
+ * the line of fine print underneath.
+ *
+ * Every line of display text is a dictionary key rather than the words
+ * themselves, so the wall reads in whichever locale the visitor picked.
  */
 /**
  * The medals a record can show in, best first. Ordering the wall is a matter
@@ -19,6 +23,16 @@
 export const TIER_ORDER = ["gold", "silver", "bronze", "steel"] as const;
 
 export type Tier = (typeof TIER_ORDER)[number];
+
+/**
+ * Competition and year, as the fine print under a title wants it: the name is
+ * a dictionary key taking a `{{year}}`, so a locale can both translate the
+ * contest and put the year where its own phrasing needs it.
+ */
+export type AchievementEvent = { key: TranslationKey; year: string };
+
+/** The suffix a placing takes in English — the set a locale supplies text for. */
+export type Ordinal = "st" | "nd" | "rd" | "th";
 
 export type Achievement = {
   /**
@@ -30,20 +44,18 @@ export type Achievement = {
    * 1st of anything — in which case the badge drops the whole rank line and
    * gives the title the room instead. Such an entry usually wants a `lead`.
    */
-  rank?: { digit: string; ordinal: string };
+  rank?: { digit: string; ordinal: Ordinal };
   /**
    * Small qualifier set above the title, in place of the rank row: the
    * un-ranked counterpart of "1st PLACE". Lets a name like "BEST ROOKIE TEAM"
    * break the way the ranked badges do — a quiet lead-in over the award
    * itself — instead of running as one flat two-line block.
    */
-  lead?: string;
+  lead?: TranslationKey;
   /** Award or category won, already in the caps the badge displays. */
-  title: string;
-  /** Second title line, for names that will not fit on one. */
-  titleLine2?: string;
+  title: TranslationKey;
   /** Competition and year, in the fine print under the title. */
-  event: string;
+  event: AchievementEvent;
   /**
    * Show this record on its own, beneath the wall, at a fraction of the size.
    *
@@ -63,28 +75,24 @@ export type Achievement = {
   tier?: Tier;
 };
 
-const KRTMI = "Indonesian Thematic Robot Contest";
-
 export const ACHIEVEMENTS: readonly Achievement[] = [
   {
-    lead: "BEST",
-    title: "ROOKIE",
-    titleLine2: "TEAM",
-    event: "Australian Rover Challenge 2026",
+    lead: "achievements.award.best",
+    title: "achievements.award.rookieTeam",
+    event: { key: "achievements.event.arc", year: "2026" },
   },
 
   {
     rank: { digit: "6", ordinal: "th" },
-    title: "WORLDWIDE",
-    event: "Australian Rover Challenge 2026",
+    title: "achievements.award.worldwide",
+    event: { key: "achievements.event.arc", year: "2026" },
     tier: "gold",
   },
 
   {
     rank: { digit: "13", ordinal: "th" },
-    title: "BEST",
-    titleLine2: "RANK",
-    event: "European Rover Challenge Remote 2025",
+    title: "achievements.award.bestRank",
+    event: { key: "achievements.event.erc", year: "2025" },
     solo: true,
     // White rather than the steel a 13th would take by default: standing on
     // its own below the wall, it reads as its own thing rather than as the
@@ -94,54 +102,54 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
 
   {
     rank: { digit: "1", ordinal: "st" },
-    title: "NATIONAL",
-    event: `${KRTMI} 2024`,
+    title: "achievements.award.national",
+    event: { key: "achievements.event.krtmi", year: "2024" },
   },
 
   // "Juara Harapan 1" — the placing directly below third. Shown as 4th, which
   // is how the Indonesian Robot Contest page already renders this same result.
   {
     rank: { digit: "4", ordinal: "th" },
-    title: "NATIONAL",
-    event: `${KRTMI} 2023`,
+    title: "achievements.award.national",
+    event: { key: "achievements.event.krtmi", year: "2023" },
   },
   {
     rank: { digit: "2", ordinal: "nd" },
-    title: "REGIONAL",
-    event: `${KRTMI} 2023`,
+    title: "achievements.award.regional",
+    event: { key: "achievements.event.krtmi", year: "2023" },
   },
 
   {
     rank: { digit: "1", ordinal: "st" },
-    title: "NATIONAL",
-    event: `${KRTMI} 2022`,
+    title: "achievements.award.national",
+    event: { key: "achievements.event.krtmi", year: "2022" },
   },
   {
     rank: { digit: "1", ordinal: "st" },
-    title: "REGIONAL",
-    event: `${KRTMI} 2022`,
+    title: "achievements.award.regional",
+    event: { key: "achievements.event.krtmi", year: "2022" },
   },
   // The special awards carry their round in the fine print instead of the
   // title line, which they have spent on the award itself.
   {
-    lead: "BEST",
-    title: "DESIGN",
-    event: `${KRTMI}, National 2022`,
+    lead: "achievements.award.best",
+    title: "achievements.award.design",
+    event: { key: "achievements.event.krtmiNational", year: "2022" },
   },
 
   {
     rank: { digit: "1", ordinal: "st" },
-    title: "NATIONAL",
-    event: `${KRTMI} 2021`,
+    title: "achievements.award.national",
+    event: { key: "achievements.event.krtmi", year: "2021" },
   },
   {
     rank: { digit: "3", ordinal: "rd" },
-    title: "REGIONAL",
-    event: `${KRTMI} 2021`,
+    title: "achievements.award.regional",
+    event: { key: "achievements.event.krtmi", year: "2021" },
   },
   {
-    lead: "BEST",
-    title: "STRATEGY",
-    event: `${KRTMI}, National 2021`,
+    lead: "achievements.award.best",
+    title: "achievements.award.strategy",
+    event: { key: "achievements.event.krtmiNational", year: "2021" },
   },
 ] as const;

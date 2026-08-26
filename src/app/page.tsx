@@ -3,8 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import DotImage from "@/components/DotImage";
+import DotImage, {
+  DOT_IMAGE_INSET,
+  type DotImageBounds,
+} from "@/components/DotImage";
 import HomeHeroCarousel from "@/components/HomeHeroCarousel";
+import { type TranslationKey, useTranslation } from "@/i18n";
+import { BUTTON_LIGHT } from "@/lib/button";
 import {
   PARTNERS_FEATURE,
   PARTNERS_LEAD,
@@ -13,21 +18,44 @@ import {
 } from "@/lib/partners";
 import { SOCIALS } from "@/lib/socials";
 
+/** Source artwork for the closing card: dots first, photo on hover. */
+const ARM_PHOTO = "/archive/images/arm2.webp";
+
+/**
+ * The three-column results strip. The placing and the year read the same in
+ * every language; the scope line and the contest under it come from the
+ * dictionary, and so does the suffix beside the digit — English sets "1st",
+ * a locale without such a suffix leaves it empty.
+ */
 const ACHIEVEMENTS = [
   {
-    rank: "1st",
-    scope: "in Indonesia",
-    detail: "Indonesian Thematic Robot Contest",
+    digit: "1",
+    ordinal: "common.ordinal.st",
+    scope: "home.stats.s1.scope",
+    detail: "home.stats.s1.detail",
     year: "2024",
   },
   {
-    rank: "6th",
-    scope: "Worldwide",
-    detail: "Australian Rover Challenge (ARCh)",
+    digit: "6",
+    ordinal: "common.ordinal.th",
+    scope: "home.stats.s2.scope",
+    detail: "home.stats.s2.detail",
     year: "2026",
   },
-  { rank: "1st", scope: "Indonesian rover team", detail: "", year: "2026" },
-];
+  {
+    digit: "1",
+    ordinal: "common.ordinal.st",
+    scope: "home.stats.s3.scope",
+    detail: "home.stats.s3.detail",
+    year: "2026",
+  },
+] as const satisfies readonly {
+  digit: string;
+  ordinal: TranslationKey;
+  scope: TranslationKey;
+  detail: TranslationKey;
+  year: string;
+}[];
 
 /**
  * Logo heights, by tier. Top-tier sponsors render larger; within a tier a wide
@@ -45,9 +73,41 @@ const logoClass = (
 ) =>
   `w-auto max-w-full object-contain ${LOGO_HEIGHTS[tier][partner.wide ? "wide" : "normal"]}`;
 
+/**
+ * Places the source photograph over the stipple of it. DotImage crops the file
+ * to its opaque bounds and contains that box inside the inset frame, so the
+ * photo has to be laid out as the whole file blown up around the same box —
+ * dropping it in with object-contain would fit the file's transparent margins
+ * too and land noticeably small.
+ *
+ * Returns styles for a square tile: the rect covering the full file, and a
+ * transform origin at the artwork's centre so the hover lift pivots on the arm
+ * rather than on the empty space around it.
+ */
+function photoFrame(bounds: DotImageBounds) {
+  const frame = 1 - DOT_IMAGE_INSET * 2;
+  const drawnWidth = Math.min(frame, frame * bounds.aspect);
+  const drawnHeight = drawnWidth / bounds.aspect;
+  const percent = (value: number) => `${value * 100}%`;
+
+  return {
+    width: percent(drawnWidth / bounds.width),
+    height: percent(drawnHeight / bounds.height),
+    left: percent(
+      (1 - drawnWidth) / 2 - (bounds.x / bounds.width) * drawnWidth,
+    ),
+    top: percent(
+      (1 - drawnHeight) / 2 - (bounds.y / bounds.height) * drawnHeight,
+    ),
+    transformOrigin: `${percent(bounds.x + bounds.width / 2)} ${percent(bounds.y + bounds.height / 2)}`,
+  };
+}
+
 export default function Home() {
+  const { t } = useTranslation();
   const teamSectionRef = useRef<HTMLDivElement>(null);
   const [teamImageLoaded, setTeamImageLoaded] = useState(false);
+  const [armBounds, setArmBounds] = useState<DotImageBounds | null>(null);
 
   useEffect(() => {
     // Reveal the section's heavy asset once it approaches the viewport, so it
@@ -73,24 +133,17 @@ export default function Home() {
           wordmark, so the document's one real heading is carried here: it
           states what the site is for a crawler and a screen reader without
           competing with the reel's typography. */}
-      <h1 className="sr-only">
-        RIVAL ITS — Robotics Rover Research Team of Institut Teknologi Sepuluh
-        Nopember
-      </h1>
+      <h1 className="sr-only">{t("home.srTitle")}</h1>
 
       <HomeHeroCarousel />
 
       <section className="px-5 pt-4 pb-14 md:px-2 md:pt-25 md:pb-25">
         <div className="mx-auto max-w-7xl text-center">
           <h2 className="mb-5 font-medium text-[1.65rem] text-white leading-tight md:mb-6 md:text-4xl lg:text-5xl">
-            Designing, Building, and Competing in Advanced Robotics Systems
+            {t("home.introTitle")}
           </h2>
           <p className="mx-auto max-w-[60rem] text-base text-white md:text-lg">
-            RIVAL ITS is a student robotic team based in Indonesia, dedicated to
-            design and build advanced robots for national and international
-            competitions. Our mission is to push the boundaries of technology
-            and innovation, while fostering a collaborative and inclusive
-            environment for students to learn and grow.
+            {t("home.introBody")}
           </p>
         </div>
       </section>
@@ -102,7 +155,7 @@ export default function Home() {
         >
           <Image
             src="/images/home/team-showcase.webp"
-            alt="RIVAL ITS Team"
+            alt={t("home.teamPhotoAlt")}
             width={1920}
             height={1080}
             className={`h-full w-full object-cover object-center transition-opacity duration-700 ${teamImageLoaded ? "opacity-100" : "opacity-0"}`}
@@ -113,28 +166,32 @@ export default function Home() {
 
       <section className="py-24">
         <div className="mx-auto flex max-w-7xl items-start justify-between gap-4 px-4 sm:gap-8 md:items-center md:gap-0 md:px-0">
-          {ACHIEVEMENTS.map((achievement) => (
-            <div
-              key={`${achievement.rank}-${achievement.scope}`}
-              className="flex flex-1 flex-col items-center"
-            >
-              <span className="font-bold text-3xl text-white leading-none sm:text-4xl md:text-[5.5vw]">
-                {achievement.rank}
-              </span>
-              <span className="mt-3 mb-3 text-center font-medium text-sm text-white sm:mt-5 sm:mb-5 sm:text-lg md:text-2xl">
-                {achievement.scope}
-              </span>
-              <span className="text-center text-gray-300 text-xs sm:text-sm md:text-base">
-                {achievement.detail && (
-                  <>
-                    {achievement.detail}
-                    <br />
-                  </>
-                )}
-                ({achievement.year})
-              </span>
-            </div>
-          ))}
+          {ACHIEVEMENTS.map((achievement) => {
+            const detail = t(achievement.detail);
+            return (
+              <div
+                key={achievement.scope}
+                className="flex flex-1 flex-col items-center"
+              >
+                <span className="font-bold text-3xl text-white leading-none sm:text-4xl md:text-[5.5vw]">
+                  {achievement.digit}
+                  {t(achievement.ordinal)}
+                </span>
+                <span className="mt-3 mb-3 text-center font-medium text-sm text-white sm:mt-5 sm:mb-5 sm:text-lg md:text-2xl">
+                  {t(achievement.scope)}
+                </span>
+                <span className="text-center text-gray-300 text-xs sm:text-sm md:text-base">
+                  {detail && (
+                    <>
+                      {detail}
+                      <br />
+                    </>
+                  )}
+                  ({achievement.year})
+                </span>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -148,26 +205,44 @@ export default function Home() {
           className="group relative mx-auto block max-w-7xl cursor-pointer overflow-hidden rounded-3xl bg-[#16171b] px-6 py-10 md:px-12 md:py-12"
         >
           <h2 className="max-w-lg font-bold text-base text-white leading-tight md:text-xl lg:text-2xl">
-            Through student leadership and teamwork,
-            <br /> we innovate and excel.
+            {t("home.cta.titleLine1")}
+            <br /> {t("home.cta.titleLine2")}
           </h2>
 
           <p className="max-w-lg font-bold text-base text-gray-500 leading-tight md:text-xl lg:text-2xl">
-            We design, build, and test the next generation of robots right here
-            in Indonesia - and inspire future generations to do the same.
+            {t("home.cta.body")}
           </p>
 
           <div className="mt-6 grid items-end gap-8 md:grid-cols-2 md:gap-12">
             <div className="order-2 md:order-1">
-              <span className="inline-block rounded-full bg-white px-6 py-3 font-medium text-black text-sm transition-colors group-hover:bg-gray-200">
-                Learn more
+              <span className={`${BUTTON_LIGHT} group-hover:bg-gray-200`}>
+                {t("common.learnMore")}
               </span>
             </div>
-            <div className="relative order-1 aspect-square w-full overflow-hidden rounded-2xl border border-white/15 bg-[#0d3b28] shadow-lg md:order-2">
+            {/* Hovering the tile itself — not the rest of the card — trades
+                the stipple for the photograph it was sampled from. The dots
+                clear quickly and linearly so the two never sit on top of each
+                other as a muddy double image, then the photo eases up into
+                place behind them. */}
+            <div className="group/photo relative order-1 aspect-square w-full rounded-2xl border border-white/15 bg-[#0d3b28] shadow-lg md:order-2">
               <DotImage
-                src="/archive/images/arm2.webp"
-                className="absolute inset-0 h-full w-full"
+                src={ARM_PHOTO}
+                onBounds={setArmBounds}
+                className="absolute inset-0 h-full w-full rounded-2xl transition-opacity duration-200 ease-linear group-hover/photo:opacity-0 motion-reduce:transition-none"
               />
+              {armBounds && (
+                <div
+                  className="pointer-events-none absolute scale-90 opacity-0 drop-shadow-[0_24px_36px_rgba(0,0,0,0.55)] transition duration-[450ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/photo:scale-100 group-hover/photo:opacity-100 motion-reduce:transition-none"
+                  style={photoFrame(armBounds)}
+                >
+                  <Image
+                    src={ARM_PHOTO}
+                    alt=""
+                    fill
+                    sizes="(min-width: 768px) 40vw, 90vw"
+                  />
+                </div>
+              )}
             </div>
           </div>
 
@@ -181,7 +256,9 @@ export default function Home() {
 
       <section className="px-4 pb-24 md:px-6">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-start gap-x-10 gap-y-6">
-          <span className="text-lg text-white md:text-xl">Follow us</span>
+          <span className="text-lg text-white md:text-xl">
+            {t("common.followUs")}
+          </span>
           {SOCIALS.map((social) => (
             <a
               key={social.label}
@@ -211,10 +288,10 @@ export default function Home() {
       <section className="px-4 pb-24 md:px-6">
         <div className="mx-auto max-w-7xl px-2 py-8 md:px-6 md:py-12">
           <p className="text-center font-semibold text-gray-400 text-xs uppercase tracking-[0.2em]">
-            Sponsors &amp; Partners
+            {t("home.sponsorsEyebrow")}
           </p>
           <h2 className="mt-4 text-center font-bold text-3xl text-white md:text-5xl">
-            Thank You for Supporting Us
+            {t("home.sponsorsTitle")}
           </h2>
 
           {/* Rows mirror the footer's old grouping — two lead, one feature,

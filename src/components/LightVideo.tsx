@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTranslation } from "@/i18n";
 
 interface LightVideoProps {
   src: string; // Path to video (e.g., '/videos/demo.mp4')
@@ -25,6 +26,7 @@ export default function LightVideo({
   controls = true,
   className = "",
 }: LightVideoProps) {
+  const { t } = useTranslation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -61,7 +63,7 @@ export default function LightVideo({
         {webmSrc && <source src={webmSrc} type="video/webm" />}
         {movSrc && <source src={movSrc} type="video/quicktime" />}
         <source src={src} type="video/mp4" />
-        Your browser does not support the video tag.
+        {t("common.videoUnsupported")}
       </video>
     </div>
   );

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { type TranslationKey, useTranslation } from "@/i18n";
 
 type Slide = {
   id: string;
@@ -9,14 +10,14 @@ type Slide = {
   media:
     | { kind: "video"; src: string; poster: string }
     | { kind: "image"; src: string };
-  title?: string;
-  subtitle?: string;
+  title?: TranslationKey;
+  subtitle?: TranslationKey;
   /** Centred artwork used instead of a text headline (the brand lockup). */
-  logo?: { src: string; alt: string };
+  logo?: { src: string; alt: TranslationKey };
   /** Where the card's content sits. Defaults to the centred treatment. */
   align?: "center" | "top-left";
   /** Read out on the control that steps to this card. */
-  label: string;
+  label: TranslationKey;
 };
 
 const SLIDES: Slide[] = [
@@ -27,16 +28,19 @@ const SLIDES: Slide[] = [
       src: "/videos/videoprofil-720.mp4",
       poster: "/images/home/video-profile-poster.webp",
     },
-    title: "RIVAL",
-    subtitle: "ITS Robotics Team",
-    label: "the RIVAL ITS team profile",
+    title: "hero.rival.title",
+    subtitle: "hero.rival.subtitle",
+    label: "hero.rival.label",
   },
   {
     id: "brand",
     media: { kind: "image", src: "/images/home/hero-background.jpg" },
-    logo: { src: "/images/brand/logo-vertical.webp", alt: "RIVAL ITS logo" },
+    logo: {
+      src: "/images/brand/logo-vertical.webp",
+      alt: "hero.brand.logoAlt",
+    },
     align: "top-left",
-    label: "the RIVAL ITS brand lockup",
+    label: "hero.brand.label",
   },
   {
     id: "arch",
@@ -44,10 +48,10 @@ const SLIDES: Slide[] = [
       kind: "image",
       src: "/images/competitions/australian-rover-challenge/hero-background.webp",
     },
-    title: "Australian Rover Challenge",
-    subtitle: "6th worldwide, 1st among Indonesian rover teams",
+    title: "hero.arch.title",
+    subtitle: "hero.arch.subtitle",
     align: "top-left",
-    label: "the Australian Rover Challenge",
+    label: "hero.arch.label",
   },
 ];
 
@@ -147,6 +151,7 @@ const MIN_POSITION = 1;
 const MAX_POSITION = REEL.length - 2;
 
 export default function HomeHeroCarousel() {
+  const { t } = useTranslation();
   const [position, setPosition] = useState(MIDDLE);
   const [animated, setAnimated] = useState(true);
   const pendingRef = useRef<number | null>(null);
@@ -190,7 +195,7 @@ export default function HomeHeroCarousel() {
   return (
     <section
       aria-roledescription="carousel"
-      aria-label="RIVAL ITS highlights"
+      aria-label={t("hero.label")}
       className="hero-reel pt-2 pb-6"
     >
       <div className="overflow-hidden">
@@ -241,7 +246,7 @@ export default function HomeHeroCarousel() {
                   {slide.logo ? (
                     <Image
                       src={slide.logo.src}
-                      alt={isActive ? slide.logo.alt : ""}
+                      alt={isActive ? t(slide.logo.alt) : ""}
                       width={220}
                       height={220}
                       className="h-auto w-[clamp(9rem,18vw,15rem)]"
@@ -263,7 +268,7 @@ export default function HomeHeroCarousel() {
                             : "hero-wordmark text-[clamp(2.75rem,8vw,7rem)] text-white leading-[1.02] tracking-[-0.02em]"
                         }
                       >
-                        {slide.title}
+                        {slide.title && t(slide.title)}
                       </p>
                       {slide.subtitle && (
                         <p
@@ -273,7 +278,7 @@ export default function HomeHeroCarousel() {
                               : "mt-4 text-[clamp(1rem,1.8vw,1.6rem)] text-white/80"
                           }
                         >
-                          {slide.subtitle}
+                          {t(slide.subtitle)}
                         </p>
                       )}
                     </>
@@ -286,7 +291,7 @@ export default function HomeHeroCarousel() {
                   <button
                     type="button"
                     onClick={() => step(slideIndex > position ? 1 : -1)}
-                    aria-label={`Show ${slide.label}`}
+                    aria-label={t("hero.show", { slide: t(slide.label) })}
                     tabIndex={-1}
                     className="absolute inset-0 cursor-pointer"
                   />
@@ -304,7 +309,7 @@ export default function HomeHeroCarousel() {
         style={{ paddingInline: LEAD }}
       >
         <span className="text-base text-white/80 md:text-lg">
-          Explore the latest
+          {t("hero.explore")}
         </span>
         {/* One pill rather than two buttons: the arrows read as a single
             control, and each one takes a circular highlight on hover. */}
@@ -312,8 +317,8 @@ export default function HomeHeroCarousel() {
           <button
             type="button"
             onClick={() => step(-1)}
-            aria-label="Previous slide"
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-[#021507] md:h-11 md:w-11"
+            aria-label={t("hero.previous")}
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-[#45a074] md:h-11 md:w-11"
           >
             <svg
               aria-hidden="true"
@@ -333,8 +338,8 @@ export default function HomeHeroCarousel() {
           <button
             type="button"
             onClick={() => step(1)}
-            aria-label="Next slide"
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-[#021507] md:h-11 md:w-11"
+            aria-label={t("hero.next")}
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-[#45a074] md:h-11 md:w-11"
           >
             <svg
               aria-hidden="true"

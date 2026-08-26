@@ -3,17 +3,19 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { type TranslationKey, useTranslation } from "@/i18n";
 
 interface Task {
   id: number;
-  title: string;
-  description: string;
+  /** Dictionary keys — the caller passes keys, not the words themselves. */
+  title: TranslationKey;
+  description: TranslationKey;
   image: string;
   videoLink?: string;
 }
 
 interface CompetitionTasksCarouselProps {
-  tasks: Task[];
+  tasks: readonly Task[];
   backgroundImage?: string;
 }
 
@@ -80,6 +82,7 @@ interface VideoLightboxProps {
 }
 
 function VideoLightbox({ videoId, title, onClose }: VideoLightboxProps) {
+  const { t } = useTranslation();
   const closeRef = useRef<HTMLButtonElement>(null);
 
   // Move focus into the overlay so the close control — and nothing behind it —
@@ -130,7 +133,7 @@ function VideoLightbox({ videoId, title, onClose }: VideoLightboxProps) {
           ref={closeRef}
           type="button"
           onClick={onClose}
-          aria-label="Close video"
+          aria-label={t("competitions.tasks.close")}
           className={`${ARROW_BASE} absolute -top-14 right-0 flex w-11 h-11`}
         >
           <svg
@@ -169,6 +172,7 @@ export default function CompetitionTasksCarousel({
   tasks,
   backgroundImage,
 }: CompetitionTasksCarouselProps) {
+  const { t } = useTranslation();
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState<"left" | "right" | null>(
     null,
@@ -277,9 +281,9 @@ export default function CompetitionTasksCarousel({
       return (
         <button
           type="button"
-          onClick={() => setOpenVideo({ id: videoId, title: task.title })}
+          onClick={() => setOpenVideo({ id: videoId, title: t(task.title) })}
           className="absolute inset-0 rounded-lg cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
-          aria-label={`Watch ${task.title}`}
+          aria-label={t("competitions.tasks.watch", { title: t(task.title) })}
         >
           {playOverlay}
         </button>
@@ -293,7 +297,7 @@ export default function CompetitionTasksCarousel({
           target="_blank"
           rel="noopener noreferrer"
           className="absolute inset-0 rounded-lg cursor-pointer"
-          aria-label={`Watch ${task.title}`}
+          aria-label={t("competitions.tasks.watch", { title: t(task.title) })}
         >
           {playOverlay}
         </a>
@@ -325,7 +329,7 @@ export default function CompetitionTasksCarousel({
       )}
       <div className="max-w-6xl mx-auto relative z-10">
         <h2 className="text-3xl md:text-5xl font-bold text-white text-center mb-6 md:mb-8">
-          COMPETITION TASKS
+          {t("competitions.tasks.heading")}
         </h2>
 
         <div className="relative flex flex-col items-center justify-center gap-6 md:h-[650px] md:min-h-[650px] md:gap-8 md:overflow-hidden md:p-4">
@@ -335,7 +339,7 @@ export default function CompetitionTasksCarousel({
             <button
               type="button"
               onClick={prevTask}
-              aria-label="Previous task"
+              aria-label={t("competitions.tasks.previous")}
               className={`${ARROW_BASE} flex w-14 h-14 flex-shrink-0`}
               disabled={isAnimating}
             >
@@ -352,7 +356,7 @@ export default function CompetitionTasksCarousel({
                 <Image
                   key={task.id}
                   src={task.image}
-                  alt={task.title}
+                  alt={t(task.title)}
                   fill
                   sizes={CARD_SIZES}
                   className={`rounded-lg object-cover transition-opacity duration-200 ${
@@ -367,7 +371,7 @@ export default function CompetitionTasksCarousel({
             <button
               type="button"
               onClick={nextTask}
-              aria-label="Next task"
+              aria-label={t("competitions.tasks.next")}
               className={`${ARROW_BASE} flex w-14 h-14 flex-shrink-0`}
               disabled={isAnimating}
             >
@@ -390,7 +394,7 @@ export default function CompetitionTasksCarousel({
               >
                 <Image
                   src={task.image}
-                  alt={task.title}
+                  alt={t(task.title)}
                   fill
                   sizes={MOBILE_CARD_SIZES}
                   className="rounded-xl object-cover"
@@ -415,10 +419,10 @@ export default function CompetitionTasksCarousel({
                 }`}
               >
                 <h3 className="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4">
-                  {task.title}
+                  {t(task.title)}
                 </h3>
                 <p className="text-gray-300 text-sm md:text-lg mt-3 md:mt-4">
-                  {task.description}
+                  {t(task.description)}
                 </p>
               </div>
             ))}

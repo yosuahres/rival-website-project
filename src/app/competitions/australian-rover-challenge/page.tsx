@@ -2,54 +2,54 @@
 
 import Image from "next/image";
 import CompetitionTasksCarousel from "@/components/CompetitionTasksCarousel";
+import { useTranslation } from "@/i18n";
+import { BUTTON_PRIMARY } from "@/lib/button";
 
-const indonesianRobotContestTasks = [
+const AUSTRALIAN_ROVER_CHALLENGE_TASKS = [
   {
     id: 1,
-    title: "Post Landing Tasks",
-    description:
-      "The rover must perform a series of activities immediately after landing to establish an operational In-Situ Resource Utilisation (ISRU) outpost, including conducting system checks, evaluating supply caches, performing maintenance, and connecting propellant hoses.",
+    title: "competitions.arc.task1.title",
+    description: "competitions.arc.task1.description",
     image:
       "/images/competitions/australian-rover-challenge/task-1-post-landing.webp",
     videoLink: "https://www.youtube.com/live/OL-GZQfJ3AQ?si=ddnjgknbIWuNDhUe",
   },
   {
     id: 2,
-    title: "Space Resources Task",
-    description:
-      "The rover must evaluate, collect, and extract critical lunar resources—specifically prospecting for ilmenite and icy regolith, and processing the icy regolith to extract the highest possible amount of liquid water.",
+    title: "competitions.arc.task2.title",
+    description: "competitions.arc.task2.description",
     image:
       "/images/competitions/australian-rover-challenge/task-2-space-resources.webp",
     videoLink: "https://www.youtube.com/live/Oe0o9es1_Q8?si=QY5_XCorFn6xtLQK",
   },
   {
     id: 3,
-    title: "Excavation and Construction Task",
-    description:
-      "The rover must prepare a landing site by clearing hazardous rocks, excavating regolith to construct a protective berm, and deploying dust-mitigating pavers.",
+    title: "competitions.arc.task3.title",
+    description: "competitions.arc.task3.description",
     image:
       "/images/competitions/australian-rover-challenge/task-3-excavation-and-construction.webp",
     videoLink: "https://www.youtube.com/live/MWcUxFiwad8?si=2w9qcM4wgIs_YjDI",
   },
   {
     id: 4,
-    title: "Mapping and Autonomous Task",
-    description:
-      "The rover is required to autonomously navigate to predefined landmarks and subsequently explore the area to construct a comprehensive map, reporting the coordinates of previously unknown landmarks",
+    title: "competitions.arc.task4.title",
+    description: "competitions.arc.task4.description",
     image:
       "/images/competitions/australian-rover-challenge/task-4-mapping-and-autonomous.webp",
     videoLink: "https://www.youtube.com/live/HbswUp7gHko?si=MMiIoeLgElbGIzMU",
   },
-];
+] as const;
 
-export default function IndonesianRobotContestPage() {
+export default function AustralianRoverChallengePage() {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen">
       <section className="relative mx-3 md:mx-4 aspect-[6/7] md:aspect-auto md:h-[60vh] flex items-center justify-center overflow-hidden rounded-4xl">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <Image
             src="/images/competitions/australian-rover-challenge/hero-background.webp"
-            alt="Competition background"
+            alt={t("competitions.heroAlt")}
             quality={50}
             priority
             sizes="100vw"
@@ -66,15 +66,15 @@ export default function IndonesianRobotContestPage() {
         </div>
         <div className="relative z-10 text-center text-white">
           <h1 className="text-2xl md:text-5xl font-bold mb-6">
-            Australian Rover Challenge 2026
+            {t("competitions.arc.title")}
           </h1>
           <a
             href="https://adelaide.edu.au/about/events/2026/australian-rover-challenge/"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#398561] hover:bg-[#021507] px-6 py-4 rounded-2xl font-bold text-sm md:text-xl transition-colors inline-block shadow-lg"
+            className={BUTTON_PRIMARY}
           >
-            Learn more
+            {t("common.learnMore")}
           </a>
         </div>
       </section>
@@ -82,16 +82,7 @@ export default function IndonesianRobotContestPage() {
       <section className="w-full py-8 flex items-center justify-center">
         <div className="max-w-7xl w-full min-h-[120px] mx-auto">
           <p className="text-lg text-white p-6 text-justify">
-            The Australian Rover Challenge (ARCh) is an annual robotics
-            competition held by the University of Adelaide, where university
-            students from across Australia and around the globe, battle it out
-            in a full-scale Lunar mission, using semi-autonomous rovers that
-            they have designed and built themselves. Competitors showcase their
-            skills in a custom built simulated lunar environment, and complete a
-            range of tasks including navigation, resource, and construction.
-            Unlike many other rover competitions across the world which focus on
-            Martian exploration, the ARCh is focused specifically on completing
-            tasks on a simulated Lunar surface.
+            {t("competitions.arc.intro")}
           </p>
         </div>
       </section>
@@ -99,7 +90,7 @@ export default function IndonesianRobotContestPage() {
       <section className="relative w-full min-h-[180px] sm:min-h-[300px] flex items-center justify-center py-8 sm:py-14 overflow-hidden">
         <Image
           src="/images/competitions/australian-rover-challenge/stats-background.webp"
-          alt="Stats background"
+          alt={t("competitions.statsAlt")}
           quality={50}
           sizes="(max-width: 640px) 100vw, 1280px"
           className="absolute inset-0 mx-auto max-w-2xl sm:max-w-7xl w-full h-full object-cover object-center z-0"
@@ -114,7 +105,10 @@ export default function IndonesianRobotContestPage() {
           >
             <div className="flex flex-col items-center justify-center">
               <div className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2">
-                6<sup className="text-lg sm:text-xl md:text-3xl">th</sup>
+                6
+                <sup className="text-lg sm:text-xl md:text-3xl">
+                  {t("common.ordinal.th")}
+                </sup>
               </div>
               <div className="text-2xl sm:text-4xl md:text-5xl font-extrabold mt-2">
                 2026
@@ -127,7 +121,7 @@ export default function IndonesianRobotContestPage() {
       <div className="bg-[#398561] px-8 mt-20">{/* spacer */}</div>
 
       <CompetitionTasksCarousel
-        tasks={indonesianRobotContestTasks}
+        tasks={AUSTRALIAN_ROVER_CHALLENGE_TASKS}
         backgroundImage="/images/competitions/australian-rover-challenge/tasks-background.webp"
       />
     </div>

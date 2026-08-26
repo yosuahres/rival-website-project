@@ -2,36 +2,38 @@
 
 import Image from "next/image";
 import CompetitionTasksCarousel from "@/components/CompetitionTasksCarousel";
+import { useTranslation } from "@/i18n";
+import { BUTTON_PRIMARY } from "@/lib/button";
 
-const indonesianRobotContestTasks = [
+const INDONESIAN_ROBOT_CONTEST_TASKS = [
   {
     id: 1,
-    title: "Autonomous Waste Sorting",
-    description:
-      "Robot 2 autonomously sorts waste items moving along the vibrating conveyor into five categories — ferro, nonferro, leaf, paper, and plastic. Each correctly sorted item earns 1 point.",
+    title: "competitions.irc.task1.title",
+    description: "competitions.irc.task1.description",
     image:
       "/images/competitions/indonesian-robot-contest/task-1-autonomous-waste-sorting.webp",
     videoLink: "https://www.youtube.com/live/jGzVkDfhV1g",
   },
   {
     id: 2,
-    title: "Trash Bin Transfer",
-    description:
-      "Robot 1 is responsible for manually moving the trash bin to the vibrating conveyor..",
+    title: "competitions.irc.task2.title",
+    description: "competitions.irc.task2.description",
     image:
       "/images/competitions/indonesian-robot-contest/task-2-trash-bin-transfer.webp",
     videoLink: "https://www.youtube.com/live/9n7s8l3Xo2g",
   },
-];
+] as const;
 
 export default function IndonesianRobotContestPage() {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen">
       <section className="relative mx-3 md:mx-4 aspect-[6/7] md:aspect-auto md:h-[60vh] flex items-center justify-center overflow-hidden rounded-4xl">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <Image
             src="/images/competitions/indonesian-robot-contest/hero-background.webp"
-            alt="Competition background"
+            alt={t("competitions.heroAlt")}
             quality={50}
             priority
             sizes="100vw"
@@ -48,15 +50,15 @@ export default function IndonesianRobotContestPage() {
         </div>
         <div className="relative z-10 text-center text-white">
           <h1 className="text-2xl md:text-5xl font-bold mb-6">
-            Indonesian Robot Contest
+            {t("competitions.irc.title")}
           </h1>
           <a
             href="https://kontesrobotindonesia.id/index.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#398561] hover:bg-[#021507] px-6 py-4 rounded-2xl font-bold text-sm md:text-xl transition-colors inline-block shadow-lg"
+            className={BUTTON_PRIMARY}
           >
-            Learn more
+            {t("common.learnMore")}
           </a>
         </div>
       </section>
@@ -64,15 +66,7 @@ export default function IndonesianRobotContestPage() {
       <section className="w-full py-8 flex items-center justify-center">
         <div className="max-w-7xl w-full min-h-[120px] mx-auto">
           <p className="text-lg text-white p-6 text-justify">
-            The Indonesian Robot Contest (KRI) is an annual student competition
-            in the field of robot design and engineering, open to all university
-            students across the Republic of Indonesia under the Ministry of
-            Higher Education, Science, and Technology (Kemdiktisaintek). KRI is
-            organized by the Directorate of Learning and Student Affairs,
-            Directorate General of Higher Education of Kemdiktisaintek, Republic
-            of Indonesia. The first KRI was held in 2003 under the Directorate
-            General of Higher Education, Ministry of Education and Culture at
-            that time.
+            {t("competitions.irc.intro")}
           </p>
         </div>
       </section>
@@ -81,7 +75,7 @@ export default function IndonesianRobotContestPage() {
       <section className="relative w-full min-h-[180px] sm:min-h-[300px] flex items-center justify-center py-8 sm:py-14 overflow-hidden">
         <Image
           src="/images/competitions/indonesian-robot-contest/stats-background.webp"
-          alt="Stats background"
+          alt={t("competitions.statsAlt")}
           quality={50}
           sizes="(max-width: 640px) 100vw, 1280px"
           className="absolute inset-0 mx-auto max-w-2xl sm:max-w-7xl w-full h-full object-cover object-center z-0"
@@ -96,13 +90,16 @@ export default function IndonesianRobotContestPage() {
           >
             <div className="flex flex-col items-center justify-center">
               <div className="text-5xl sm:text-7xl md:text-9xl font-extrabold mb-2">
-                1<sup className="text-xl sm:text-2xl md:text-4xl">st</sup>
+                1
+                <sup className="text-xl sm:text-2xl md:text-4xl">
+                  {t("common.ordinal.st")}
+                </sup>
               </div>
               <div
                 className="text-sm sm:text-sm
                opacity-80"
               >
-                OUT OF 36 TEAMS
+                {t("competitions.irc.outOf")}
               </div>
               <div className="text-2xl sm:text-4xl md:text-5xl font-extrabold mt-2">
                 2024
@@ -112,7 +109,10 @@ export default function IndonesianRobotContestPage() {
             <div className="flex flex-row items-end gap-2 sm:gap-4">
               <div className="flex flex-col items-center justify-end mx-2 sm:mx-6">
                 <div className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2">
-                  4<sup className="text-lg sm:text-xl md:text-3xl">th</sup>
+                  4
+                  <sup className="text-lg sm:text-xl md:text-3xl">
+                    {t("common.ordinal.th")}
+                  </sup>
                 </div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold mt-2">
                   2023
@@ -120,7 +120,10 @@ export default function IndonesianRobotContestPage() {
               </div>
               <div className="flex flex-col items-center justify-end mx-2 sm:mx-6">
                 <div className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2">
-                  1<sup className="text-lg sm:text-xl md:text-3xl">st</sup>
+                  1
+                  <sup className="text-lg sm:text-xl md:text-3xl">
+                    {t("common.ordinal.st")}
+                  </sup>
                 </div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold mt-2">
                   2022
@@ -128,7 +131,10 @@ export default function IndonesianRobotContestPage() {
               </div>
               <div className="flex flex-col items-center justify-end mx-2 sm:mx-6">
                 <div className="text-4xl sm:text-6xl md:text-8xl font-bold mb-2">
-                  1<sup className="text-lg sm:text-xl md:text-3xl">st</sup>
+                  1
+                  <sup className="text-lg sm:text-xl md:text-3xl">
+                    {t("common.ordinal.st")}
+                  </sup>
                 </div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold mt-2">
                   2021
@@ -142,7 +148,7 @@ export default function IndonesianRobotContestPage() {
       <div className="px-8 mt-20">{/* spacer */}</div>
 
       <CompetitionTasksCarousel
-        tasks={indonesianRobotContestTasks}
+        tasks={INDONESIAN_ROBOT_CONTEST_TASKS}
         backgroundImage="/images/competitions/indonesian-robot-contest/tasks-background.webp"
       />
     </div>

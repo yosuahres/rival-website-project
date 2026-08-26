@@ -31,9 +31,328 @@
     "socialMedia": "Media Sosial",
     "rights": "Seluruh Hak Cipta Dilindungi"
   },
+  "common": {
+    "learnMore": "Selengkapnya",
+    "contactUs": "Hubungi Kami",
+    "followUs": "Ikuti kami",
+    "ordinal": {
+      "st": "",
+      "nd": "",
+      "rd": "",
+      "th": ""
+    },
+    "videoUnsupported": "Browser Anda tidak mendukung tag video."
+  },
+  "hero": {
+    "label": "Sorotan RIVAL ITS",
+    "previous": "Slide sebelumnya",
+    "next": "Slide berikutnya",
+    "show": "Tampilkan {{slide}}",
+    "rival": {
+      "title": "RIVAL",
+      "subtitle": "Tim Robotika ITS",
+      "label": "profil tim RIVAL ITS"
+    },
+    "brand": {
+      "logoAlt": "Logo RIVAL ITS",
+      "label": "lockup merek RIVAL ITS"
+    },
+    "arch": {
+      "title": "Australian Rover Challenge",
+      "subtitle": "Peringkat 6 dunia, peringkat 1 di antara tim rover Indonesia",
+      "label": "Australian Rover Challenge"
+    },
+    "explore": "Jelajahi yang terbaru"
+  },
+  "home": {
+    "srTitle": "RIVAL ITS — Tim Riset Robotika Rover Institut Teknologi Sepuluh Nopember",
+    "introTitle": "Merancang, Membangun, dan Berkompetisi dalam Sistem Robotika Mutakhir",
+    "introBody": "RIVAL ITS adalah tim robotika mahasiswa asal Indonesia yang berdedikasi merancang dan membangun robot canggih untuk kompetisi nasional maupun internasional. Misi kami adalah mendorong batas teknologi dan inovasi, sekaligus membangun lingkungan yang kolaboratif dan inklusif bagi mahasiswa untuk belajar dan berkembang.",
+    "teamPhotoAlt": "Tim RIVAL ITS",
+    "stats": {
+      "s1": {
+        "scope": "di Indonesia",
+        "detail": "Kontes Robot Tematik Indonesia"
+      },
+      "s2": {
+        "scope": "Dunia",
+        "detail": "Australian Rover Challenge (ARCh)"
+      },
+      "s3": {
+        "scope": "tim rover Indonesia",
+        "detail": ""
+      }
+    },
+    "cta": {
+      "titleLine1": "Melalui kepemimpinan mahasiswa dan kerja sama tim,",
+      "titleLine2": "kami berinovasi dan berprestasi.",
+      "body": "Kami merancang, membangun, dan menguji robot generasi berikutnya langsung di Indonesia — dan menginspirasi generasi mendatang untuk melakukan hal yang sama."
+    },
+    "sponsorsEyebrow": "Sponsor & Mitra",
+    "sponsorsTitle": "Terima Kasih atas Dukungan Anda"
+  },
+  "about": {
+    "title": "Tentang RIVAL ITS",
+    "body": "RIVAL ITS adalah tim robotika terdepan di Indonesia yang berdedikasi mendorong batas teknologi dan inovasi. Tim insinyur dan inovator kami yang penuh semangat bekerja bersama menciptakan solusi robotika mutakhir yang menginspirasi generasi berikutnya."
+  },
+  "news": {
+    "title": "Berita",
+    "subtitleLine1": "Temukan terobosan robotika terbaru kami,",
+    "subtitleLine2": "proyek, dan pembaruan"
+  },
+  "teams": {
+    "heroAlt": "Latar belakang tim",
+    "title": "Kenali Tim Kami",
+    "memberAlt": "Anggota tim {{name}}",
+    "empty": "Belum ada anggota {{role}}.",
+    "role": {
+      "advisor": "penasihat tim",
+      "leader": "ketua tim",
+      "electrical": "tim elektrikal",
+      "mechanical": "tim mekanikal",
+      "programming": "tim pemrograman",
+      "nonTech": "non-teknis"
+    },
+    "division": {
+      "electrical": "Elektrikal",
+      "mechanical": "Mekanikal",
+      "programming": "Pemrograman",
+      "nonTech": "Non-Teknis"
+    },
+    "position": {
+      "advisor": "Penasihat Tim",
+      "teamLeader": "Ketua Tim",
+      "leader": "Ketua Divisi {{division}}",
+      "expert": "Staf Ahli {{division}}",
+      "staff": "Staf {{division}}"
+    }
+  },
+  "partners": {
+    "heroAlt": "Robot rover",
+    "title": "Sponsor & Mitra",
+    "becomeTitle": "Jadilah Sponsor",
+    "becomeBody": "Kami menawarkan beberapa paket sponsorship: SILVER, BRONZE, WINNER, PLATINUM, dan GOLD. Setiap paket dirancang dengan cermat untuk memberikan manfaat unik yang disesuaikan dengan kebutuhan mitra kami. Bergantung pada paket yang dipilih, sponsor dapat memperoleh berbagai peluang promosi, termasuk penayangan materi promosi di media sosial tim dan penempatan logo pada materi promosi. Hubungi kami melalui email untuk detail selengkapnya!",
+    "dividerAlt": "Pembatas bagian sponsor",
+    "logoAlt": "Logo sponsor {{tier}}",
+    "platinum": "SPONSOR PLATINUM",
+    "silver": "SPONSOR SILVER",
+    "bronze": "SPONSOR BRONZE",
+    "winner": "SPONSOR WINNER",
+    "supporters": "PENDUKUNG AEROVAL",
+    "tier": {
+      "platinum": "Platinum",
+      "silver": "Silver",
+      "bronze": "Bronze",
+      "winner": "Winner"
+    }
+  },
   "achievements": {
     "title": "Hall of Fame",
-    "place": "PLACE",
-    "heroAlt": "Tim RIVAL ITS merayakan hasil kompetisi"
+    "place": "JUARA",
+    "heroAlt": "Tim RIVAL ITS merayakan hasil kompetisi",
+    "award": {
+      "best": "TERBAIK",
+      "rookieTeam": "TIM PENDATANG BARU",
+      "worldwide": "DUNIA",
+      "bestRank": "PERINGKAT TERBAIK",
+      "national": "NASIONAL",
+      "regional": "REGIONAL",
+      "design": "DESAIN",
+      "strategy": "STRATEGI"
+    },
+    "event": {
+      "arc": "Australian Rover Challenge {{year}}",
+      "erc": "European Rover Challenge Remote {{year}}",
+      "krtmi": "Kontes Robot Tematik Indonesia {{year}}",
+      "krtmiNational": "Kontes Robot Tematik Indonesia, Nasional {{year}}"
+    }
+  },
+  "competitions": {
+    "tasks": {
+      "previous": "Tugas sebelumnya",
+      "next": "Tugas berikutnya",
+      "close": "Tutup video",
+      "watch": "Tonton {{title}}",
+      "heading": "TUGAS KOMPETISI"
+    },
+    "heroAlt": "Latar belakang kompetisi",
+    "statsAlt": "Latar belakang statistik",
+    "arc": {
+      "title": "Australian Rover Challenge 2026",
+      "intro": "Australian Rover Challenge (ARCh) adalah kompetisi robotika tahunan yang diselenggarakan oleh University of Adelaide, tempat mahasiswa dari seluruh Australia dan berbagai penjuru dunia bersaing dalam misi Bulan skala penuh menggunakan rover semi-otonom yang mereka rancang dan bangun sendiri. Peserta menunjukkan kemampuan mereka di lingkungan bulan simulasi yang dibangun khusus, dan menyelesaikan berbagai tugas mulai dari navigasi, sumber daya, hingga konstruksi. Berbeda dengan banyak kompetisi rover lain di dunia yang berfokus pada eksplorasi Mars, ARCh secara khusus berfokus pada penyelesaian tugas di permukaan Bulan simulasi.",
+      "task1": {
+        "title": "Tugas Pasca Pendaratan",
+        "description": "Rover harus menjalankan serangkaian aktivitas segera setelah mendarat untuk membangun pos In-Situ Resource Utilisation (ISRU) yang operasional, meliputi pemeriksaan sistem, evaluasi cadangan pasokan, pemeliharaan, dan penyambungan selang propelan."
+      },
+      "task2": {
+        "title": "Tugas Sumber Daya Antariksa",
+        "description": "Rover harus mengevaluasi, mengumpulkan, dan mengekstraksi sumber daya bulan yang krusial — khususnya menambang ilmenit dan regolit es, serta mengolah regolit es untuk memperoleh air cair sebanyak mungkin."
+      },
+      "task3": {
+        "title": "Tugas Penggalian dan Konstruksi",
+        "description": "Rover harus menyiapkan lokasi pendaratan dengan menyingkirkan batuan berbahaya, menggali regolit untuk membangun tanggul pelindung, dan memasang paver peredam debu."
+      },
+      "task4": {
+        "title": "Tugas Pemetaan dan Otonomi",
+        "description": "Rover harus bernavigasi secara otonom menuju penanda yang telah ditentukan, lalu menjelajahi area untuk menyusun peta menyeluruh serta melaporkan koordinat penanda yang sebelumnya tidak diketahui"
+      }
+    },
+    "irc": {
+      "title": "Kontes Robot Indonesia",
+      "intro": "Kontes Robot Indonesia (KRI) adalah kompetisi mahasiswa tahunan di bidang perancangan dan rekayasa robot yang terbuka bagi seluruh mahasiswa perguruan tinggi di Republik Indonesia di bawah Kementerian Pendidikan Tinggi, Sains, dan Teknologi (Kemdiktisaintek). KRI diselenggarakan oleh Direktorat Pembelajaran dan Kemahasiswaan, Direktorat Jenderal Pendidikan Tinggi Kemdiktisaintek Republik Indonesia. KRI pertama digelar pada tahun 2003 di bawah Direktorat Jenderal Pendidikan Tinggi, Kementerian Pendidikan dan Kebudayaan pada masa itu.",
+      "outOf": "DARI 36 TIM",
+      "task1": {
+        "title": "Pemilahan Sampah Otonom",
+        "description": "Robot 2 memilah sampah yang bergerak di atas konveyor bergetar secara otonom ke dalam lima kategori — ferro, nonferro, daun, kertas, dan plastik. Setiap barang yang terpilah dengan benar bernilai 1 poin."
+      },
+      "task2": {
+        "title": "Pemindahan Tempat Sampah",
+        "description": "Robot 1 bertugas memindahkan tempat sampah secara manual ke konveyor bergetar.."
+      }
+    }
+  },
+  "recruitment": {
+    "heroAlt": "Tim RIVAL ITS",
+    "title": "Rekrutmen",
+    "introTitle": "Ayo Bergabung Bersama Kami!",
+    "introBody1": "Bergabunglah dengan RIVAL ITS dan menjadi bagian dari tim multidisiplin yang membangun robot kompetisi kelas dunia melalui inovasi, kolaborasi, dan budaya rekayasa yang kuat.",
+    "introBody2": "Melalui rekrutmen magang ini, kamu akan memperoleh pengalaman langsung, pengetahuan praktis, dan keterlibatan dalam proyek kompetisi nyata sambil mengembangkan kemampuan teknis dan profesionalmu.",
+    "nav": {
+      "label": "Bagian halaman",
+      "requirements": "Persyaratan Umum",
+      "timeline": "Linimasa",
+      "divisions": "Divisi",
+      "documents": "Dokumen Wajib",
+      "apply": "Daftar Sekarang",
+      "faq": "FAQ"
+    },
+    "requirementsTitle": "PERSYARATAN UMUM",
+    "requirements": {
+      "r1": "Mahasiswa baru program sarjana (S1/D4) di Institut Teknologi Sepuluh Nopember (ITS) angkatan 2026.",
+      "r2": "Memiliki kemauan belajar yang kuat dan siap menghadapi tantangan baru.",
+      "r3": "Mampu bekerja sama dalam tim dan tetap berkinerja baik di bawah tekanan.",
+      "r4": "Berkomitmen, bertanggung jawab, dan berdedikasi untuk berkontribusi bagi RIVAL ITS.",
+      "r5": "Bersedia mengikuti seluruh tahap rekrutmen dan program magang."
+    },
+    "timelineTitle": "Linimasa",
+    "timeline": {
+      "openRegistration": {
+        "title": "Pendaftaran Dibuka",
+        "date": "19 September 2026"
+      },
+      "closeRegistration": {
+        "title": "Pendaftaran Ditutup",
+        "date": "24 September 2026"
+      },
+      "announcement": {
+        "title": "Pengumuman Administrasi",
+        "date": "28 September 2026"
+      },
+      "interview": {
+        "title": "Wawancara",
+        "date": "30 September – 5 Oktober 2026"
+      },
+      "interviewResult": {
+        "title": "Hasil Wawancara",
+        "date": "9 Oktober 2026"
+      },
+      "internshipStart": {
+        "title": "Magang Dimulai",
+        "date": "12 Oktober 2026"
+      }
+    },
+    "technicalTitle": "DIVISI TEKNIS",
+    "nonTechnicalTitle": "DIVISI NON-TEKNIS",
+    "divisions": {
+      "mechanical": {
+        "name": "Mekanikal",
+        "desc": "Merancang dan memproduksi sasis, sistem penggerak, dan manipulator robot agar tahan di lapangan dan sesuai dengan regulasi kompetisi.",
+        "skill1": "SolidWorks / Autodesk Inventor",
+        "skill2": "Analisis struktur statis & dinamis",
+        "skill3": "Proses manufaktur (permesinan, 3D printing)",
+        "skill4": "Pemilihan material"
+      },
+      "electrical": {
+        "name": "Elektrikal",
+        "desc": "Membangun sistem daya, pengkabelan, sensor, dan elektronika kendali yang menjaga setiap subsistem robot tetap hidup.",
+        "skill1": "Desain PCB (KiCad / Altium / EAGLE)",
+        "skill2": "Mikrokontroler (STM32, ESP32, Arduino)",
+        "skill3": "Sistem manajemen daya & baterai",
+        "skill4": "Integrasi sensor dan pemecahan masalah"
+      },
+      "programming": {
+        "name": "Pemrograman",
+        "desc": "Mengembangkan otak robot — otonomi, computer vision, komunikasi, dan antarmuka yang digunakan operator selama pertandingan.",
+        "skill1": "C/C++ dan Python",
+        "skill2": "ROS / ROS2",
+        "skill3": "Computer vision (OpenCV)",
+        "skill4": "Sistem kendali & perencanaan jalur"
+      },
+      "creative": {
+        "name": "Kreatif & Branding",
+        "desc": "Membentuk citra dan suara RIVAL ITS — mulai dari konten media sosial hingga dokumentasi kompetisi dan identitas tim.",
+        "skill1": "Figma / Adobe Illustrator / Photoshop",
+        "skill2": "Penyuntingan video (Premiere Pro, CapCut)",
+        "skill3": "Copywriting & strategi media sosial",
+        "skill4": "Fotografi dan videografi"
+      },
+      "external": {
+        "name": "Hubungan Eksternal & Sponsorship",
+        "desc": "Membuka peluang bagi tim — proposal sponsorship, hubungan mitra, serta kolaborasi dengan industri dan institusi.",
+        "skill1": "Penulisan proposal & pitching",
+        "skill2": "Negosiasi dan public speaking",
+        "skill3": "Manajemen hubungan mitra",
+        "skill4": "Korespondensi bisnis"
+      },
+      "administration": {
+        "name": "Administrasi & Keuangan",
+        "desc": "Menjaga tim tetap berjalan di balik layar: penganggaran, pengadaan, persuratan, logistik, dan akomodasi kompetisi.",
+        "skill1": "Spreadsheet & pembukuan",
+        "skill2": "Administrasi dokumen dan persuratan",
+        "skill3": "Perencanaan pengadaan dan logistik",
+        "skill4": "Manajemen waktu dan acara"
+      }
+    },
+    "documentsTitle": "Dokumen Wajib",
+    "documents": {
+      "cv": "Curriculum Vitae (CV) (format ATS atau kreatif).",
+      "motivation": "Motivation Letter (minimal 500 kata) yang memuat:",
+      "motivation1": "Perkenalan diri",
+      "motivation2": "Apa yang kamu ketahui tentang RIVAL ITS",
+      "motivation3": "Motivasimu bergabung dengan RIVAL ITS",
+      "motivation4": "Kontribusi dan inovasi yang dapat kamu berikan pada divisi pilihanmu",
+      "portfolio": "Portofolio (opsional, namun disarankan)"
+    },
+    "applyTitle": "Siap Membangun Masa Depan? Bergabunglah.",
+    "applyBody": "Mulai langkah pertamamu bersama RIVAL ITS. Kirimkan dokumenmu, pilih divisimu, dan berkembanglah bersama tim yang mewujudkan ide menjadi robot kompetisi nyata. Pendaftaran ditutup 24 September 2026.",
+    "applyCta": "Daftar Sekarang",
+    "faqTitle": "Pertanyaan yang Sering Diajukan",
+    "faqToggle": "Buka/tutup jawaban",
+    "faq": {
+      "q1": {
+        "q": "Bolehkah saya mendaftar lebih dari satu divisi?",
+        "a": "Tidak. Setiap pendaftar hanya boleh memilih satu divisi agar penilaian tetap terfokus. Pilihlah divisi yang paling sesuai dengan minat dan kemampuanmu."
+      },
+      "q2": {
+        "q": "Apakah saya perlu pengalaman robotika sebelumnya?",
+        "a": "Sama sekali tidak. Sebagian besar anggota kami memulai tanpa pengalaman kompetisi. Yang terpenting adalah kemauan belajar, komitmen, dan konsistensimu selama masa magang."
+      },
+      "q3": {
+        "q": "Apakah saya langsung ikut kompetisi?",
+        "a": "Anggota yang diterima memulai sebagai peserta magang. Mereka yang menunjukkan performa dan komitmen kuat selama magang akan dipilih untuk masuk skuad kompetisi KRI atau Australian Rover Challenge."
+      },
+      "q4": {
+        "q": "Seberapa padat kegiatannya?",
+        "a": "Bergantung pada periodenya. Di luar musim kompetisi ada pertemuan mingguan dan kerja divisi. Menjelang kompetisi, intensitasnya meningkat signifikan, termasuk kerja di laboratorium pada akhir pekan."
+      },
+      "q5": {
+        "q": "Apa yang saya dapatkan dari magang ini?",
+        "a": "Pengalaman langsung membangun robot kompetisi sungguhan, bimbingan dari anggota senior, sertifikat anggota aktif, portofolio yang kuat, serta jejaring di lingkungan ITS dan mitra industri kami."
+      }
+    }
+  },
+  "notFound": {
+    "message": "Halaman tidak ditemukan!",
+    "home": "Kembali ke Beranda"
   }
 }

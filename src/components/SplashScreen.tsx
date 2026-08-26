@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "@/i18n";
 
 interface SplashScreenProps {
   onFinish: () => void;
@@ -11,6 +12,7 @@ interface SplashScreenProps {
 const HOLD_MS = 1200;
 
 export default function SplashScreen({ onFinish }: SplashScreenProps) {
+  const { t } = useTranslation();
   const [isLeaving, setIsLeaving] = useState(false);
 
   // Held in a ref so a re-render of the parent (which rebuilds the callback)
@@ -37,7 +39,7 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
     >
       <Image
         src="/images/brand/logo-vertical.webp"
-        alt="RIVAL ITS Logo"
+        alt={t("nav.logoAlt")}
         width={280}
         height={280}
         priority
