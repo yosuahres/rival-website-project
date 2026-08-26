@@ -20,8 +20,22 @@ const PIECES = [
   "/archive/images/rover5.webp",
 ] as const;
 
-/** Narrower than this and the page is too tight to give half of it away. */
-const MIN_WIDTH = 1024;
+/** Narrower than this and there is no room for anything at all. */
+const MIN_WIDTH = 340;
+/**
+ * Below this the page stops having two halves worth speaking of: the content
+ * runs the full width, so there is nowhere for a piece to sit that is not
+ * behind the reading. Narrow pages carry the footer piece alone, drawn wide
+ * enough to be worth seeing.
+ */
+const NARROW = 768;
+/**
+ * How much of the width the footer piece takes on a narrow page. Well short of
+ * the full width: at phone size the footer is shallow and the piece has copy
+ * either side of it, so it reads as a mark in the corner rather than a wash
+ * behind the whole thing.
+ */
+const NARROW_RATIO = 0.62;
 /**
  * Pages that carry nothing but the footer piece. The partners page is a wall of
  * sponsor marks from top to bottom, and a second set of artwork behind them
@@ -171,7 +185,10 @@ function plan(footerOnly: boolean): Slot[] {
 
   // The biggest box the window will take, which every piece reaches for: as
   // wide as its half allows, and as tall as that width and the window permit.
-  const boxWidth = Math.min((width / 2) * SIZE_RATIO, MAX_SIZE);
+  const narrow = width < NARROW;
+  const boxWidth = narrow
+    ? width * NARROW_RATIO
+    : Math.min((width / 2) * SIZE_RATIO, MAX_SIZE);
   const boxHeight = Math.min(
     boxWidth / BOX_ASPECT,
     window_.innerHeight * MAX_HEIGHT_RATIO,
@@ -182,7 +199,9 @@ function plan(footerOnly: boolean): Slot[] {
   // Half the page each, rather than the thin margins outside the content
   // column: copy paints nothing, so a piece can run right under a paragraph
   // and still be clear of every card and photograph on the page.
-  if (!footerOnly) {
+  // A narrow page gets the footer piece and nothing else: with no side margin
+  // to speak of, everything the walk finds sits squarely behind the reading.
+  if (!footerOnly && !narrow) {
     const strips: Record<Side, Band> = {
       left: { from: 0, to: width / 2 },
       right: { from: width / 2, to: width },
