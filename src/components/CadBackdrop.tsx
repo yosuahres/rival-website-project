@@ -23,11 +23,13 @@ const PIECES = [
 /** Narrower than this and the page is too tight to give half of it away. */
 const MIN_WIDTH = 1024;
 /**
- * Pages that carry no backdrop at all, footer piece included. The partners page
- * is a wall of sponsor marks from top to bottom, and a second set of artwork
- * behind them competes with the logos it is meant to sit under.
+ * Pages that carry nothing but the footer piece. The partners page is a wall of
+ * sponsor marks from top to bottom, and a second set of artwork behind them
+ * competes with the logos it is meant to sit under — but the footer is the same
+ * on every page, so it keeps the one that belongs to the site rather than to
+ * the page.
  */
-const EXCLUDED: readonly string[] = ["/partners"];
+const FOOTER_ONLY: readonly string[] = ["/partners"];
 
 /** A band shorter than this cannot hold anything, whatever the window. */
 const MIN_BAND = 260;
@@ -93,8 +95,8 @@ type Slot = {
   /** Set where the drawing is fixed rather than taken from the rotation. */
   piece?: number;
   mirrored?: boolean;
-  /** Turned upside down, for a band that asked for it. */
-  spun?: boolean;
+  /** Faced the other way, for a band that asked for it. */
+  flipped?: boolean;
 };
 
 /**
@@ -159,50 +161,13 @@ function freeBands(spans: Band[], pageHeight: number): Band[] {
  * straight across, and either will swallow a piece whole. Reading the rendered
  * page is the only way to know where the margin is actually bare.
  */
-function plan(): Slot[] {
+function plan(footerOnly: boolean): Slot[] {
   const window_ = window;
   const width = window_.innerWidth;
   if (width < MIN_WIDTH) return [];
 
   const pageHeight = document.documentElement.scrollHeight;
   const offset = window_.scrollY;
-  // Half the page each, rather than the thin margins outside the content
-  // column: copy paints nothing, so a piece can run right under a paragraph
-  // and still be clear of every card and photograph on the page.
-  const strips: Record<Side, Band> = {
-    left: { from: 0, to: width / 2 },
-    right: { from: width / 2, to: width },
-  };
-  const painted: Record<Side, Band[]> = { left: [], right: [] };
-  /** Stretches a page has asked to have its piece turned upside down in. */
-  const spun: Band[] = [];
-
-  for (const element of document.body.querySelectorAll("*")) {
-    if (element.closest("[data-cad-backdrop]")) continue;
-    const rect = element.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) continue;
-
-    if (element.hasAttribute("data-backdrop-spin")) {
-      spun.push({ from: rect.top + offset, to: rect.bottom + offset });
-    }
-
-    const sides = (["left", "right"] as const).filter(
-      (side) => rect.right > strips[side].from && rect.left < strips[side].to,
-    );
-    if (sides.length === 0) continue;
-    // `data-no-backdrop` keeps a section clear by hand, for the places where a
-    // piece is technically in the open but visually in the way.
-    if (!element.hasAttribute("data-no-backdrop") && !paints(element)) continue;
-
-    for (const side of sides) {
-      painted[side].push({ from: rect.top + offset, to: rect.bottom + offset });
-    }
-  }
-
-  const bands = {
-    left: freeBands(painted.left, pageHeight),
-    right: freeBands(painted.right, pageHeight),
-  };
 
   // The biggest box the window will take, which every piece reaches for: as
   // wide as its half allows, and as tall as that width and the window permit.
@@ -212,52 +177,97 @@ function plan(): Slot[] {
     window_.innerHeight * MAX_HEIGHT_RATIO,
   );
   const shortest = boxHeight * MIN_SCALE;
+  const spacing = window_.innerHeight / PER_SCREEN;
+  const slots: Slot[] = [];
+  // Half the page each, rather than the thin margins outside the content
+  // column: copy paints nothing, so a piece can run right under a paragraph
+  // and still be clear of every card and photograph on the page.
+  if (!footerOnly) {
+    const strips: Record<Side, Band> = {
+      left: { from: 0, to: width / 2 },
+      right: { from: width / 2, to: width },
+    };
+    const painted: Record<Side, Band[]> = { left: [], right: [] };
+    /** Stretches a page has asked to have its piece face the other way in. */
+    const flipped: Band[] = [];
 
-  // Spread pieces evenly down every bare stretch, so a long run carries several
-  // rather than a single lonely one. Each is as large as the window allows, or
-  // as large as the band will carry at full overflow, whichever is smaller.
-  const candidates: Slot[] = [];
-  for (const side of ["left", "right"] as const) {
-    for (const band of bands[side]) {
-      const room = band.to - band.from - CLEARANCE * 2;
-      if (room < shortest / OVERFLOW) continue;
+    for (const element of document.body.querySelectorAll("*")) {
+      if (element.closest("[data-cad-backdrop]")) continue;
+      const rect = element.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) continue;
 
-      const height = Math.min(boxHeight, room * OVERFLOW);
-      const count = Math.max(1, Math.floor(room / (height * 0.9)));
-      for (let index = 0; index < count; index += 1) {
-        const middle = band.from + CLEARANCE + (room * (index + 0.5)) / count;
-        candidates.push({
-          top: middle - height / 2,
-          width: boxWidth,
-          height,
-          side,
-          spun: spun.some((band) => middle >= band.from && middle <= band.to),
+      if (element.hasAttribute("data-backdrop-flip")) {
+        flipped.push({ from: rect.top + offset, to: rect.bottom + offset });
+      }
+
+      const sides = (["left", "right"] as const).filter(
+        (side) => rect.right > strips[side].from && rect.left < strips[side].to,
+      );
+      if (sides.length === 0) continue;
+      // `data-no-backdrop` keeps a section clear by hand, for the places where a
+      // piece is technically in the open but visually in the way.
+      if (!element.hasAttribute("data-no-backdrop") && !paints(element))
+        continue;
+
+      for (const side of sides) {
+        painted[side].push({
+          from: rect.top + offset,
+          to: rect.bottom + offset,
         });
       }
     }
-  }
 
-  // Take them left, right, left, right down the page, spaced far enough apart
-  // to land at the wanted density. Only when the wanted side has nothing left
-  // to offer below the last piece does the other side stand in — better a
-  // repeated side than a blank half of the page.
-  const spacing = window_.innerHeight / PER_SCREEN;
-  candidates.sort((a, b) => a.top - b.top);
+    const bands = {
+      left: freeBands(painted.left, pageHeight),
+      right: freeBands(painted.right, pageHeight),
+    };
 
-  const slots: Slot[] = [];
-  let wanted: Side = "left";
-  let floor = 0;
-  while (slots.length < MAX_PIECES) {
-    const clear = candidates.filter(
-      (candidate) => candidate.top >= floor && !slots.includes(candidate),
-    );
-    const next =
-      clear.find((candidate) => candidate.side === wanted) ?? clear[0];
-    if (!next) break;
+    // Spread pieces evenly down every bare stretch, so a long run carries several
+    // rather than a single lonely one. Each is as large as the window allows, or
+    // as large as the band will carry at full overflow, whichever is smaller.
+    const candidates: Slot[] = [];
+    for (const side of ["left", "right"] as const) {
+      for (const band of bands[side]) {
+        const room = band.to - band.from - CLEARANCE * 2;
+        if (room < shortest / OVERFLOW) continue;
 
-    slots.push(next);
-    floor = next.top + spacing;
-    wanted = next.side === "left" ? "right" : "left";
+        const height = Math.min(boxHeight, room * OVERFLOW);
+        const count = Math.max(1, Math.floor(room / (height * 0.9)));
+        for (let index = 0; index < count; index += 1) {
+          const middle = band.from + CLEARANCE + (room * (index + 0.5)) / count;
+          candidates.push({
+            top: middle - height / 2,
+            width: boxWidth,
+            height,
+            side,
+            flipped: flipped.some(
+              (band) => middle >= band.from && middle <= band.to,
+            ),
+          });
+        }
+      }
+    }
+
+    // Take them left, right, left, right down the page, spaced far enough apart
+    // to land at the wanted density. Only when the wanted side has nothing left
+    // to offer below the last piece does the other side stand in — better a
+    // repeated side than a blank half of the page.
+    candidates.sort((a, b) => a.top - b.top);
+
+    let wanted: Side = "left";
+    let floor = 0;
+    while (slots.length < MAX_PIECES) {
+      const clear = candidates.filter(
+        (candidate) => candidate.top >= floor && !slots.includes(candidate),
+      );
+      const next =
+        clear.find((candidate) => candidate.side === wanted) ?? clear[0];
+      if (!next) break;
+
+      slots.push(next);
+      floor = next.top + spacing;
+      wanted = next.side === "left" ? "right" : "left";
+    }
   }
 
   // The footer piece is placed rather than found, so every page ends on one
@@ -316,17 +326,15 @@ function startingPiece(pathname: string) {
 export default function CadBackdrop() {
   const pathname = usePathname() ?? "/";
   const [slots, setSlots] = useState<Slot[]>([]);
-  const excluded = EXCLUDED.includes(pathname);
+  const footerOnly = FOOTER_ONLY.includes(pathname);
 
   // Layout keys this component by route, so a navigation remounts it and the
   // plan below is always measured against the page currently on screen.
   useEffect(() => {
-    if (excluded) return;
-
     let frame = 0;
     const remeasure = () => {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => setSlots(plan()));
+      frame = requestAnimationFrame(() => setSlots(plan(footerOnly)));
     };
 
     remeasure();
@@ -342,9 +350,7 @@ export default function CadBackdrop() {
       window.removeEventListener("load", remeasure);
       observer.disconnect();
     };
-  }, [excluded]);
-
-  if (excluded) return null;
+  }, [footerOnly]);
 
   const first = startingPiece(pathname);
 
@@ -356,12 +362,14 @@ export default function CadBackdrop() {
     >
       {slots.map((slot, index) => {
         const piece = slot.piece ?? (first + index) % PIECES.length;
-        const mirrored = slot.mirrored ?? (first + index) % 2 === 1;
-        // Both a mirror and a half turn swap the element's edges, so a piece
-        // that is to end up against the left of the page has to be drawn
-        // against the right of its own box — unless it gets both, which puts
-        // it back where it started.
-        const flipped = mirrored !== Boolean(slot.spun);
+        // Every other piece is mirrored as it goes down the page; a band
+        // marked to face the other way inverts that for the one it holds.
+        const mirrored =
+          (slot.mirrored ?? (first + index) % 2 === 1) !==
+          Boolean(slot.flipped);
+        // A mirror swaps the element's edges too, so a piece that is to end up
+        // against the left of the page has to be drawn against the right of
+        // its own box.
         const away = slot.side === "left" ? "right" : "left";
         return (
           <div
@@ -382,10 +390,10 @@ export default function CadBackdrop() {
               // Held against the outside edge rather than centred in its half,
               // so it reads as furniture in the corner of the page instead of
               // drifting into the middle of the copy.
-              align={flipped ? away : slot.side}
+              align={mirrored ? away : slot.side}
               className={`h-full w-full opacity-[0.22] ${
                 mirrored ? "scale-x-[-1]" : ""
-              } ${slot.spun ? "rotate-180" : ""}`}
+              }`}
             />
           </div>
         );

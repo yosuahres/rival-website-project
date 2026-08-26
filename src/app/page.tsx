@@ -136,10 +136,10 @@ export default function Home() {
 
       <HomeHeroCarousel />
 
-      {/* The backdrop piece beside this one reads better upside down: the rover
-          then leans into the heading rather than away from it. */}
+      {/* The backdrop piece beside this one reads better facing the other way:
+          the rover then leans into the heading rather than away from it. */}
       <section
-        data-backdrop-spin
+        data-backdrop-flip
         className="px-5 pt-4 pb-14 md:px-2 md:pt-25 md:pb-25"
       >
         <div className="mx-auto max-w-7xl text-center">
