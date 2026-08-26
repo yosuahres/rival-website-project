@@ -24,6 +24,12 @@ type Props = {
   className?: string;
   /** Dot colours, cycled by a positional hash so the mix stays stable. */
   palette?: { body: string[]; edge: string[] };
+  /**
+   * Which way the artwork sits in the box. Centred by default; anchoring it to
+   * an edge lets a caller hold it against the side of the page without having
+   * to shrink the box to get it there.
+   */
+  align?: "center" | "left" | "right";
   /** Called once per source, with the box the dots were fitted to. */
   onBounds?: (bounds: DotImageBounds) => void;
 };
@@ -34,6 +40,8 @@ const SAMPLE_SIZE = 720;
 const ALPHA_FLOOR = 28;
 /** Grid pitch in CSS pixels: the smaller, the denser the stipple. */
 const PITCH = 4;
+/** How many frames to keep asking for a size before giving up on one. */
+const SETTLE_FRAMES = 20;
 /** Share of the box left empty around the artwork. */
 export const DOT_IMAGE_INSET = 0.06;
 const INSET = DOT_IMAGE_INSET;
@@ -110,6 +118,7 @@ export default function DotImage({
   alt = "",
   className,
   palette = DEFAULT_PALETTE,
+  align = "center",
   onBounds,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -155,7 +164,13 @@ export default function DotImage({
     const scale = Math.min(frameW / box.width, frameH / box.height);
     const drawnW = box.width * scale;
     const drawnH = box.height * scale;
-    const originX = (cssWidth - drawnW) / 2;
+    const inset = cssWidth * INSET;
+    const originX =
+      align === "left"
+        ? inset
+        : align === "right"
+          ? cssWidth - drawnW - inset
+          : (cssWidth - drawnW) / 2;
     const originY = (cssHeight - drawnH) / 2;
 
     for (let y = 0; y < drawnH; y += PITCH) {
@@ -195,7 +210,7 @@ export default function DotImage({
       }
     }
     ctx.globalAlpha = 1;
-  }, [palette]);
+  }, [palette, align]);
 
   useEffect(() => {
     let cancelled = false;
@@ -273,7 +288,26 @@ export default function DotImage({
     if (!canvas) return;
     const observer = new ResizeObserver(() => draw());
     observer.observe(canvas);
-    return () => observer.disconnect();
+
+    // A canvas that has not been laid out yet measures zero and draws nothing.
+    // ResizeObserver covers the usual case, but on a client-side navigation the
+    // file is already cached and decodes synchronously, so the sample can land
+    // before the element has a size — and no resize follows to rescue it. So
+    // the first few frames are nudged, until the element measures for real.
+    let frames = 0;
+    let nudge = 0;
+    const settle = () => {
+      draw();
+      if (canvas.clientWidth > 0 || frames > SETTLE_FRAMES) return;
+      frames += 1;
+      nudge = requestAnimationFrame(settle);
+    };
+    nudge = requestAnimationFrame(settle);
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(nudge);
+    };
   }, [draw]);
 
   return (

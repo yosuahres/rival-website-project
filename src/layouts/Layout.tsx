@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import type React from "react";
 import { useEffect } from "react";
+import CadBackdrop from "@/components/CadBackdrop";
 import SplashScreen from "@/components/SplashScreen";
 import { useUiStore } from "@/store";
 import { useLocaleStore } from "@/store/locale";
@@ -38,10 +39,16 @@ export default function Layout({ children }: LayoutProps) {
   }, [pathname, setShowSplashScreen, setFadeOut]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-transparent">
+    // Positioned so the backdrop below can span the whole page rather than the
+    // viewport it happens to open on.
+    <div className="relative flex flex-col min-h-screen bg-transparent">
       {showSplashScreen && <SplashScreen onFinish={handleSplashScreenFinish} />}
+      {/* Sits under everything else, so the content wrapper below has to open
+          its own stacking context to stay on top of it. It is anchored to this
+          container, which is why the container is positioned. */}
+      <CadBackdrop key={pathname} />
       <div
-        className={`flex flex-col bg-transparent transition-opacity duration-500 ${
+        className={`relative z-10 flex flex-col bg-transparent transition-opacity duration-500 ${
           showSplashScreen && !fadeOut
             ? "opacity-0 pointer-events-none"
             : "opacity-100"

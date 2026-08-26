@@ -136,6 +136,29 @@ body {
   pointer-events: none;
 }
 
+/* The CAD backdrop pieces are drawn larger than the gaps they sit in, so the
+   sections above and below cut straight across them — and since those sections
+   are painted in the page's own colour, the cut reads as a hard edge floating
+   in the middle of nothing. Fading each piece out towards its own edges means
+   the drawing has already thinned away by the time it meets one, so it reads as
+   the stipple running out rather than as a line ruled through it. Same
+   treatment as the wordmark watermark in the footer. */
+.cad-piece {
+  /* The ellipse is deliberately tighter vertically than horizontally: the cuts
+     come from the sections above and below, so that is the axis the fade has to
+     finish on, while the width is free to keep its reach across the page. */
+  -webkit-mask-image: radial-gradient(
+    ellipse 92% 52% at center,
+    black 30%,
+    transparent 95%
+  );
+  mask-image: radial-gradient(
+    ellipse 92% 52% at center,
+    black 30%,
+    transparent 95%
+  );
+}
+
 .logo-text {
   position: relative;
   font-family: var(--font-inter), sans-serif;

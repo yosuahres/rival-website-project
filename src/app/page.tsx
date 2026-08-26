@@ -136,7 +136,12 @@ export default function Home() {
 
       <HomeHeroCarousel />
 
-      <section className="px-5 pt-4 pb-14 md:px-2 md:pt-25 md:pb-25">
+      {/* The backdrop piece beside this one reads better upside down: the rover
+          then leans into the heading rather than away from it. */}
+      <section
+        data-backdrop-spin
+        className="px-5 pt-4 pb-14 md:px-2 md:pt-25 md:pb-25"
+      >
         <div className="mx-auto max-w-7xl text-center">
           <h2 className="mb-5 font-medium text-[1.65rem] text-white leading-tight md:mb-6 md:text-4xl lg:text-5xl">
             {t("home.introTitle")}
@@ -283,8 +288,10 @@ export default function Home() {
       </section>
 
       {/* Sponsor wall. Rows mirror the footer's grouping — two lead, one
-          feature, then three across. */}
-      <section className="px-4 pb-24 md:px-6">
+          feature, then three across. The backdrop is kept out of it: the wall
+          is mostly air, so a stipple beside it has room to sit but reads as
+          clutter against the logos. */}
+      <section data-no-backdrop className="px-4 pb-24 md:px-6">
         <div className="mx-auto max-w-7xl px-2 py-8 md:px-6 md:py-12">
           <p className="text-center font-semibold text-gray-400 text-xs uppercase tracking-[0.2em]">
             {t("home.sponsorsEyebrow")}
