@@ -1,0 +1,4 @@
+1:"$Sreact.fragment"
+2:I[87989,["/_next/static/chunks/15qupdy76.c.a.js","/_next/static/chunks/0-w77s0rkkjpp.js"],"default"]
+3:I[36703,["/_next/static/chunks/15qupdy76.c.a.js","/_next/static/chunks/0-w77s0rkkjpp.js"],"default"]
+0:{"rsc":["$","$1","c",{"children":[null,[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://rival.its.ac.id/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Indonesian Robot Contest\",\"item\":\"https://rival.its.ac.id/competitions/indonesian-robot-contest\"}]}"}}],["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"Wn2EoDxukBO_WDC5gIY6j"}
