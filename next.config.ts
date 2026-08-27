@@ -22,6 +22,8 @@ const SECURITY_HEADERS = [
 ];
 
 const nextConfig: NextConfig = {
+  output: "export",
+  trailingSlash: true,
   // Cache rendered pages in the client-side Router Cache so navigating
   // back to the home page doesn't remount/refetch the whole tree.
   experimental: {
@@ -51,6 +53,7 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
+    unoptimized: true,
     // Cache optimized images for a year instead of the 4h default.
     minimumCacheTTL: 31536000,
     // Next 16 only serves qualities named here (default [75]); 50 is for the

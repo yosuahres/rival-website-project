@@ -1,0 +1,68 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "dist/**"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and publish to dist/
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "pnpm"
+
+      - name: Download deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Build static export
+        env:
+          NEXT_PUBLIC_SITE_URL: https://rival.its.ac.id
+        run: pnpm build
+
+      - name: 📄 Add Apache config
+        run: cp deploy/.htaccess out/.htaccess
+
+      - name: 🔍 Verify the export looks deployable
+        run: |
+          test -f out/index.html || { echo "::error::out/index.html missing"; exit 1; }
+          test -f out/.htaccess  || { echo "::error::out/.htaccess missing";  exit 1; }
+          echo "Exported $(find out -name '*.html' | wc -l) HTML files, $(du -sh out | cut -f1) total"
+
+      - name: 📦 Move the export into dist/
+        run: |
+          rm -rf dist
+          mv out dist
+
+      - name: 💾 Commit dist/ to main
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A dist
+          if git diff --staged --quiet; then
+            echo "Build output identical to the last deploy; nothing to commit."
+            exit 0
+          fi
+          git commit -m "deploy: build ${GITHUB_SHA::7} [skip ci]"
+          git push origin HEAD:main
