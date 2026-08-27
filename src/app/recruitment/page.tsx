@@ -29,8 +29,14 @@ type Division = {
   /** Stable id — the React key and the icon's accessible name are built on it. */
   id: string;
   name: TranslationKey;
-  desc: TranslationKey;
-  skills: readonly TranslationKey[];
+  /** Technical divisions lead with mission + focus; non-technical ones with a blurb. */
+  mission?: TranslationKey;
+  focus?: TranslationKey;
+  desc?: TranslationKey;
+  /** Responsibilities for technical divisions, requirements for non-technical ones. */
+  points: readonly TranslationKey[];
+  /** Chips pinned to the bottom of the card — technical divisions only. */
+  skills?: readonly TranslationKey[];
   // Single 24x24 outline path drawn inside the card's icon badge.
   icon: string;
 };
@@ -40,19 +46,31 @@ const TECHNICAL_DIVISIONS: readonly Division[] = [
     id: "mechanical",
     name: "recruitment.divisions.mechanical.name",
     icon: "M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9",
-    desc: "recruitment.divisions.mechanical.desc",
+    mission: "recruitment.divisions.mechanical.mission",
+    focus: "recruitment.divisions.mechanical.focus",
+    points: [
+      "recruitment.divisions.mechanical.resp1",
+      "recruitment.divisions.mechanical.resp2",
+      "recruitment.divisions.mechanical.resp3",
+      "recruitment.divisions.mechanical.resp4",
+    ],
     skills: [
       "recruitment.divisions.mechanical.skill1",
       "recruitment.divisions.mechanical.skill2",
-      "recruitment.divisions.mechanical.skill3",
-      "recruitment.divisions.mechanical.skill4",
     ],
   },
   {
     id: "electrical",
     name: "recruitment.divisions.electrical.name",
     icon: "M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z",
-    desc: "recruitment.divisions.electrical.desc",
+    mission: "recruitment.divisions.electrical.mission",
+    focus: "recruitment.divisions.electrical.focus",
+    points: [
+      "recruitment.divisions.electrical.resp1",
+      "recruitment.divisions.electrical.resp2",
+      "recruitment.divisions.electrical.resp3",
+      "recruitment.divisions.electrical.resp4",
+    ],
     skills: [
       "recruitment.divisions.electrical.skill1",
       "recruitment.divisions.electrical.skill2",
@@ -64,12 +82,20 @@ const TECHNICAL_DIVISIONS: readonly Division[] = [
     id: "programming",
     name: "recruitment.divisions.programming.name",
     icon: "M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5",
-    desc: "recruitment.divisions.programming.desc",
+    mission: "recruitment.divisions.programming.mission",
+    focus: "recruitment.divisions.programming.focus",
+    points: [
+      "recruitment.divisions.programming.resp1",
+      "recruitment.divisions.programming.resp2",
+      "recruitment.divisions.programming.resp3",
+      "recruitment.divisions.programming.resp4",
+    ],
     skills: [
       "recruitment.divisions.programming.skill1",
       "recruitment.divisions.programming.skill2",
       "recruitment.divisions.programming.skill3",
       "recruitment.divisions.programming.skill4",
+      "recruitment.divisions.programming.skill5",
     ],
   },
 ];
@@ -80,11 +106,11 @@ const NON_TECHNICAL_DIVISIONS: readonly Division[] = [
     name: "recruitment.divisions.creative.name",
     icon: "M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42",
     desc: "recruitment.divisions.creative.desc",
-    skills: [
-      "recruitment.divisions.creative.skill1",
-      "recruitment.divisions.creative.skill2",
-      "recruitment.divisions.creative.skill3",
-      "recruitment.divisions.creative.skill4",
+    points: [
+      "recruitment.divisions.creative.req1",
+      "recruitment.divisions.creative.req2",
+      "recruitment.divisions.creative.req3",
+      "recruitment.divisions.creative.req4",
     ],
   },
   {
@@ -92,11 +118,11 @@ const NON_TECHNICAL_DIVISIONS: readonly Division[] = [
     name: "recruitment.divisions.external.name",
     icon: "M20.25 14.15v4.073a2.25 2.25 0 01-1.907 2.222c-2.088.324-4.227.492-6.405.492s-4.317-.168-6.405-.492A2.25 2.25 0 013.75 18.223V14.15M12 12.75h.008v.008H12v-.008zM3.75 8.25h16.5c.621 0 1.125.504 1.125 1.125v2.023a2.25 2.25 0 01-1.907 2.222A48.208 48.208 0 0112 14.25c-2.716 0-5.4-.226-8.018-.659a2.25 2.25 0 01-1.907-2.222V9.375c0-.621.504-1.125 1.125-1.125zM15 8.25V6a2.25 2.25 0 00-2.25-2.25h-1.5A2.25 2.25 0 009 6v2.25",
     desc: "recruitment.divisions.external.desc",
-    skills: [
-      "recruitment.divisions.external.skill1",
-      "recruitment.divisions.external.skill2",
-      "recruitment.divisions.external.skill3",
-      "recruitment.divisions.external.skill4",
+    points: [
+      "recruitment.divisions.external.req1",
+      "recruitment.divisions.external.req2",
+      "recruitment.divisions.external.req3",
+      "recruitment.divisions.external.req4",
     ],
   },
   {
@@ -104,11 +130,11 @@ const NON_TECHNICAL_DIVISIONS: readonly Division[] = [
     name: "recruitment.divisions.administration.name",
     icon: "M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z",
     desc: "recruitment.divisions.administration.desc",
-    skills: [
-      "recruitment.divisions.administration.skill1",
-      "recruitment.divisions.administration.skill2",
-      "recruitment.divisions.administration.skill3",
-      "recruitment.divisions.administration.skill4",
+    points: [
+      "recruitment.divisions.administration.req1",
+      "recruitment.divisions.administration.req2",
+      "recruitment.divisions.administration.req3",
+      "recruitment.divisions.administration.req4",
     ],
   },
 ];
@@ -149,14 +175,20 @@ const sections = [
   { id: "faq", label: "recruitment.nav.faq" },
 ] as const satisfies readonly { id: string; label: TranslationKey }[];
 
+const DIVISION_LABEL =
+  "text-white/60 font-semibold text-xs uppercase tracking-[0.12em] mb-2";
+
 function DivisionSection({
   id,
   title,
   items,
+  pointsLabel,
 }: {
   id: string;
   title: TranslationKey;
   items: readonly Division[];
+  /** Heads the bullet list: responsibilities here, requirements there. */
+  pointsLabel: TranslationKey;
 }) {
   const { t } = useTranslation();
 
@@ -197,23 +229,53 @@ function DivisionSection({
                   {t(division.name)}
                 </h4>
                 <div className="border-t border-white/15 my-6"></div>
-                <ul className="list-disc pl-5 mb-8 space-y-4 marker:text-white/40 text-gray-300 text-base leading-relaxed">
-                  <li>{t(division.desc)}</li>
-                </ul>
+                {/* last:mb-0 — non-technical cards end here, with no chip row below. */}
+                <div className="mb-8 last:mb-0 space-y-5 text-gray-300 text-base leading-relaxed">
+                  {division.mission && (
+                    <div>
+                      <h5 className={DIVISION_LABEL}>
+                        {t("recruitment.divisionLabels.mission")}
+                      </h5>
+                      <p>{t(division.mission)}</p>
+                    </div>
+                  )}
+                  {division.focus && (
+                    <div>
+                      <h5 className={DIVISION_LABEL}>
+                        {t("recruitment.divisionLabels.focus")}
+                      </h5>
+                      <p>{t(division.focus)}</p>
+                    </div>
+                  )}
+                  {division.desc && <p>{t(division.desc)}</p>}
+                  <div>
+                    <h5 className={DIVISION_LABEL}>{t(pointsLabel)}</h5>
+                    <ul className="list-disc pl-5 space-y-2 marker:text-white/40">
+                      {division.points.map((point) => (
+                        <li key={point}>{t(point)}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
                 {/* Pinned to the bottom so the chip rows line up across the
                     three cards however long the bullets above run. */}
-                <div className="mt-auto border-t border-white/15 pt-6">
-                  <ul className="flex flex-wrap gap-2">
-                    {division.skills.map((skill) => (
-                      <li
-                        key={skill}
-                        className="bg-[#398561] text-white font-medium text-sm rounded-md px-3 py-1.5"
-                      >
-                        {t(skill)}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {division.skills && (
+                  <div className="mt-auto border-t border-white/15 pt-6">
+                    <h5 className={DIVISION_LABEL}>
+                      {t("recruitment.divisionLabels.skills")}
+                    </h5>
+                    <ul className="flex flex-wrap gap-2">
+                      {division.skills.map((skill) => (
+                        <li
+                          key={skill}
+                          className="bg-[#398561] text-white font-medium text-sm rounded-md px-3 py-1.5"
+                        >
+                          {t(skill)}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </FadeIn>
           ))}
@@ -552,6 +614,7 @@ export default function Recruitment() {
         id="divisions"
         title="recruitment.technicalTitle"
         items={TECHNICAL_DIVISIONS}
+        pointsLabel="recruitment.divisionLabels.responsibilities"
       />
 
       {/* Non-technical divisions */}
@@ -559,6 +622,7 @@ export default function Recruitment() {
         id="non-technical-divisions"
         title="recruitment.nonTechnicalTitle"
         items={NON_TECHNICAL_DIVISIONS}
+        pointsLabel="recruitment.divisionLabels.requirements"
       />
 
       {/* Required documents */}

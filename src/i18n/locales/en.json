@@ -209,54 +209,75 @@
     },
     "technicalTitle": "TECHNICAL DIVISIONS",
     "nonTechnicalTitle": "NON-TECHNICAL DIVISIONS",
+    "divisionLabels": {
+      "mission": "Mission",
+      "focus": "Focus",
+      "responsibilities": "Responsibilities",
+      "skills": "Expected Skills",
+      "requirements": "Requirements"
+    },
     "divisions": {
       "mechanical": {
         "name": "Mechanical",
-        "desc": "Designs and manufactures the robot's chassis, drivetrain, and manipulator so it survives the field and the competition rules.",
-        "skill1": "SolidWorks / Autodesk Inventor",
-        "skill2": "Static & dynamic structural analysis",
-        "skill3": "Manufacturing process (machining, 3D printing)",
-        "skill4": "Material selection"
+        "mission": "Design and manufacture durable, efficient, and competition-ready robotic structures.",
+        "focus": "Robot mechanical design and manufacturing.",
+        "resp1": "Design robot structures and mechanisms.",
+        "resp2": "Manufacture and assemble mechanical components.",
+        "resp3": "Operate manufacturing equipment safely.",
+        "resp4": "Conduct testing and improve mechanical performance.",
+        "skill1": "CAD Engineering (Fusion 360, Autodesk Inventor, etc.)",
+        "skill2": "Manufacturing (bandsaw, drill, conventional/CNC machines, etc.)"
       },
       "electrical": {
         "name": "Electrical",
-        "desc": "Builds the power system, wiring, sensors, and control electronics that keep every subsystem of the robot alive.",
-        "skill1": "PCB design (KiCad / Altium / EAGLE)",
-        "skill2": "Microcontrollers (STM32, ESP32, Arduino)",
-        "skill3": "Power & battery management systems",
-        "skill4": "Sensor integration and troubleshooting"
+        "mission": "Develop reliable electronic and embedded systems that power the robot's performance.",
+        "focus": "Hardware and electronic system development.",
+        "resp1": "Assemble electronic components, wiring, and power systems.",
+        "resp2": "Develop and integrate embedded systems using microcontrollers.",
+        "resp3": "Perform hardware testing and troubleshooting.",
+        "resp4": "Integrate sensors and actuators into the robot.",
+        "skill1": "Circuit Design",
+        "skill2": "Wiring & Soldering",
+        "skill3": "Arduino, ESP32, STM32",
+        "skill4": "Electronics Troubleshooting"
       },
       "programming": {
         "name": "Programming",
-        "desc": "Develops the robot's brain — autonomy, computer vision, communication, and the interface the drivers use during a run.",
-        "skill1": "C/C++ and Python",
-        "skill2": "ROS / ROS2",
-        "skill3": "Computer vision (OpenCV)",
-        "skill4": "Control systems & path planning"
+        "mission": "Develop intelligent software that enables the robot to perform autonomously and efficiently.",
+        "focus": "Software development and autonomous robot control.",
+        "resp1": "Develop robot control systems.",
+        "resp2": "Implement computer vision and sensor processing.",
+        "resp3": "Create navigation and automation algorithms.",
+        "resp4": "Test, debug, and optimize software performance.",
+        "skill1": "C/C++",
+        "skill2": "Python",
+        "skill3": "ROS (Robot Operating System)",
+        "skill4": "OpenCV",
+        "skill5": "Git & Version Control"
       },
       "creative": {
-        "name": "Creative & Branding",
-        "desc": "Shapes how RIVAL ITS looks and sounds — from social media content to competition documentation and team identity.",
-        "skill1": "Figma / Adobe Illustrator / Photoshop",
-        "skill2": "Video editing (Premiere Pro, CapCut)",
-        "skill3": "Copywriting & social media strategy",
-        "skill4": "Photography and videography"
+        "name": "Creative & Design",
+        "desc": "The Creative & Design division handles the creation and design of all visual content related to the team, including videos, graphics, and social media management. It builds a positive and professional image of the team for public consumption.",
+        "req1": "Proficiency in graphic design software.",
+        "req2": "Experience with video production and editing tools.",
+        "req3": "Creative mindset with a good eye for visual aesthetics.",
+        "req4": "Ability to create engaging content to promote the team's image."
       },
       "external": {
-        "name": "External Relations & Sponsorship",
-        "desc": "Opens doors for the team — sponsorship proposals, partner relations, and collaborations with industry and institutions.",
-        "skill1": "Proposal writing & pitching",
-        "skill2": "Negotiation and public speaking",
-        "skill3": "Partner relationship management",
-        "skill4": "Business correspondence"
+        "name": "Sponsorship & Public Relations",
+        "desc": "The Sponsorship & Public Relations division manages events and agendas involving the team, maintains relationships with external stakeholders, and ensures effective public communication through social media. This division is also responsible for securing sponsorships and ensuring agreed-upon sponsorship benefits are delivered.",
+        "req1": "Excellent communication and interpersonal skills for external relations.",
+        "req2": "Ability to negotiate and secure sponsorship deals.",
+        "req3": "Enthusiasm for networking and maintaining external relations.",
+        "req4": "Understanding of social media platforms for brand communication."
       },
       "administration": {
         "name": "Administration & Finance",
-        "desc": "Keeps the team running behind the scenes: budgeting, procurement, letters, logistics, and competition accommodation.",
-        "skill1": "Spreadsheet & bookkeeping",
-        "skill2": "Document and letter administration",
-        "skill3": "Procurement and logistics planning",
-        "skill4": "Time and event management"
+        "desc": "The Administration division is responsible for organizing the team's timeline and agenda, managing general team needs, archiving important documents, handling correspondence, and completing the paperwork required for competitions.",
+        "req1": "Able to handle and archive documents efficiently.",
+        "req2": "Familiar with managing schedules and team activities.",
+        "req3": "Able to manage official correspondence and maintain confidentiality.",
+        "req4": "Committed and able to work under pressure to meet deadlines."
       }
     },
     "documentsTitle": "Required Documents",

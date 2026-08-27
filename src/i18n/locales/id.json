@@ -209,54 +209,75 @@
     },
     "technicalTitle": "DIVISI TEKNIS",
     "nonTechnicalTitle": "DIVISI NON-TEKNIS",
+    "divisionLabels": {
+      "mission": "Misi",
+      "focus": "Fokus",
+      "responsibilities": "Tanggung Jawab",
+      "skills": "Keahlian yang Diharapkan",
+      "requirements": "Persyaratan"
+    },
     "divisions": {
       "mechanical": {
         "name": "Mekanikal",
-        "desc": "Merancang dan memproduksi sasis, sistem penggerak, dan manipulator robot agar tahan di lapangan dan sesuai dengan regulasi kompetisi.",
-        "skill1": "SolidWorks / Autodesk Inventor",
-        "skill2": "Analisis struktur statis & dinamis",
-        "skill3": "Proses manufaktur (permesinan, 3D printing)",
-        "skill4": "Pemilihan material"
+        "mission": "Merancang dan memproduksi struktur robot yang tangguh, efisien, dan siap berkompetisi.",
+        "focus": "Perancangan dan manufaktur mekanik robot.",
+        "resp1": "Merancang struktur dan mekanisme robot.",
+        "resp2": "Memproduksi dan merakit komponen mekanik.",
+        "resp3": "Mengoperasikan peralatan manufaktur dengan aman.",
+        "resp4": "Melakukan pengujian dan meningkatkan performa mekanik.",
+        "skill1": "CAD Engineering (Fusion 360, Autodesk Inventor, dll.)",
+        "skill2": "Manufaktur (bandsaw, bor, mesin konvensional/CNC, dll.)"
       },
       "electrical": {
         "name": "Elektrikal",
-        "desc": "Membangun sistem daya, pengkabelan, sensor, dan elektronika kendali yang menjaga setiap subsistem robot tetap hidup.",
-        "skill1": "Desain PCB (KiCad / Altium / EAGLE)",
-        "skill2": "Mikrokontroler (STM32, ESP32, Arduino)",
-        "skill3": "Sistem manajemen daya & baterai",
-        "skill4": "Integrasi sensor dan pemecahan masalah"
+        "mission": "Mengembangkan sistem elektronik dan embedded yang andal untuk menopang performa robot.",
+        "focus": "Pengembangan perangkat keras dan sistem elektronik.",
+        "resp1": "Merakit komponen elektronik, pengkabelan, dan sistem daya.",
+        "resp2": "Mengembangkan dan mengintegrasikan sistem embedded menggunakan mikrokontroler.",
+        "resp3": "Melakukan pengujian dan pemecahan masalah perangkat keras.",
+        "resp4": "Mengintegrasikan sensor dan aktuator ke dalam robot.",
+        "skill1": "Desain rangkaian",
+        "skill2": "Pengkabelan & penyolderan",
+        "skill3": "Arduino, ESP32, STM32",
+        "skill4": "Troubleshooting elektronika"
       },
       "programming": {
         "name": "Pemrograman",
-        "desc": "Mengembangkan otak robot — otonomi, computer vision, komunikasi, dan antarmuka yang digunakan operator selama pertandingan.",
-        "skill1": "C/C++ dan Python",
-        "skill2": "ROS / ROS2",
-        "skill3": "Computer vision (OpenCV)",
-        "skill4": "Sistem kendali & perencanaan jalur"
+        "mission": "Mengembangkan perangkat lunak cerdas agar robot dapat bekerja secara otonom dan efisien.",
+        "focus": "Pengembangan perangkat lunak dan kendali robot otonom.",
+        "resp1": "Mengembangkan sistem kendali robot.",
+        "resp2": "Menerapkan computer vision dan pengolahan data sensor.",
+        "resp3": "Membuat algoritma navigasi dan otomasi.",
+        "resp4": "Menguji, men-debug, dan mengoptimalkan performa perangkat lunak.",
+        "skill1": "C/C++",
+        "skill2": "Python",
+        "skill3": "ROS (Robot Operating System)",
+        "skill4": "OpenCV",
+        "skill5": "Git & kontrol versi"
       },
       "creative": {
-        "name": "Kreatif & Branding",
-        "desc": "Membentuk citra dan suara RIVAL ITS — mulai dari konten media sosial hingga dokumentasi kompetisi dan identitas tim.",
-        "skill1": "Figma / Adobe Illustrator / Photoshop",
-        "skill2": "Penyuntingan video (Premiere Pro, CapCut)",
-        "skill3": "Copywriting & strategi media sosial",
-        "skill4": "Fotografi dan videografi"
+        "name": "Kreatif & Desain",
+        "desc": "Divisi Kreatif & Desain menangani pembuatan dan perancangan seluruh konten visual tim, termasuk video, grafis, dan pengelolaan media sosial. Divisi ini membangun citra tim yang positif dan profesional di mata publik.",
+        "req1": "Menguasai perangkat lunak desain grafis.",
+        "req2": "Berpengalaman dengan perangkat produksi dan penyuntingan video.",
+        "req3": "Berpikir kreatif dengan kepekaan terhadap estetika visual.",
+        "req4": "Mampu membuat konten menarik untuk mempromosikan citra tim."
       },
       "external": {
-        "name": "Hubungan Eksternal & Sponsorship",
-        "desc": "Membuka peluang bagi tim — proposal sponsorship, hubungan mitra, serta kolaborasi dengan industri dan institusi.",
-        "skill1": "Penulisan proposal & pitching",
-        "skill2": "Negosiasi dan public speaking",
-        "skill3": "Manajemen hubungan mitra",
-        "skill4": "Korespondensi bisnis"
+        "name": "Sponsorship & Hubungan Masyarakat",
+        "desc": "Divisi Sponsorship & Hubungan Masyarakat mengelola acara dan agenda yang melibatkan tim, menjaga hubungan dengan pemangku kepentingan eksternal, serta memastikan komunikasi publik berjalan efektif melalui media sosial. Divisi ini juga bertanggung jawab memperoleh sponsorship dan memastikan benefit yang telah disepakati terpenuhi.",
+        "req1": "Kemampuan komunikasi dan interpersonal yang baik untuk hubungan eksternal.",
+        "req2": "Mampu bernegosiasi dan memperoleh kesepakatan sponsorship.",
+        "req3": "Antusias membangun jejaring dan menjaga hubungan eksternal.",
+        "req4": "Memahami platform media sosial untuk komunikasi brand."
       },
       "administration": {
         "name": "Administrasi & Keuangan",
-        "desc": "Menjaga tim tetap berjalan di balik layar: penganggaran, pengadaan, persuratan, logistik, dan akomodasi kompetisi.",
-        "skill1": "Spreadsheet & pembukuan",
-        "skill2": "Administrasi dokumen dan persuratan",
-        "skill3": "Perencanaan pengadaan dan logistik",
-        "skill4": "Manajemen waktu dan acara"
+        "desc": "Divisi Administrasi bertanggung jawab menyusun linimasa dan agenda tim, mengelola kebutuhan umum tim, mengarsipkan dokumen penting, menangani korespondensi, serta menyelesaikan berkas yang dibutuhkan untuk kompetisi.",
+        "req1": "Mampu menangani dan mengarsipkan dokumen secara efisien.",
+        "req2": "Terbiasa mengelola jadwal dan kegiatan tim.",
+        "req3": "Mampu mengelola korespondensi resmi dan menjaga kerahasiaan.",
+        "req4": "Berkomitmen dan mampu bekerja di bawah tekanan untuk memenuhi tenggat waktu."
       }
     },
     "documentsTitle": "Required Documents",

@@ -98,8 +98,25 @@ const FOOTER_LIFT = 50;
 const PER_SCREEN = 3;
 /** Every piece is a canvas full of dots, so the page gets a budget. */
 const MAX_PIECES = 10;
-/** How long after mount the choice of pieces is still open, in milliseconds. */
-const SETTLE_DELAY = 800;
+/**
+ * How still the document height has to be before the plan is taken, and how
+ * often it is sampled, in milliseconds.
+ *
+ * The plan is a measurement of the rendered page, so it is only worth taking
+ * once the page has stopped rendering: fonts swapping in, images decoding and
+ * cards arriving all change the bands, and a plan drawn mid-flight is a plan
+ * that disagrees with the one after it.
+ */
+const QUIET_MS = 250;
+const SAMPLE_MS = 50;
+/**
+ * The longest the quiet is waited for. A page that never settles — a looping
+ * animation that resizes something, a feed that keeps appending — would
+ * otherwise never get a backdrop at all.
+ */
+const SETTLE_CAP = 3000;
+/** How long a resize has to stop before the page is planned again. */
+const RESIZE_QUIET = 200;
 
 type Side = "left" | "right";
 type Band = { from: number; to: number };
@@ -389,17 +406,23 @@ export default function CadBackdrop() {
   // Layout keys this component by route, so a navigation remounts it and the
   // plan below is always measured against the page currently on screen.
   useEffect(() => {
-    let frame = 0;
+    // Two frame handles rather than one: a restick arriving while a replan is
+    // still queued used to cancel it, which quietly dropped the plan.
+    let planFrame = 0;
+    let stickFrame = 0;
+    let sampler = 0;
+    let resizer = 0;
+    let done = false;
 
     /**
-     * Choose the pieces and where they go. Only ever run while the page is
-     * still arriving, and on a resize — running it again later is what made
-     * the pieces wander, since a page that has grown gives a different set of
-     * bands and so a different set of choices.
+     * Choose the pieces and where they go. Taken once, off a page that has
+     * stopped moving, and again only if the window is resized — a plan drawn
+     * against a half-arrived page reads different bands, so re-choosing later
+     * is what made the pieces land somewhere new on every refresh.
      */
     const replan = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => setSlots(plan(footerOnly)));
+      cancelAnimationFrame(planFrame);
+      planFrame = requestAnimationFrame(() => setSlots(plan(footerOnly)));
     };
 
     /**
@@ -409,34 +432,73 @@ export default function CadBackdrop() {
      * along instead of stranding it.
      */
     const restick = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        setSlots((current) =>
-          current.map((slot) => {
+      cancelAnimationFrame(stickFrame);
+      stickFrame = requestAnimationFrame(() => {
+        setSlots((current) => {
+          if (current.length === 0) return current;
+          return current.map((slot) => {
             if (!slot.anchor?.isConnected) return slot;
             const rect = slot.anchor.getBoundingClientRect();
             const edge = slot.anchorEdge === "top" ? rect.top : rect.bottom;
             const top = Math.max(0, edge + window.scrollY + slot.offset);
             return top === slot.top ? slot : { ...slot, top };
-          }),
-        );
+          });
+        });
       });
     };
 
-    replan();
-    window.addEventListener("load", replan);
-    window.addEventListener("resize", replan);
-    // The last word on the arriving page, after which the choice is settled.
-    const settle = window.setTimeout(replan, SETTLE_DELAY);
-    // From then on the document may keep growing; the pieces travel with it.
+    /**
+     * Watch the document height until it holds still, then plan against it.
+     *
+     * Height is the one number that moves whenever anything the plan cares
+     * about moves — a font swapping in, an image decoding, a card mounting —
+     * so waiting on it covers all of them without having to enumerate them.
+     */
+    let height = -1;
+    let quiet = 0;
+    const opened = performance.now();
+    const sample = () => {
+      const measured = document.documentElement.scrollHeight;
+      if (measured === height) {
+        quiet += SAMPLE_MS;
+      } else {
+        height = measured;
+        quiet = 0;
+      }
+
+      if (quiet >= QUIET_MS || performance.now() - opened >= SETTLE_CAP) {
+        done = true;
+        replan();
+        return;
+      }
+      sampler = window.setTimeout(sample, SAMPLE_MS);
+    };
+    sample();
+
+    // Fonts reflow every block of copy at once, and can land after a stretch
+    // of quiet has already been counted, so their arrival restarts the count.
+    document.fonts?.ready.then(() => {
+      if (!done) quiet = 0;
+    });
+
+    // A resize invalidates the geometry outright, so that one really does have
+    // to re-choose — but only once the dragging stops.
+    const onResize = () => {
+      window.clearTimeout(resizer);
+      resizer = window.setTimeout(replan, RESIZE_QUIET);
+    };
+    window.addEventListener("resize", onResize);
+    // The document may keep growing after all that; the pieces travel with it.
     const observer = new ResizeObserver(restick);
     observer.observe(document.body);
 
     return () => {
-      cancelAnimationFrame(frame);
-      window.clearTimeout(settle);
-      window.removeEventListener("load", replan);
-      window.removeEventListener("resize", replan);
+      done = true;
+      cancelAnimationFrame(planFrame);
+      cancelAnimationFrame(stickFrame);
+      window.clearTimeout(sampler);
+      window.clearTimeout(resizer);
+      window.removeEventListener("resize", onResize);
       observer.disconnect();
     };
   }, [footerOnly]);
