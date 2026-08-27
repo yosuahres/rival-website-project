@@ -3,10 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import DotImage, {
-  DOT_IMAGE_INSET,
-  type DotImageBounds,
-} from "@/components/DotImage";
 import HomeHeroCarousel from "@/components/HomeHeroCarousel";
 import { type TranslationKey, useTranslation } from "@/i18n";
 import { BUTTON_LIGHT } from "@/lib/button";
@@ -18,8 +14,12 @@ import {
 } from "@/lib/partners";
 import { SOCIALS } from "@/lib/socials";
 
-/** Source artwork for the closing card: dots first, photo on hover. */
-const ARM_PHOTO = "/archive/images/arm2.webp";
+/**
+ * Photograph filling the tile on the closing card — the rover on the ARCh
+ * field, cropped square and sized for the tile so next/image doesn't have to
+ * decode the 6000x4000 original behind it.
+ */
+const CLOSING_PHOTO = "/images/home/closing-rover.webp";
 
 /**
  * The three-column results strip. The placing, its suffix and the year read
@@ -72,41 +72,10 @@ const logoClass = (
 ) =>
   `w-auto max-w-full object-contain ${LOGO_HEIGHTS[tier][partner.wide ? "wide" : "normal"]}`;
 
-/**
- * Places the source photograph over the stipple of it. DotImage crops the file
- * to its opaque bounds and contains that box inside the inset frame, so the
- * photo has to be laid out as the whole file blown up around the same box —
- * dropping it in with object-contain would fit the file's transparent margins
- * too and land noticeably small.
- *
- * Returns styles for a square tile: the rect covering the full file, and a
- * transform origin at the artwork's centre so the hover lift pivots on the arm
- * rather than on the empty space around it.
- */
-function photoFrame(bounds: DotImageBounds) {
-  const frame = 1 - DOT_IMAGE_INSET * 2;
-  const drawnWidth = Math.min(frame, frame * bounds.aspect);
-  const drawnHeight = drawnWidth / bounds.aspect;
-  const percent = (value: number) => `${value * 100}%`;
-
-  return {
-    width: percent(drawnWidth / bounds.width),
-    height: percent(drawnHeight / bounds.height),
-    left: percent(
-      (1 - drawnWidth) / 2 - (bounds.x / bounds.width) * drawnWidth,
-    ),
-    top: percent(
-      (1 - drawnHeight) / 2 - (bounds.y / bounds.height) * drawnHeight,
-    ),
-    transformOrigin: `${percent(bounds.x + bounds.width / 2)} ${percent(bounds.y + bounds.height / 2)}`,
-  };
-}
-
 export default function Home() {
   const { t } = useTranslation();
   const teamSectionRef = useRef<HTMLDivElement>(null);
   const [teamImageLoaded, setTeamImageLoaded] = useState(false);
-  const [armBounds, setArmBounds] = useState<DotImageBounds | null>(null);
 
   useEffect(() => {
     // Reveal the section's heavy asset once it approaches the viewport, so it
@@ -223,30 +192,16 @@ export default function Home() {
                 {t("common.learnMore")}
               </span>
             </div>
-            {/* Hovering the tile itself — not the rest of the card — trades
-                the stipple for the photograph it was sampled from. The dots
-                clear quickly and linearly so the two never sit on top of each
-                other as a muddy double image, then the photo eases up into
-                place behind them. */}
-            <div className="group/photo relative order-1 aspect-square w-full rounded-2xl border border-white/15 bg-[#0d3b28] shadow-lg md:order-2">
-              <DotImage
-                src={ARM_PHOTO}
-                onBounds={setArmBounds}
-                className="absolute inset-0 h-full w-full rounded-2xl transition-opacity duration-200 ease-linear group-hover/photo:opacity-0 motion-reduce:transition-none"
+            {/* The tile is a plain photograph; hovering the card eases it
+                in a touch so it reads as part of the same link. */}
+            <div className="relative order-1 aspect-square w-full overflow-hidden rounded-2xl border border-white/15 bg-[#0d3b28] shadow-lg md:order-2">
+              <Image
+                src={CLOSING_PHOTO}
+                alt=""
+                fill
+                sizes="(min-width: 768px) 40vw, 90vw"
+                className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 motion-reduce:transition-none"
               />
-              {armBounds && (
-                <div
-                  className="pointer-events-none absolute scale-90 opacity-0 drop-shadow-[0_24px_36px_rgba(0,0,0,0.55)] transition duration-[450ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/photo:scale-100 group-hover/photo:opacity-100 motion-reduce:transition-none"
-                  style={photoFrame(armBounds)}
-                >
-                  <Image
-                    src={ARM_PHOTO}
-                    alt=""
-                    fill
-                    sizes="(min-width: 768px) 40vw, 90vw"
-                  />
-                </div>
-              )}
             </div>
           </div>
 
