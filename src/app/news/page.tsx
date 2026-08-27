@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useTranslation } from "@/i18n";
 
 const newsData = [
@@ -72,15 +71,6 @@ function MetaRow({ source, date }: { source: string; date: string }) {
 
 export default function News() {
   const { t } = useTranslation();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
 
   // The newest item anchors the page as the large left-hand feature; everything
   // else stacks in the compact right-hand rail.
