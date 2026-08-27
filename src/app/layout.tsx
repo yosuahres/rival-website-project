@@ -4,6 +4,7 @@ import { Inter, Roboto_Flex, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
 import Layout from "@/layouts/Layout";
+import { withBasePath } from "@/lib/base-path";
 import {
   IS_PRODUCTION_DOMAIN,
   SITE_DESCRIPTION,
@@ -98,9 +99,9 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: withBasePath("/favicon.ico"),
   },
-  manifest: "/manifest.webmanifest",
+  manifest: withBasePath("/manifest.webmanifest"),
   // Stops iOS Safari from linkifying phone-like strings (scores, years) into
   // tap-to-call links, which also keeps the rendered markup stable.
   formatDetection: {

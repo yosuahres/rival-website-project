@@ -21,8 +21,11 @@ const SECURITY_HEADERS = [
   },
 ];
 
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const nextConfig: NextConfig = {
   output: "export",
+  ...(BASE_PATH ? { basePath: BASE_PATH } : {}),
   trailingSlash: true,
   // Cache rendered pages in the client-side Router Cache so navigating
   // back to the home page doesn't remount/refetch the whole tree.
@@ -53,7 +56,8 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    unoptimized: true,
+    loader: "custom",
+    loaderFile: "./image-loader.ts",
     // Cache optimized images for a year instead of the 4h default.
     minimumCacheTTL: 31536000,
     // Next 16 only serves qualities named here (default [75]); 50 is for the

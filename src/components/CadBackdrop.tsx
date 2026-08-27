@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import DotImage from "@/components/DotImage";
+import { withBasePath } from "@/lib/base-path";
 import { INDEXABLE_ROUTES } from "@/lib/routes";
 
 /**
@@ -538,7 +539,7 @@ export default function CadBackdrop() {
             }}
           >
             <DotImage
-              src={PIECES[piece]}
+              src={withBasePath(PIECES[piece])}
               // Held against the outside edge rather than centred in its half,
               // so it reads as furniture in the corner of the page instead of
               // drifting into the middle of the copy.

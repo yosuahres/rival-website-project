@@ -67,5 +67,4 @@ export const SOCIAL_PROFILES = [
 ] as const;
 
 /** Absolute URL for a site-relative path. */
-export const absoluteUrl = (path = "/"): string =>
-  new URL(path, SITE_URL).toString();
+export const absoluteUrl = (path = "/"): string => `${SITE_URL}${path}`;

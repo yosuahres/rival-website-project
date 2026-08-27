@@ -38,7 +38,8 @@ jobs:
 
       - name: Build static export
         env:
-          NEXT_PUBLIC_SITE_URL: https://rival.its.ac.id
+          NEXT_PUBLIC_SITE_URL: https://arek.its.ac.id/rival
+          NEXT_PUBLIC_BASE_PATH: /rival
         run: pnpm build
 
       - name: 📄 Add Apache config

@@ -3,8 +3,9 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-: "${NEXT_PUBLIC_SITE_URL:=https://rival.its.ac.id}"
-export NEXT_PUBLIC_SITE_URL
+: "${NEXT_PUBLIC_SITE_URL:=https://arek.its.ac.id/rival}"
+: "${NEXT_PUBLIC_BASE_PATH:=/rival}"
+export NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_BASE_PATH
 echo "==> Building for ${NEXT_PUBLIC_SITE_URL}"
 
 rm -rf out rival-site.zip

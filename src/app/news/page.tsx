@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useTranslation } from "@/i18n";
+import { withBasePath } from "@/lib/base-path";
 
 const newsData = [
   {
@@ -113,7 +114,9 @@ export default function News() {
 
             <div
               className="mt-8 w-full aspect-[4/5] bg-cover bg-center rounded-2xl"
-              style={{ backgroundImage: `url('${featured.image}')` }}
+              style={{
+                backgroundImage: `url('${withBasePath(featured.image)}')`,
+              }}
               role="img"
               aria-label={featured.title}
             />
@@ -142,7 +145,9 @@ export default function News() {
 
                 <div
                   className="shrink-0 w-28 h-28 md:w-44 md:h-44 bg-cover bg-center rounded-2xl"
-                  style={{ backgroundImage: `url('${news.image}')` }}
+                  style={{
+                    backgroundImage: `url('${withBasePath(news.image)}')`,
+                  }}
                   role="img"
                   aria-label={news.title}
                 />
