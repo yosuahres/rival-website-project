@@ -1,0 +1,9 @@
+<svg width="200" height="300" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Thumbs up hand gesture -->
+  <path d="M120 100 Q130 90 140 90 Q150 90 150 100 L150 140 Q150 150 145 155 L125 155 L125 200 Q125 210 115 210 L75 210 Q65 210 65 200 L65 155 Q65 145 75 145 L95 145 L95 120 Q95 100 105 90 Q115 80 125 85 Q135 90 125 100 L120 115" fill="white" stroke="#000" stroke-width="6"/>
+  <ellipse cx="95" cy="230" rx="35" ry="35" fill="white" stroke="#000" stroke-width="6"/>
+  <path d="M70 155 L70 200 L120 200 L120 155 M85 165 L85 190 M100 165 L100 190 M115 165 L115 190" stroke="#000" stroke-width="4"/>
+  <path d="M125 100 L125 155" stroke="#000" stroke-width="6"/>
+  <!-- Shadow -->
+  <ellipse cx="95" cy="270" rx="40" ry="10" fill="#00000020"/>
+</svg>

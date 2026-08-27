@@ -1,0 +1,6 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+
+Host: https://rival.its.ac.id/
+Sitemap: https://rival.its.ac.id/sitemap.xml
