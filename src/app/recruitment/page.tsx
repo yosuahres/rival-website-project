@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import FadeIn from "@/components/FadeIn";
 import { type TranslationKey, useTranslation } from "@/i18n";
 import { BUTTON_PRIMARY } from "@/lib/button";
+import { clsxm } from "@/lib/clsxm";
 
 const APPLY_FORM_URL = "https://forms.gle/";
 
@@ -141,7 +142,15 @@ const NON_TECHNICAL_DIVISIONS: readonly Division[] = [
 
 const APPLICATION_DOCUMENTS: readonly {
   title: TranslationKey;
+  /** Sentence between the title and the lists below it. */
+  lead?: TranslationKey;
+  /** Numbered sub-points, as on the motivation letter. */
   items?: readonly TranslationKey[];
+  /** Bulleted sub-lists under their own heading, as on the portfolio. */
+  groups?: readonly {
+    heading: TranslationKey;
+    items: readonly TranslationKey[];
+  }[];
 }[] = [
   { title: "recruitment.documents.cv" },
   {
@@ -153,7 +162,120 @@ const APPLICATION_DOCUMENTS: readonly {
       "recruitment.documents.motivation4",
     ],
   },
-  { title: "recruitment.documents.portfolio" },
+  {
+    title: "recruitment.documents.portfolio",
+    lead: "recruitment.documents.portfolioLead",
+    groups: [
+      {
+        heading: "recruitment.documents.portfolioTechnical",
+        items: [
+          "recruitment.documents.portfolioTechnical1",
+          "recruitment.documents.portfolioTechnical2",
+          "recruitment.documents.portfolioTechnical3",
+        ],
+      },
+      {
+        heading: "recruitment.documents.portfolioNonTechnical",
+        items: [
+          "recruitment.documents.portfolioNonTechnical1",
+          "recruitment.documents.portfolioNonTechnical2",
+          "recruitment.documents.portfolioNonTechnical3",
+        ],
+      },
+    ],
+  },
+];
+
+/**
+ * Per-division brief inside a special task panel. A division has either a link
+ * to its brief (technical) or the brief written out (non-technical).
+ */
+type SpecialTaskBlock = {
+  id: string;
+  heading: TranslationKey;
+  /** Paragraphs of the brief, in order. */
+  paragraphs?: readonly TranslationKey[];
+  /** Bulleted points, each optionally carrying a second detail line. */
+  points?: readonly { text: TranslationKey; detail?: TranslationKey }[];
+  /** Labelled sub-lists, e.g. the interview and presentation scenarios. */
+  groups?: readonly {
+    label: TranslationKey;
+    items: readonly TranslationKey[];
+  }[];
+  /** Brief hosted elsewhere. Empty until the link is handed over. */
+  href?: string;
+};
+
+/** Bands of the special task section — one per department. */
+const SPECIAL_TASKS: readonly {
+  id: string;
+  title: TranslationKey;
+  blocks: readonly SpecialTaskBlock[];
+}[] = [
+  {
+    id: "technical",
+    title: "recruitment.specialTask.technicalTitle",
+    blocks: [
+      {
+        id: "mechanical",
+        heading: "recruitment.specialTask.mechanical",
+        href: "",
+      },
+      {
+        id: "electrical",
+        heading: "recruitment.specialTask.electrical",
+        href: "",
+      },
+      {
+        id: "programming",
+        heading: "recruitment.specialTask.programming",
+        href: "",
+      },
+    ],
+  },
+  {
+    id: "non-technical",
+    title: "recruitment.specialTask.nonTechnicalTitle",
+    blocks: [
+      {
+        id: "administration",
+        heading: "recruitment.specialTask.adminTitle",
+        paragraphs: ["recruitment.specialTask.adminBody"],
+      },
+      {
+        id: "external",
+        heading: "recruitment.specialTask.externalTitle",
+        paragraphs: [
+          "recruitment.specialTask.externalBody1",
+          "recruitment.specialTask.externalBody2",
+        ],
+        groups: [
+          {
+            label: "recruitment.specialTask.externalInterviewLabel",
+            items: [
+              "recruitment.specialTask.externalInterview1",
+              "recruitment.specialTask.externalInterview2",
+            ],
+          },
+          {
+            label: "recruitment.specialTask.externalPresentationLabel",
+            items: ["recruitment.specialTask.externalPresentation1"],
+          },
+        ],
+      },
+      {
+        id: "creative",
+        heading: "recruitment.specialTask.creativeTitle",
+        points: [
+          { text: "recruitment.specialTask.creativePoint1" },
+          {
+            text: "recruitment.specialTask.creativePoint2",
+            detail: "recruitment.specialTask.creativePoint2Detail",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 const FAQS = [
@@ -171,12 +293,31 @@ const sections = [
   { id: "timeline", label: "recruitment.nav.timeline" },
   { id: "divisions", label: "recruitment.nav.divisions" },
   { id: "documents", label: "recruitment.nav.documents" },
+  { id: "special-task", label: "recruitment.nav.specialTask" },
   { id: "apply", label: "recruitment.nav.apply" },
   { id: "faq", label: "recruitment.nav.faq" },
 ] as const satisfies readonly { id: string; label: TranslationKey }[];
 
 const DIVISION_LABEL =
   "text-white/60 font-semibold text-xs uppercase tracking-[0.12em] mb-2";
+
+/**
+ * Renders `**bold**` runs inside otherwise plain translated copy — the locale
+ * files hold strings, so emphasis has to travel in the string itself.
+ */
+function RichText({ value }: { value: string }) {
+  // Capturing split: even indices are plain text, odd ones were wrapped.
+  return value.split(/\*\*(.+?)\*\*/g).map((part, index) =>
+    index % 2 === 1 ? (
+      // biome-ignore lint/suspicious/noArrayIndexKey: the split is positional
+      <strong key={index} className="font-semibold text-white">
+        {part}
+      </strong>
+    ) : (
+      part
+    ),
+  );
+}
 
 function DivisionSection({
   id,
@@ -193,7 +334,10 @@ function DivisionSection({
   const { t } = useTranslation();
 
   return (
-    <section id={id} className="py-16 md:py-24 scroll-mt-24">
+    <section
+      id={id}
+      className="py-16 md:py-24 scroll-mt-[var(--jump-offset,6rem)]"
+    >
       <div className="w-full px-6 md:px-12">
         <FadeIn>
           <div className="border-t-2 border-white mb-6"></div>
@@ -297,6 +441,8 @@ export default function Recruitment() {
   const [navEdges, setNavEdges] = useState({ start: false, end: false });
   const [siteNavHeight, setSiteNavHeight] = useState(0);
   const [siteNavHidden, setSiteNavHidden] = useState(false);
+  const [jumpBarHeight, setJumpBarHeight] = useState(0);
+  const navRef = useRef<HTMLElement>(null);
   const navListRef = useRef<HTMLUListElement>(null);
 
   // Where the bar comes to rest: flush against the top while the site navbar
@@ -308,6 +454,30 @@ export default function Recruitment() {
   // the moment the bar takes hold and it still never jumps. Matching the site
   // bar's own transition below is what makes the two read as one movement.
   const stuckTop = siteNavHidden ? 12 : siteNavHeight + 12;
+
+  // The bar's own height, measured rather than assumed: it wraps to a second
+  // row on narrow desktops, so its bottom edge is not a number that can be
+  // written down here.
+  useEffect(() => {
+    const bar = navRef.current;
+    if (!bar) return;
+    const measure = () => setJumpBarHeight(bar.offsetHeight);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(bar);
+    return () => observer.disconnect();
+  }, []);
+
+  // Where the pinned bar's bottom edge sits, plus a little air. Both the scroll
+  // spy's line and the landing spot for a jump link are measured from it, so a
+  // pill lights up exactly as its section slides under the bar and clicking one
+  // never parks the heading behind it. It is measured against the bar's lower
+  // resting place — the one it takes while the site navbar is on screen — so
+  // the number does not move as that bar slides in and out, which would make
+  // the spy flip sections on a nudge of the wheel. Until the first measurement
+  // lands it falls back to the hand-picked value this replaced.
+  const jumpOffset =
+    jumpBarHeight > 0 ? siteNavHeight + 12 + jumpBarHeight + 16 : 140;
 
   // The two things about the site navbar that the offset above is built from.
   // Its height is measured rather than hard-coded because it follows the bar's
@@ -350,7 +520,7 @@ export default function Recruitment() {
     let frame = 0;
     const update = () => {
       frame = 0;
-      const line = 140;
+      const line = jumpOffset;
       const atBottom =
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 2;
@@ -378,7 +548,7 @@ export default function Recruitment() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, []);
+  }, [jumpOffset]);
 
   // On phones the bar is one scrolling row rather than three wrapped ones, so
   // the pill the scroll spy just lit up can be off to one side. Bring it back
@@ -442,7 +612,12 @@ export default function Recruitment() {
       : undefined;
 
   return (
-    <div className="flex flex-col min-h-full">
+    // Every section's scroll-margin reads --jump-offset, so a jump link lands
+    // its heading clear of the pinned bar at whatever height the bar is.
+    <div
+      className="flex flex-col min-h-full"
+      style={{ "--jump-offset": `${jumpOffset}px` } as React.CSSProperties}
+    >
       {/* Hero */}
       <section className="relative mx-3 md:mx-4 flex min-h-[60vh] items-center justify-center overflow-hidden rounded-4xl px-8 py-20">
         <div className="pointer-events-none absolute inset-0 h-full w-full overflow-hidden">
@@ -495,6 +670,7 @@ export default function Recruitment() {
           The transition is for stuckTop, and is timed to the site navbar's own
           so the two bars move as one. */}
       <nav
+        ref={navRef}
         aria-label={t("recruitment.nav.label")}
         className="sticky z-50 px-6 transition-[top] duration-300 ease-out"
         style={{ top: stuckTop }}
@@ -528,7 +704,10 @@ export default function Recruitment() {
       </nav>
 
       {/* General requirements */}
-      <section id="requirements" className="py-16 md:py-24 scroll-mt-24">
+      <section
+        id="requirements"
+        className="py-16 md:py-24 scroll-mt-[var(--jump-offset,6rem)]"
+      >
         <div className="max-w-6xl mx-auto px-6">
           <FadeIn>
             <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-12">
@@ -554,7 +733,10 @@ export default function Recruitment() {
       </section>
 
       {/* Timeline */}
-      <section id="timeline" className="py-16 md:py-24 scroll-mt-24">
+      <section
+        id="timeline"
+        className="py-16 md:py-24 scroll-mt-[var(--jump-offset,6rem)]"
+      >
         <div className="max-w-6xl mx-auto px-6">
           <FadeIn>
             <div className="flex justify-center mb-16 md:mb-20">
@@ -626,7 +808,10 @@ export default function Recruitment() {
       />
 
       {/* Required documents */}
-      <section id="documents" className="py-16 md:py-24 scroll-mt-24">
+      <section
+        id="documents"
+        className="py-16 md:py-24 scroll-mt-[var(--jump-offset,6rem)]"
+      >
         <div className="w-full px-6 md:px-12">
           <FadeIn>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-10">
@@ -641,6 +826,11 @@ export default function Recruitment() {
                   <p className="text-white text-lg md:text-xl">
                     {t(doc.title)}
                   </p>
+                  {doc.lead && (
+                    <p className="mt-4 text-gray-300 text-base md:text-lg">
+                      {t(doc.lead)}
+                    </p>
+                  )}
                   {doc.items && (
                     <ol className="mt-4 ml-1 space-y-2">
                       {doc.items.map((item, index) => (
@@ -654,6 +844,24 @@ export default function Recruitment() {
                       ))}
                     </ol>
                   )}
+                  {doc.groups?.map((group) => (
+                    <div key={group.heading} className="mt-5 ml-1">
+                      <p className="text-white/80 font-semibold text-base md:text-lg">
+                        {t(group.heading)}
+                      </p>
+                      <ul className="mt-2 space-y-2">
+                        {group.items.map((item) => (
+                          <li
+                            key={item}
+                            className="flex gap-3 text-gray-300 text-base md:text-lg"
+                          >
+                            <span className="text-white/50">&bull;</span>
+                            <span>{t(item)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                 </li>
               </FadeIn>
             ))}
@@ -661,11 +869,136 @@ export default function Recruitment() {
         </div>
       </section>
 
+      {/* Special task */}
+      <section
+        id="special-task"
+        className="py-16 md:py-24 scroll-mt-[var(--jump-offset,6rem)]"
+      >
+        <div className="w-full px-6 md:px-12">
+          <FadeIn>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-10">
+              {t("recruitment.specialTaskTitle")}
+            </h2>
+          </FadeIn>
+
+          <div className="space-y-6 md:space-y-8">
+            {SPECIAL_TASKS.map((task, index) => (
+              <FadeIn key={task.id}>
+                <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-8 md:p-10">
+                  {/* Oversized index, ghosted back into the panel. Sits behind
+                      the copy, which is why the text below is positioned. */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute top-0 right-4 md:top-2 md:right-8 select-none font-bold leading-none text-7xl md:text-9xl text-white/[0.06]"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <div className="relative">
+                    <h3 className="text-white font-bold text-2xl md:text-3xl">
+                      {t(task.title)}
+                    </h3>
+
+                    <div className="mt-8 space-y-8">
+                      {task.blocks.map((block) => (
+                        <div key={block.id}>
+                          <h4 className="text-white font-bold text-lg md:text-xl">
+                            {t(block.heading)}
+                          </h4>
+
+                          {block.paragraphs?.map((paragraph) => (
+                            <p
+                              key={paragraph}
+                              className="mt-3 text-gray-300 text-base md:text-lg leading-relaxed max-w-4xl"
+                            >
+                              <RichText value={t(paragraph)} />
+                            </p>
+                          ))}
+
+                          {block.points && (
+                            <ul className="mt-3 space-y-3">
+                              {block.points.map((point) => (
+                                <li
+                                  key={point.text}
+                                  className="flex gap-3 text-gray-300 text-base md:text-lg"
+                                >
+                                  <span
+                                    aria-hidden="true"
+                                    className="mt-2.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#398561]"
+                                  ></span>
+                                  <span>
+                                    <RichText value={t(point.text)} />
+                                    {point.detail && (
+                                      <span className="block leading-relaxed">
+                                        {t(point.detail)}
+                                      </span>
+                                    )}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+
+                          {block.groups?.map((group) => (
+                            <div key={group.label} className="mt-5">
+                              <p className={DIVISION_LABEL}>{t(group.label)}</p>
+                              <ul className="space-y-2">
+                                {group.items.map((item) => (
+                                  <li
+                                    key={item}
+                                    className="flex gap-3 text-gray-300 text-base md:text-lg"
+                                  >
+                                    <span
+                                      aria-hidden="true"
+                                      className="mt-2.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#398561]"
+                                    ></span>
+                                    <span>{t(item)}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+
+                          {/* Technical briefs live off-site; until a link is
+                              handed over the row says so rather than 404ing. */}
+                          {"href" in block &&
+                            (block.href ? (
+                              <a
+                                href={block.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-3 inline-block text-[#398561] font-medium text-base md:text-lg underline underline-offset-4 hover:text-white transition-colors"
+                              >
+                                {t("recruitment.specialTask.linkLabel")}
+                              </a>
+                            ) : (
+                              <p className="mt-3 text-gray-400 text-base md:text-lg">
+                                {t("recruitment.specialTask.linkPending")}
+                              </p>
+                            ))}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Apply now */}
-      <section id="apply" className="py-16 md:py-24 scroll-mt-24">
+      <section
+        id="apply"
+        className="py-16 md:py-24 scroll-mt-[var(--jump-offset,6rem)]"
+      >
         <div className="max-w-6xl mx-auto px-6">
           <FadeIn>
-            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 px-8 py-12 md:px-14 md:py-16">
+            {/* The whole card is the apply target. The padding lives on the
+                inner wrapper rather than here so that wrapper fills the card
+                edge to edge, which is what the link's `after:inset-0` overlay
+                stretches across. */}
+            <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition-colors hover:border-[#398561]/50 hover:bg-white/[0.07]">
               {/* Soft accent glows, echoing the card's edge lighting. */}
               <div
                 aria-hidden="true"
@@ -676,7 +1009,7 @@ export default function Recruitment() {
                 className="pointer-events-none absolute -bottom-28 -left-20 w-72 h-72 rounded-full bg-[#398561]/15 blur-3xl"
               ></div>
 
-              <div className="relative">
+              <div className="relative px-8 py-12 md:px-14 md:py-16">
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
                   {t("recruitment.applyTitle")}
                 </h2>
@@ -689,7 +1022,21 @@ export default function Recruitment() {
                     href={APPLY_FORM_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={BUTTON_PRIMARY}
+                    // The closing CTA is the one action this whole page is
+                    // driving at, so it runs larger than the shared pill.
+                    // clsxm lets the size utilities win over BUTTON_PRIMARY's.
+                    //
+                    // `after:inset-0` stretches this one link across the whole
+                    // card, so a click anywhere on it opens the form. Done with
+                    // an overlay rather than by wrapping the card in an anchor
+                    // so the accessible name stays "Apply Now" instead of the
+                    // entire heading and paragraph being read out as the link.
+                    className={clsxm(
+                      BUTTON_PRIMARY,
+                      "px-10 py-4 text-base md:px-14 md:py-5 md:text-lg font-semibold",
+                      "group-hover:bg-[#45a074]",
+                      "after:absolute after:inset-0 after:rounded-3xl after:content-['']",
+                    )}
                   >
                     {t("recruitment.applyCta")}
                   </a>
@@ -701,7 +1048,10 @@ export default function Recruitment() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-16 md:py-24 scroll-mt-24">
+      <section
+        id="faq"
+        className="py-16 md:py-24 scroll-mt-[var(--jump-offset,6rem)]"
+      >
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)] gap-10 md:gap-16">
           <FadeIn>
             <h2 className="text-4xl md:text-5xl font-bold text-white md:max-w-[8em] leading-tight md:sticky md:top-28">

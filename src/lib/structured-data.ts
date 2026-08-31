@@ -51,7 +51,7 @@ export function organizationSchema() {
       contactType: "general enquiries",
       email: CONTACT_EMAIL,
       telephone: CONTACT_PHONE,
-      availableLanguage: ["en", "id"],
+      availableLanguage: ["id", "en"],
     },
     // Links the site to the profiles that describe the same team, which is
     // what lets a knowledge panel resolve them as one entity.
@@ -67,7 +67,7 @@ export function websiteSchema() {
     name: SITE_NAME,
     description: SITE_DESCRIPTION,
     url: absoluteUrl("/"),
-    inLanguage: ["en", "id"],
+    inLanguage: ["id", "en"],
     publisher: { "@id": ORGANIZATION_ID },
   };
 }

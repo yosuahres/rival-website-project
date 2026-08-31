@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslation } from "@/i18n";
-import { WHATSAPP_URL } from "@/lib/site";
+import { HAS_CROWDFUNDING, WHATSAPP_URL } from "@/lib/site";
 import { SOCIALS } from "@/lib/socials";
 
 export default function Navbar() {
@@ -120,11 +120,11 @@ export default function Navbar() {
               className="hover:opacity-80 transition-opacity flex items-center"
             >
               <Image
-                src="/images/brand/logo-vertical.webp"
+                src="/assets/logo-1.png"
                 alt={t("nav.logoAlt")}
-                width={42}
-                height={25}
-                className="object-contain"
+                width={86}
+                height={24}
+                className="h-6 w-auto object-contain"
                 priority
               />
             </Link>
@@ -228,6 +228,14 @@ export default function Navbar() {
               >
                 {t("nav.recruitment")}
               </Link>
+              {HAS_CROWDFUNDING && (
+                <Link
+                  href="/crowdfunding"
+                  className="rounded-full border border-transparent px-4 py-2 text-sm font-medium text-white transition-colors hover:border-white/25"
+                >
+                  {t("nav.crowdfunding")}
+                </Link>
+              )}
             </div>
           </div>
 
@@ -290,11 +298,11 @@ export default function Navbar() {
             {/* Logo center */}
             <div className="flex justify-center">
               <Image
-                src="/images/brand/logo-vertical.webp"
+                src="/assets/logo-1.png"
                 alt={t("nav.logoAlt")}
-                width={70}
-                height={50}
-                className="object-contain"
+                width={115}
+                height={32}
+                className="h-8 w-auto object-contain"
                 priority
               />
             </div>
@@ -381,6 +389,15 @@ export default function Navbar() {
               >
                 {t("nav.recruitment")}
               </Link>
+              {HAS_CROWDFUNDING && (
+                <Link
+                  href="/crowdfunding"
+                  className="text-white hover:opacity-80 transition-opacity text-2xl font-medium text-right w-full"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {t("nav.crowdfunding")}
+                </Link>
+              )}
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
@@ -430,11 +447,11 @@ export default function Navbar() {
             {/* Logo center */}
             <div className="flex justify-center">
               <Image
-                src="/images/brand/logo-vertical.webp"
+                src="/assets/logo-1.png"
                 alt={t("nav.logoAlt")}
-                width={70}
-                height={50}
-                className="object-contain"
+                width={115}
+                height={32}
+                className="h-8 w-auto object-contain"
                 priority
               />
             </div>

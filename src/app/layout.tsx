@@ -87,8 +87,8 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: SITE_NAME,
     type: "website",
-    locale: "en_US",
-    alternateLocale: ["id_ID"],
+    locale: "id_ID",
+    alternateLocale: ["en_US"],
     url: "/",
     title: `${SITE_NAME} — ITS Robotics Rover Research Team`,
     description: SITE_DESCRIPTION,
@@ -123,7 +123,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="id"
       className={`${inter.variable} ${spaceGrotesk.variable} ${robotoFlex.variable}`}
     >
       <body className="antialiased">

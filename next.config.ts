@@ -23,8 +23,17 @@ const SECURITY_HEADERS = [
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
+// The marketing pages are a static export served off cPanel, but the
+// crowdfunding section under /crowdfunding is not exportable: it ships route
+// handlers under /api and a force-dynamic page, neither of which survives
+// `output: "export"`. So the export is opt-in and the default
+// build is a normal Next server. Setting STATIC_EXPORT=true will fail the
+// build until the crowdfunding routes are either dropped from the export or
+// the whole site moves to a Node host — see README.
+const STATIC_EXPORT = process.env.STATIC_EXPORT === "true";
+
 const nextConfig: NextConfig = {
-  output: "export",
+  ...(STATIC_EXPORT ? { output: "export" as const } : {}),
   ...(BASE_PATH ? { basePath: BASE_PATH } : {}),
   trailingSlash: true,
   // Cache rendered pages in the client-side Router Cache so navigating

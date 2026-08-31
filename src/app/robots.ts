@@ -16,8 +16,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        // Route handlers return JSON, never anything worth indexing.
-        disallow: ["/api/"],
+        // Route handlers return JSON, never anything worth indexing, and the
+        // crowdfunding back office is staff-only.
+        disallow: ["/api/", "/crowdfunding/admin/"],
       },
     ],
     sitemap: absoluteUrl("/sitemap.xml"),

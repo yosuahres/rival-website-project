@@ -38,6 +38,11 @@ export default function Layout({ children }: LayoutProps) {
     }
   }, [pathname, setShowSplashScreen, setFadeOut]);
 
+  // The crowdfunding section ships its own stripped-back header and footer
+  // (see app/crowdfunding/layout.tsx), so the site bar and footer stand down
+  // there rather than stacking two of each.
+  const isCrowdfunding = pathname?.startsWith("/crowdfunding") ?? false;
+
   return (
     // Positioned so the backdrop below can span the whole page rather than the
     // viewport it happens to open on.
@@ -56,9 +61,9 @@ export default function Layout({ children }: LayoutProps) {
       >
         {/* Navbar is a direct child here on purpose: its sticky positioning is
             scoped to this container, which spans the whole page. */}
-        <Navbar />
+        {!isCrowdfunding && <Navbar />}
         <main className="flex-1 bg-transparent">{children}</main>
-        <Footer />
+        {!isCrowdfunding && <Footer />}
       </div>
     </div>
   );

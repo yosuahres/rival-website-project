@@ -43,7 +43,7 @@ export function buildMetadata({
       url: path,
       siteName: SITE_NAME,
       type: "website",
-      locale: "en_US",
+      locale: "id_ID",
     },
     twitter: {
       card: "summary_large_image",

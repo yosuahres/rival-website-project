@@ -1,6 +1,7 @@
 User-Agent: *
 Allow: /
 Disallow: /api/
+Disallow: /crowdfunding/admin/
 
 Host: https://arek.its.ac.id/rival/
 Sitemap: https://arek.its.ac.id/rival/sitemap.xml

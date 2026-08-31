@@ -36,6 +36,17 @@ export const SITE_URL = resolveSiteUrl();
 /** True once a real domain is configured — used to gate indexing. */
 export const IS_PRODUCTION_DOMAIN = SITE_URL !== PLACEHOLDER_ORIGIN;
 
+/**
+ * Whether the crowdfunding section is part of this build.
+ *
+ * It needs a Node runtime — middleware, route handlers, a force-dynamic page —
+ * so `scripts/build-static.mjs` leaves it out of the cPanel export and sets
+ * this to "false". The navbar tab and the sitemap entries follow the flag
+ * rather than linking at a page the deployed bundle does not contain.
+ */
+export const HAS_CROWDFUNDING =
+  process.env.NEXT_PUBLIC_CROWDFUNDING_ENABLED !== "false";
+
 export const SITE_NAME = "RIVAL ITS";
 
 export const SITE_TAGLINE = "ITS Robotics Rover Research Team";

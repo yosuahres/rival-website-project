@@ -1,11 +1,15 @@
 import en from "./locales/en.json";
 import id from "./locales/id.json";
 
-// English is the source of truth: it is the default a first-time visitor sees
-// and the fallback whenever another locale is missing a key.
-export const DEFAULT_LOCALE = "en" as const;
+// Indonesian is what a first-time visitor sees: this is an ITS team site and
+// its primary audience reads Bahasa Indonesia.
+export const DEFAULT_LOCALE = "id" as const;
 
-// Display order only — English stays the default and the fallback regardless.
+// English remains the source of truth for the key set, so it is what a missing
+// translation falls back to rather than the default locale.
+export const FALLBACK_LOCALE = "en" as const;
+
+// Display order only — the default and the fallback are set above.
 export const LOCALES = [
   {
     code: "id",
@@ -62,7 +66,7 @@ export const translate = (
 ): string => {
   const raw =
     lookup(dictionaries[locale], key) ??
-    lookup(dictionaries[DEFAULT_LOCALE], key) ??
+    lookup(dictionaries[FALLBACK_LOCALE], key) ??
     key;
 
   if (!vars) return raw;

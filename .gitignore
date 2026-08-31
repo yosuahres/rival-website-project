@@ -42,3 +42,6 @@ yarn-error.log*
 next-env.d.ts
 
 /rival-site.zip
+
+# scripts/build-static.mjs stages server-only routes here mid-build
+.static-export-staging/

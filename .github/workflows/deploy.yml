@@ -36,25 +36,20 @@ jobs:
       - name: Download deps
         run: pnpm install --frozen-lockfile
 
-      - name: Build static export
+      # build:static stages the crowdfunding section and /api out of the tree
+      # first — they need a Node runtime and cannot be exported — then adds
+      # deploy/.htaccess, verifies the output, and moves it into dist/.
+      - name: Build static export into dist/
         env:
           NEXT_PUBLIC_SITE_URL: https://arek.its.ac.id/rival
           NEXT_PUBLIC_BASE_PATH: /rival
-        run: pnpm build
-
-      - name: 📄 Add Apache config
-        run: cp deploy/.htaccess out/.htaccess
+        run: pnpm build:static
 
       - name: 🔍 Verify the export looks deployable
         run: |
-          test -f out/index.html || { echo "::error::out/index.html missing"; exit 1; }
-          test -f out/.htaccess  || { echo "::error::out/.htaccess missing";  exit 1; }
-          echo "Exported $(find out -name '*.html' | wc -l) HTML files, $(du -sh out | cut -f1) total"
-
-      - name: 📦 Move the export into dist/
-        run: |
-          rm -rf dist
-          mv out dist
+          test -f dist/index.html || { echo "::error::dist/index.html missing"; exit 1; }
+          test -f dist/.htaccess  || { echo "::error::dist/.htaccess missing";  exit 1; }
+          echo "Exported $(find dist -name '*.html' | wc -l) HTML files, $(du -sh dist | cut -f1) total"
 
       - name: 💾 Commit dist/ to main
         run: |

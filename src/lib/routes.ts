@@ -32,6 +32,10 @@ export const INDEXABLE_ROUTES: readonly SitemapEntry[] = [
     priority: 0.8,
     changeFrequency: "monthly",
   },
+  // The donation appeal is a live campaign, so it turns over faster than the
+  // evergreen pages below it.
+  { path: "/crowdfunding", priority: 0.8, changeFrequency: "weekly" },
+  { path: "/crowdfunding/support", priority: 0.7, changeFrequency: "weekly" },
   { path: "/teams", priority: 0.7, changeFrequency: "monthly" },
   { path: "/achievements", priority: 0.7, changeFrequency: "monthly" },
   { path: "/news", priority: 0.7, changeFrequency: "weekly" },
