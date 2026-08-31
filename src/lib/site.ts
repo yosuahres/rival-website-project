@@ -21,12 +21,40 @@
  */
 const PLACEHOLDER_ORIGIN = "http://localhost:3000";
 
+/**
+ * Turns a configured origin into something `new URL()` will accept.
+ *
+ * Vercel's dashboard hands out bare hostnames ("rivalits.vercel.app"), and a
+ * value with no scheme makes `metadataBase: new URL(SITE_URL)` in the root
+ * layout throw ERR_INVALID_URL while collecting page data — a build failure
+ * that names neither the variable nor the value. So assume https when the
+ * scheme is missing, and fail with something readable if it is still not a
+ * URL.
+ */
+function normalizeOrigin(value: string, name: string): string {
+  const trimmed = value.trim().replace(/\/+$/, "");
+  const withScheme = /^https?:\/\//i.test(trimmed)
+    ? trimmed
+    : `https://${trimmed}`;
+
+  try {
+    new URL(withScheme);
+  } catch {
+    throw new Error(
+      `${name} is not a valid origin: ${JSON.stringify(value)}. ` +
+        "Use a full origin such as https://example.com, with no trailing slash.",
+    );
+  }
+
+  return withScheme;
+}
+
 function resolveSiteUrl(): string {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL;
-  if (explicit) return explicit.replace(/\/+$/, "");
+  if (explicit) return normalizeOrigin(explicit, "NEXT_PUBLIC_SITE_URL");
 
   const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  if (vercel) return `https://${vercel.replace(/\/+$/, "")}`;
+  if (vercel) return normalizeOrigin(vercel, "VERCEL_PROJECT_PRODUCTION_URL");
 
   return PLACEHOLDER_ORIGIN;
 }
