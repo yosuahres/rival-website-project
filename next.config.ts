@@ -89,6 +89,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "flagcdn.com",
       },
+      // Payment-channel logos returned by Duitku's getPaymentMethod.
+      {
+        protocol: "https",
+        hostname: "images.duitku.com",
+      },
     ],
   },
 };

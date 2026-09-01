@@ -2,6 +2,12 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
+import OrderSummary from "@/components/crowdfunding/OrderSummary";
+import PaymentCountdown from "@/components/crowdfunding/PaymentCountdown";
+import type { Charge } from "@/components/crowdfunding/PaymentInstructions";
+import PaymentInstructions from "@/components/crowdfunding/PaymentInstructions";
+import type { PaymentMethod } from "@/components/crowdfunding/PaymentMethodPicker";
+import PaymentMethodPicker from "@/components/crowdfunding/PaymentMethodPicker";
 import { withBasePath } from "@/lib/base-path";
 import { apiUrl } from "@/lib/crowdfunding/api";
 
@@ -17,6 +23,24 @@ export default function SupportPage() {
     null,
   );
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
+
+  // Duitku. `duitkuEnabled === null` means the channel list has not come back
+  // yet; `false` means the gateway has no credentials on this deployment and
+  // the manual QRIS + transfer-proof flow takes over.
+  const [duitkuEnabled, setDuitkuEnabled] = useState<boolean | null>(null);
+  const [methods, setMethods] = useState<PaymentMethod[]>([]);
+  const [charge, setCharge] = useState<Charge | null>(null);
+  // Picking a channel no longer creates the transaction: the donor selects,
+  // reviews the total in the summary rail, then confirms. Duitku will not let
+  // an order id be reused, so the charge has to be deliberate.
+  const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(
+    null,
+  );
+  const [methodModalOpen, setMethodModalOpen] = useState(false);
+  const [charging, setCharging] = useState(false);
+  const [chargeError, setChargeError] = useState("");
+  const [checking, setChecking] = useState(false);
+  const [checkMessage, setCheckMessage] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<
     "pending" | "success" | "failed"
   >("pending");
@@ -111,6 +135,133 @@ export default function SupportPage() {
     return () => clearInterval(interval);
   }, [paymentData, paymentStatus, pollStatus]);
 
+  // Ask the server which channels Duitku has enabled for this exact amount.
+  // The fee differs per channel and per amount, so this cannot be hoisted out
+  // of the donation.
+  useEffect(() => {
+    if (!paymentData || charge) return;
+
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const res = await fetch(
+          apiUrl("/api/duitku/payment-methods", {
+            amount: String(paymentData.amount),
+          }),
+        );
+        const result = await res.json();
+        if (cancelled) return;
+
+        if (!res.ok || result.enabled === false) {
+          // No credentials, or the gateway is unreachable — fall back to the
+          // static QRIS code so a donor is never left with no way to pay.
+          setDuitkuEnabled(false);
+          return;
+        }
+
+        setMethods(result.methods ?? []);
+        setDuitkuEnabled((result.methods ?? []).length > 0);
+      } catch {
+        if (!cancelled) setDuitkuEnabled(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [paymentData, charge]);
+
+  /**
+   * Asks Duitku directly whether the payment landed.
+   *
+   * The 5-second poll only reads our own database, so it can only see a
+   * payment the callback already told us about. When the callback cannot reach
+   * us at all this is the donor's way out. It is manual and server-throttled
+   * because Duitku blocks the whole merchant for about an hour if its
+   * transactionStatus rate limit is hit.
+   */
+  const checkPaymentStatus = useCallback(async () => {
+    if (!paymentData) return;
+
+    setChecking(true);
+    setCheckMessage("");
+
+    try {
+      const res = await fetch(apiUrl("/api/duitku/check"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ invoice_number: paymentData.invoice_number }),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        setCheckMessage(result.error || "Gagal memeriksa status pembayaran.");
+        return;
+      }
+
+      if (result.status === "success") {
+        setPaymentStatus("success");
+        setSuccessData({ reference: paymentData.invoice_number });
+        setPaymentData(null);
+        return;
+      }
+
+      if (result.status === "failed") {
+        setPaymentStatus("failed");
+        setPaymentData(null);
+        return;
+      }
+
+      if (result.reason === "cooldown") {
+        setCheckMessage(
+          `Baru saja diperiksa. Coba lagi dalam ${result.retry_after_seconds} detik.`,
+        );
+        return;
+      }
+
+      setCheckMessage(
+        "Pembayaran belum diterima. Jika Anda baru saja membayar, tunggu beberapa saat lalu periksa lagi.",
+      );
+    } catch {
+      setCheckMessage("Gagal terhubung. Silakan coba lagi.");
+    } finally {
+      setChecking(false);
+    }
+  }, [paymentData]);
+
+  const startPayment = async () => {
+    if (!paymentData || !selectedMethod) return;
+
+    setChargeError("");
+    setCharging(true);
+
+    try {
+      const res = await fetch(apiUrl("/api/duitku/transaction"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          invoice_number: paymentData.invoice_number,
+          payment_method: selectedMethod.paymentMethod,
+        }),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        setChargeError(result.error || "Tidak dapat memulai pembayaran.");
+        return;
+      }
+
+      setCharge(result.payment);
+    } catch {
+      setChargeError("Gagal terhubung. Silakan coba lagi.");
+    } finally {
+      setCharging(false);
+    }
+  };
+
   const uploadTransferProof = async () => {
     if (!paymentData || !transferProofFile) {
       setProofUploadError("Please choose a file first.");
@@ -152,8 +303,19 @@ export default function SupportPage() {
   // Hide the banner/intro once the donor reaches the payment step.
   const showIntro = !successData && !paymentData && paymentStatus !== "failed";
 
+  // The form reads better narrow, but the checkout is two columns and needs
+  // the room, so the shell widens once the gateway step is on screen.
+  const wideShell =
+    duitkuEnabled === true &&
+    paymentData !== null &&
+    paymentStatus === "pending";
+
   return (
-    <main className="mx-auto flex max-w-3xl flex-col items-center gap-10 px-4 py-16 sm:px-6 lg:px-8">
+    <main
+      className={`mx-auto flex w-full flex-col items-center gap-10 px-4 py-16 sm:px-6 lg:px-8 ${
+        wideShell ? "max-w-6xl" : "max-w-3xl"
+      }`}
+    >
       {showIntro && (
         <>
           <div className="w-full overflow-hidden rounded-2xl">
@@ -167,7 +329,7 @@ export default function SupportPage() {
             />
           </div>
 
-          <p className="bg-gradient-to-r from-[#bdb88e] via-[#ffffff] to-[#8eac7a] bg-clip-text text-center text-lg font-bold tracking-tight text-transparent">
+          <p className="text-center text-lg font-bold tracking-tight text-white">
             #SupportTheDream
           </p>
 
@@ -194,7 +356,7 @@ export default function SupportPage() {
           </span>
           <div className="h-1.5 w-full rounded-full bg-white/20">
             <div
-              className={`h-full rounded-full transition-all duration-500 ${step >= 1 ? "w-full bg-[#8eac7a]" : "w-0"}`}
+              className={`h-full rounded-full transition-all duration-500 ${step >= 1 ? "w-full bg-brand-soft" : "w-0"}`}
             />
           </div>
         </div>
@@ -208,7 +370,7 @@ export default function SupportPage() {
           </span>
           <div className="h-1.5 w-full rounded-full bg-white/20">
             <div
-              className={`h-full rounded-full transition-all duration-500 ${step >= 2 ? "w-full bg-[#8eac7a]" : "w-0"}`}
+              className={`h-full rounded-full transition-all duration-500 ${step >= 2 ? "w-full bg-brand-soft" : "w-0"}`}
             />
           </div>
         </div>
@@ -216,14 +378,14 @@ export default function SupportPage() {
 
       {/* Thank You After Proof Upload */}
       {proofUploaded && (
-        <div className="flex w-full flex-col items-center gap-6 rounded-2xl border border-[#8eac7a]/30 bg-[#145127]/40 p-10 text-center">
+        <div className="flex w-full flex-col items-center gap-6 rounded-2xl border border-white/15 bg-brand-panel p-10 text-center">
           <svg
             aria-hidden="true"
             width="64"
             height="64"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#8eac7a"
+            stroke="#57b894"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -240,7 +402,7 @@ export default function SupportPage() {
           {paymentData && (
             <div className="flex flex-col gap-1">
               <p className="text-xs text-white/50">Invoice</p>
-              <p className="font-mono text-sm font-bold text-[#8eac7a]">
+              <p className="font-mono text-sm font-bold text-brand-soft">
                 {paymentData.invoice_number}
               </p>
             </div>
@@ -255,92 +417,182 @@ export default function SupportPage() {
         </div>
       )}
 
-      {/* QRIS Payment View */}
+      {/* Payment step: Duitku when it is configured, static QRIS otherwise. */}
       {!proofUploaded && paymentData && paymentStatus === "pending" && (
-        <div className="flex w-full flex-col items-center gap-6 text-center">
-          <h3 className="text-xl font-bold text-white">Scan QRIS to Pay</h3>
-          <p className="text-sm text-white/70">
-            Amount:{" "}
-            <span className="font-bold text-[#8eac7a]">
-              {formatRupiah(paymentData.amount)}
-            </span>
-          </p>
-
-          <Image
-            src="/assets/code.jpeg"
-            alt="QRIS Payment Code"
-            width={800}
-            height={800}
-            className="w-full rounded-2xl"
-          />
-
-          <p className="text-xs text-white/50">
-            Invoice:{" "}
-            <span className="font-mono">{paymentData.invoice_number}</span>
-          </p>
-
-          <div className="w-full rounded-2xl border border-white/20 bg-black/20 p-4 text-left">
-            <p className="text-sm font-semibold text-white">Bukti Donasi</p>
-            <p className="mt-1 text-xs text-white/60">
-              Format: JPG, PNG, PDF (max 5MB)
+        <div className="flex w-full flex-col gap-6">
+          {duitkuEnabled === null && (
+            <p className="w-full py-16 text-center text-sm text-white/60">
+              Memuat metode pembayaran...
             </p>
+          )}
 
-            <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <input
-                type="file"
-                accept=".jpg,.jpeg,.png,.pdf"
-                onChange={(e) => {
-                  const file = e.target.files?.[0] || null;
-                  setTransferProofFile(file);
-                  setProofUploadError("");
-                }}
-                className="w-full rounded-lg border border-white/20 bg-transparent px-3 py-2 text-sm text-white file:mr-3 file:rounded-md file:border-0 file:bg-[#145127] file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white"
-              />
-              <button
-                type="button"
-                onClick={uploadTransferProof}
-                disabled={proofUploading || !transferProofFile}
-                className="inline-flex items-center justify-center rounded-lg bg-[#145127] px-4 py-2 text-sm font-medium text-white transition-all hover:bg-[#1a6b34] disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {proofUploading ? "Uploading..." : "Upload"}
-              </button>
+          {duitkuEnabled === true && (
+            <div className="flex w-full flex-col gap-5">
+              {charge?.expires_at && (
+                <PaymentCountdown
+                  expiresAt={charge.expires_at}
+                  // One authoritative check rather than assuming. It also
+                  // writes the outcome to the database — marking it failed on
+                  // the client alone would leave the row pending forever.
+                  onExpire={checkPaymentStatus}
+                />
+              )}
+
+              <div className="grid w-full gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
+                <div className="flex min-w-0 flex-col gap-4">
+                  {charge ? (
+                    <PaymentInstructions
+                      charge={charge}
+                      method={selectedMethod}
+                      onCheckStatus={checkPaymentStatus}
+                      checking={checking}
+                      checkMessage={checkMessage}
+                    />
+                  ) : (
+                    <PaymentMethodPicker
+                      methods={methods}
+                      selected={selectedMethod}
+                      onSelect={setSelectedMethod}
+                      modalOpen={methodModalOpen}
+                      onModalOpenChange={setMethodModalOpen}
+                      disabled={charging}
+                    />
+                  )}
+
+                  {chargeError && (
+                    <p className="rounded-xl border border-red-400/30 bg-red-900/20 px-4 py-3 text-xs text-red-300">
+                      {chargeError}
+                    </p>
+                  )}
+                </div>
+
+                <OrderSummary
+                  invoiceNumber={paymentData.invoice_number}
+                  amount={paymentData.amount}
+                  packageName={
+                    donationType === "package"
+                      ? (packages.find((pkg) => pkg.id === selectedPackage)
+                          ?.name ?? "Donasi")
+                      : "Donasi Custom"
+                  }
+                  perks={
+                    donationType === "package"
+                      ? packages.find((pkg) => pkg.id === selectedPackage)
+                          ?.perks
+                      : undefined
+                  }
+                >
+                  {!charge && (
+                    <button
+                      type="button"
+                      onClick={startPayment}
+                      disabled={!selectedMethod || charging}
+                      className="w-full cursor-pointer rounded-full bg-brand px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-hover disabled:cursor-not-allowed disabled:bg-white/15 disabled:text-white/40"
+                    >
+                      {charging
+                        ? "Memproses..."
+                        : selectedMethod
+                          ? `Bayar dengan ${selectedMethod.paymentName}`
+                          : "Belum Pilih Metode Pembayaran"}
+                    </button>
+                  )}
+                </OrderSummary>
+              </div>
             </div>
+          )}
 
-            {proofUploadMsg && (
-              <p className="mt-3 text-xs text-[#8eac7a]">{proofUploadMsg}</p>
-            )}
-            {uploadedProofPath && (
-              <p className="mt-1 text-xs text-white/50">
-                File: {uploadedProofPath}
+          {/* Manual fallback: static QRIS + transfer proof, no gateway. */}
+          {duitkuEnabled === false && (
+            <div className="flex w-full flex-col items-center gap-6 text-center">
+              <h3 className="text-xl font-bold text-white">Scan QRIS to Pay</h3>
+              <p className="text-sm text-white/70">
+                Amount:{" "}
+                <span className="font-bold text-brand-soft">
+                  {formatRupiah(paymentData.amount)}
+                </span>
               </p>
-            )}
-            {proofUploadError && (
-              <p className="mt-3 text-xs text-red-400">{proofUploadError}</p>
-            )}
-          </div>
 
-          <a
-            href={withBasePath("/assets/code.jpeg")}
-            download="QRIS-Payment.jpeg"
-            className="inline-flex items-center gap-2 rounded-full border border-[#8eac7a] px-6 py-2.5 text-sm font-medium text-[#8eac7a] transition-all hover:bg-[#8eac7a]/10"
-          >
-            <svg
-              aria-hidden="true"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download QR Code
-          </a>
+              <Image
+                src="/assets/code.jpeg"
+                alt="QRIS Payment Code"
+                width={800}
+                height={800}
+                className="w-full rounded-2xl"
+              />
+
+              <p className="text-xs text-white/50">
+                Invoice:{" "}
+                <span className="font-mono">{paymentData.invoice_number}</span>
+              </p>
+
+              <div className="w-full rounded-2xl border border-white/20 bg-black/20 p-4 text-left">
+                <p className="text-sm font-semibold text-white">Bukti Donasi</p>
+                <p className="mt-1 text-xs text-white/60">
+                  Format: JPG, PNG, PDF (max 5MB)
+                </p>
+
+                <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <input
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] || null;
+                      setTransferProofFile(file);
+                      setProofUploadError("");
+                    }}
+                    className="w-full rounded-lg border border-white/20 bg-transparent px-3 py-2 text-sm text-white file:mr-3 file:rounded-md file:border-0 file:bg-brand file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white"
+                  />
+                  <button
+                    type="button"
+                    onClick={uploadTransferProof}
+                    disabled={proofUploading || !transferProofFile}
+                    className="inline-flex items-center justify-center rounded-lg bg-brand px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {proofUploading ? "Uploading..." : "Upload"}
+                  </button>
+                </div>
+
+                {proofUploadMsg && (
+                  <p className="mt-3 text-xs text-brand-soft">
+                    {proofUploadMsg}
+                  </p>
+                )}
+                {uploadedProofPath && (
+                  <p className="mt-1 text-xs text-white/50">
+                    File: {uploadedProofPath}
+                  </p>
+                )}
+                {proofUploadError && (
+                  <p className="mt-3 text-xs text-red-400">
+                    {proofUploadError}
+                  </p>
+                )}
+              </div>
+
+              <a
+                href={withBasePath("/assets/code.jpeg")}
+                download="QRIS-Payment.jpeg"
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/50 hover:bg-white/5"
+              >
+                <svg
+                  aria-hidden="true"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download QR Code
+              </a>
+            </div>
+          )}
         </div>
       )}
 
@@ -372,9 +624,16 @@ export default function SupportPage() {
             onClick={() => {
               setPaymentStatus("pending");
               setPaymentData(null);
+              setDuitkuEnabled(null);
+              setMethods([]);
+              setCharge(null);
+              setSelectedMethod(null);
+              setMethodModalOpen(false);
+              setChargeError("");
+              setCheckMessage("");
               setStep(2);
             }}
-            className="inline-flex items-center gap-2 rounded-full bg-[#145127] px-6 py-2.5 text-sm font-medium text-white transition-all hover:bg-[#1a6b34]"
+            className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-hover"
           >
             Try Again
           </button>
@@ -382,14 +641,14 @@ export default function SupportPage() {
       )}
 
       {successData && (
-        <div className="flex w-full flex-col items-center gap-4 rounded-2xl border border-[#8eac7a]/30 bg-[#145127]/40 p-8 text-center">
+        <div className="flex w-full flex-col items-center gap-4 rounded-2xl border border-white/15 bg-brand-panel p-8 text-center">
           <svg
             aria-hidden="true"
             width="48"
             height="48"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#8eac7a"
+            stroke="#57b894"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -402,7 +661,7 @@ export default function SupportPage() {
             Thank you for your support! Your donation has been confirmed.
           </p>
           <p className="text-sm text-white/70">Reference ID:</p>
-          <p className="font-mono text-sm font-bold text-[#8eac7a]">
+          <p className="font-mono text-sm font-bold text-brand-soft">
             {successData.reference}
           </p>
         </div>
@@ -464,6 +723,15 @@ export default function SupportPage() {
                 setProofUploadMsg("");
                 setProofUploadError("");
                 setUploadedProofPath("");
+                // A new invoice means a new Duitku transaction: clear the old
+                // channel list and charge so the picker starts fresh.
+                setDuitkuEnabled(null);
+                setMethods([]);
+                setCharge(null);
+                setSelectedMethod(null);
+                setMethodModalOpen(false);
+                setChargeError("");
+                setCheckMessage("");
               } else {
                 setErrorMsg("Payment generation failed. Please try again.");
               }
@@ -488,7 +756,7 @@ export default function SupportPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Enter your name"
-                  className="rounded-lg border border-white/20 bg-transparent px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-[#8eac7a] focus:ring-1 focus:ring-[#8eac7a]"
+                  className="rounded-lg border border-white/20 bg-transparent px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-brand-soft focus:ring-1 focus:ring-brand-soft"
                 />
               </div>
 
@@ -504,7 +772,7 @@ export default function SupportPage() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="Input your phone number"
-                  className="rounded-lg border border-white/20 bg-transparent px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-[#8eac7a] focus:ring-1 focus:ring-[#8eac7a]"
+                  className="rounded-lg border border-white/20 bg-transparent px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-brand-soft focus:ring-1 focus:ring-brand-soft"
                 />
                 <p className="text-xs text-white/50">
                   Use +62 or 08 format. Ex: +6281234567890
@@ -523,7 +791,7 @@ export default function SupportPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="rounded-lg border border-white/20 bg-transparent px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-[#8eac7a] focus:ring-1 focus:ring-[#8eac7a]"
+                  className="rounded-lg border border-white/20 bg-transparent px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-brand-soft focus:ring-1 focus:ring-brand-soft"
                 />
                 <p className="text-xs text-white/50">Ex: example@gmail.com</p>
               </div>
@@ -543,7 +811,7 @@ export default function SupportPage() {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="Enter your address"
-                  className="rounded-lg border border-white/20 bg-transparent px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-[#8eac7a] focus:ring-1 focus:ring-[#8eac7a]"
+                  className="rounded-lg border border-white/20 bg-transparent px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-brand-soft focus:ring-1 focus:ring-brand-soft"
                 />
                 <p className="text-xs text-white/50">
                   Use full address format. Ex: Jl. Raya Kebayoran Baru No. 123,
@@ -557,7 +825,7 @@ export default function SupportPage() {
                 <label className="flex cursor-pointer items-center gap-3 text-sm text-white">
                   <span className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-white">
                     {gender === "male" && (
-                      <span className="h-3 w-3 rounded-full bg-[#8eac7a]" />
+                      <span className="h-3 w-3 rounded-full bg-brand-soft" />
                     )}
                   </span>
                   <input
@@ -573,7 +841,7 @@ export default function SupportPage() {
                 <label className="flex cursor-pointer items-center gap-3 text-sm text-white">
                   <span className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-white">
                     {gender === "female" && (
-                      <span className="h-3 w-3 rounded-full bg-[#8eac7a]" />
+                      <span className="h-3 w-3 rounded-full bg-brand-soft" />
                     )}
                   </span>
                   <input
@@ -611,7 +879,7 @@ export default function SupportPage() {
                 </button>
                 <button
                   type="submit"
-                  className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#145127] px-6 py-2.5 text-sm font-medium text-white transition-all hover:bg-[#1a6b34]"
+                  className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-brand px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-hover"
                 >
                   Next
                   <svg
@@ -639,7 +907,7 @@ export default function SupportPage() {
                 <label className="flex cursor-pointer items-center gap-3 text-sm text-white">
                   <span className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-white">
                     {donationType === "package" && (
-                      <span className="h-3 w-3 rounded-full bg-[#8eac7a]" />
+                      <span className="h-3 w-3 rounded-full bg-brand-soft" />
                     )}
                   </span>
                   <input
@@ -655,7 +923,7 @@ export default function SupportPage() {
                 <label className="flex cursor-pointer items-center gap-3 text-sm text-white">
                   <span className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-white">
                     {donationType === "custom" && (
-                      <span className="h-3 w-3 rounded-full bg-[#8eac7a]" />
+                      <span className="h-3 w-3 rounded-full bg-brand-soft" />
                     )}
                   </span>
                   <input
@@ -681,7 +949,7 @@ export default function SupportPage() {
                         onClick={() => setSelectedPackage(pkg.id)}
                         className={`relative flex flex-col gap-2 rounded-xl border p-5 text-left transition-all ${
                           selectedPackage === pkg.id
-                            ? "border-[#8eac7a]"
+                            ? "border-brand-soft"
                             : "border-white/20 hover:border-white/40"
                         }`}
                       >
@@ -691,14 +959,14 @@ export default function SupportPage() {
                           </span>
                           <span className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-white">
                             {selectedPackage === pkg.id && (
-                              <span className="h-3 w-3 rounded-full bg-[#8eac7a]" />
+                              <span className="h-3 w-3 rounded-full bg-brand-soft" />
                             )}
                           </span>
                         </div>
                         <span className="text-lg font-bold text-white">
                           {formatRupiah(pkg.price)}
                         </span>
-                        <span className="text-xs font-semibold text-[#8eac7a]">
+                        <span className="text-xs font-semibold text-brand-soft">
                           You Will Get
                         </span>
                         <ul className="flex list-disc flex-col gap-1 pl-4 text-xs leading-relaxed text-white/60">
@@ -729,7 +997,7 @@ export default function SupportPage() {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="Minimum 5,000"
-                    className="rounded-lg border border-white/20 bg-transparent px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-[#8eac7a] focus:ring-1 focus:ring-[#8eac7a]"
+                    className="rounded-lg border border-white/20 bg-transparent px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-brand-soft focus:ring-1 focus:ring-brand-soft"
                   />
                   <p className="text-xs text-white/50">
                     Minimum donation: IDR 5,000
@@ -760,7 +1028,7 @@ export default function SupportPage() {
                 </button>
                 <button
                   type="submit"
-                  className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#145127] px-6 py-2.5 text-sm font-medium text-white transition-all hover:bg-[#1a6b34]"
+                  className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-brand px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-hover"
                 >
                   Next
                   <svg
@@ -807,8 +1075,8 @@ export default function SupportPage() {
                       Please review your details before proceeding to payment
                     </p>
 
-                    <div className="w-full rounded-xl border border-[#bdb88e]/40 bg-[#bdb88e]/10 px-6 py-4 text-center">
-                      <p className="text-sm text-[#bdb88e]">
+                    <div className="w-full rounded-xl border border-gold/40 bg-brand/10 px-6 py-4 text-center">
+                      <p className="text-sm text-gold">
                         Please double-check your information. Once you proceed
                         to payment, you cannot edit these details.
                       </p>
@@ -823,7 +1091,7 @@ export default function SupportPage() {
                         <div className="flex items-start gap-3">
                           <svg
                             aria-hidden="true"
-                            className="mt-0.5 shrink-0 text-[#8eac7a]"
+                            className="mt-0.5 shrink-0 text-brand-soft"
                             width="18"
                             height="18"
                             viewBox="0 0 24 24"
@@ -847,7 +1115,7 @@ export default function SupportPage() {
                         <div className="flex items-start gap-3">
                           <svg
                             aria-hidden="true"
-                            className="mt-0.5 shrink-0 text-[#8eac7a]"
+                            className="mt-0.5 shrink-0 text-brand-soft"
                             width="18"
                             height="18"
                             viewBox="0 0 24 24"
@@ -871,7 +1139,7 @@ export default function SupportPage() {
                         <div className="flex items-start gap-3">
                           <svg
                             aria-hidden="true"
-                            className="mt-0.5 shrink-0 text-[#8eac7a]"
+                            className="mt-0.5 shrink-0 text-brand-soft"
                             width="18"
                             height="18"
                             viewBox="0 0 24 24"
@@ -896,7 +1164,7 @@ export default function SupportPage() {
                         <div className="flex items-start gap-3">
                           <svg
                             aria-hidden="true"
-                            className="mt-0.5 shrink-0 text-[#8eac7a]"
+                            className="mt-0.5 shrink-0 text-brand-soft"
                             width="18"
                             height="18"
                             viewBox="0 0 24 24"
@@ -920,7 +1188,7 @@ export default function SupportPage() {
                         <div className="flex items-start gap-3">
                           <svg
                             aria-hidden="true"
-                            className="mt-0.5 shrink-0 text-[#8eac7a]"
+                            className="mt-0.5 shrink-0 text-brand-soft"
                             width="18"
                             height="18"
                             viewBox="0 0 24 24"
@@ -953,7 +1221,7 @@ export default function SupportPage() {
                           <div className="flex items-start gap-3">
                             <svg
                               aria-hidden="true"
-                              className="mt-0.5 shrink-0 text-[#8eac7a]"
+                              className="mt-0.5 shrink-0 text-brand-soft"
                               width="18"
                               height="18"
                               viewBox="0 0 24 24"
@@ -980,13 +1248,13 @@ export default function SupportPage() {
                           </div>
                         )}
 
-                        <div className="rounded-xl border border-[#8eac7a]/40 bg-[#8eac7a]/5 px-5 py-4">
+                        <div className="rounded-xl border border-brand-soft/40 bg-brand-soft/5 px-5 py-4">
                           <p className="text-xs text-white/50">
                             {donationType === "package"
                               ? "Package Amount"
                               : "Donation Amount"}
                           </p>
-                          <p className="mt-1 text-2xl font-bold text-[#8eac7a]">
+                          <p className="mt-1 text-2xl font-bold text-brand-soft">
                             {formatRupiah(finalAmount)}
                           </p>
                         </div>
@@ -1005,14 +1273,14 @@ export default function SupportPage() {
                     <button
                       type="button"
                       onClick={() => setStep(2)}
-                      className="inline-flex items-center justify-center gap-2 rounded-full border border-[#8eac7a] px-6 py-2.5 text-sm font-medium text-[#8eac7a] transition-colors hover:bg-[#8eac7a]/10"
+                      className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/50 hover:bg-white/5"
                     >
                       Edit Information
                     </button>
                     <button
                       type="submit"
                       disabled={submitting}
-                      className="inline-flex min-w-[13rem] items-center justify-center gap-2 rounded-full bg-[#145127] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#1a6b34] disabled:opacity-50"
+                      className="inline-flex min-w-[13rem] items-center justify-center gap-2 rounded-full bg-brand px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-hover disabled:opacity-50"
                     >
                       <svg
                         aria-hidden="true"
