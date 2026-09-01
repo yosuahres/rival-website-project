@@ -1,17 +1,6 @@
-import { Exo_2 } from "next/font/google";
-import BackgroundShapes from "@/components/crowdfunding/BackgroundShapes";
 import Header from "@/components/crowdfunding/Header";
 import SiteChrome from "@/components/crowdfunding/SiteChrome";
 import { buildMetadata } from "@/lib/metadata";
-
-// Display face for the crowdfunding headings. It is loaded here rather than in
-// the root layout so the rest of the site does not pay for a family only these
-// pages use.
-const exo2 = Exo_2({
-  variable: "--font-exo2",
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-});
 
 export const metadata = buildMetadata({
   title: "Crowdfunding",
@@ -29,16 +18,18 @@ export const metadata = buildMetadata({
 export default function CrowdfundingLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // The section carries its own dark-green ground, aurora backdrop, and a
-  // stripped-back header of its own — the site navbar and footer stand down
-  // here (see layouts/Layout.tsx), and this section carries no footer at all.
-  // SiteChrome drops the header again on the admin page, which renders its
-  // own shell.
+  // The section sits on the site's own ground and palette — it used to carry a
+  // separate dark-green scheme, a drifting aurora backdrop, and its own display
+  // face (Exo 2), which together read as a different product. The ground is now
+  // flat like every other page, and headings use Space Grotesk from the root
+  // layout, the same face the rest of the site sets display type in.
+  //
+  // It keeps a stripped-back header of its own: the site navbar and footer
+  // stand down here (see layouts/Layout.tsx), and this section carries no
+  // footer at all. SiteChrome drops the header again on the admin page, which
+  // renders its own shell.
   return (
-    <div
-      className={`${exo2.variable} relative isolate flex min-h-screen flex-col bg-[#0a1f10]`}
-    >
-      <BackgroundShapes />
+    <div className="relative isolate flex min-h-screen flex-col bg-background">
       <SiteChrome>
         <Header />
       </SiteChrome>

@@ -144,7 +144,7 @@ export default function ProgressSettingsForm({
         <div>
           <div className="h-3 w-full overflow-hidden rounded-full bg-gray-100">
             <div
-              className="h-full rounded-full bg-[#8eac7a] transition-all duration-500"
+              className="h-full rounded-full bg-brand-soft transition-all duration-500"
               style={{ width: `${percentage}%` }}
             />
           </div>

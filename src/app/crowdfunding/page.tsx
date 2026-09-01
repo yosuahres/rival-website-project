@@ -20,7 +20,7 @@ export default async function CrowdfundingPage() {
 
   return (
     <main className="mx-auto flex max-w-7xl flex-col items-center gap-10 px-4 py-20 sm:px-6 lg:px-8">
-      <h1 className="bg-gradient-to-r from-[#bdb88e] via-[#d4cfb0] to-[#8eac7a] bg-clip-text text-center text-3xl font-extrabold leading-tight tracking-tight text-transparent sm:text-4xl md:text-5xl">
+      <h1 className="text-center text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl">
         #ChaseTheDream
       </h1>
       <p className="-mt-8 text-center text-base font-medium text-white/70 sm:text-lg">
@@ -31,14 +31,14 @@ export default async function CrowdfundingPage() {
 
       <Link
         href="/crowdfunding/support"
-        className="inline-flex items-center justify-center rounded-full bg-[#bdb88e] px-8 py-3 text-lg font-semibold text-[#231f20] shadow-lg transition-all hover:scale-105 hover:bg-[#8eac7a] hover:shadow-xl active:scale-100"
+        className="inline-flex items-center justify-center rounded-full bg-brand px-8 py-3 text-base font-medium text-white transition-colors hover:bg-brand-hover"
       >
         Support Us
       </Link>
 
       <Carousel images={CAROUSEL_IMAGES} />
 
-      <h2 className="text-center font-[family-name:var(--font-exo2)] text-3xl font-bold text-white">
+      <h2 className="text-center font-display text-3xl font-bold text-white">
         RIVAL ITS TEAM
       </h2>
     </main>
