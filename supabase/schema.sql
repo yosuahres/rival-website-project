@@ -54,8 +54,17 @@ create index if not exists donation_packages_campaign_id_idx
   on public.donation_packages (campaign_id);
 
 -- ── donations ───────────────────────────────────────────────
--- Payment flow is manual: the donor scans the static QRIS code, uploads a
--- transfer proof, and an admin flips payment_status after verifying it.
+-- Two payment flows share this table:
+--
+--   Duitku (when DUITKU_MERCHANT_CODE/DUITKU_API_KEY are set) — the donor
+--   picks a channel, /api/duitku/transaction fills the duitku_* columns, and
+--   /api/duitku/callback flips payment_status once the gateway confirms.
+--
+--   Manual fallback (no Duitku keys) — the donor scans the static QRIS code,
+--   uploads a transfer proof, and an admin flips payment_status by hand.
+--
+-- invoice_number doubles as Duitku's merchantOrderId, so it must stay unique
+-- and must never be reused for a second payment attempt.
 create table if not exists public.donations (
   id              uuid primary key default gen_random_uuid(),
   campaign_id     uuid references public.campaigns (id) on delete set null,
@@ -68,11 +77,36 @@ create table if not exists public.donations (
   amount          numeric not null check (amount >= 5000),
   payment_status  text default 'pending' check (payment_status in ('pending', 'success', 'failed')),
   invoice_number  text not null unique,   -- DON-XXXX-XXXX, also the storage folder name
-  created_at      timestamptz default now()
+  created_at      timestamptz default now(),
+
+  -- Duitku transaction, written once by /api/duitku/transaction.
+  duitku_reference      text,   -- Duitku's own reference, for reconciliation
+  duitku_payment_method text,   -- two-letter channel code, e.g. BC / BR / SP
+  duitku_va_number      text,   -- virtual account number, for VA channels
+  duitku_payment_url    text,   -- hosted payment page
+  duitku_qr_string      text,   -- raw QRIS payload, for QR channels
+  duitku_expires_at     timestamptz, -- when the gateway stops accepting payment
+  duitku_checked_at     timestamptz  -- last manual transactionStatus call
 );
+
+-- For databases created before Duitku was wired in.
+alter table public.donations
+  add column if not exists duitku_reference      text,
+  add column if not exists duitku_payment_method text,
+  add column if not exists duitku_va_number      text,
+  add column if not exists duitku_payment_url    text,
+  add column if not exists duitku_qr_string      text,
+  add column if not exists duitku_expires_at     timestamptz,
+  add column if not exists duitku_checked_at     timestamptz;
 
 create index if not exists donations_campaign_id_idx on public.donations (campaign_id);
 create index if not exists donations_created_at_idx  on public.donations (created_at desc);
+
+-- One Duitku transaction per donation; catches a double-submit that somehow
+-- got two rows pointed at the same gateway transaction.
+create unique index if not exists donations_duitku_reference_idx
+  on public.donations (duitku_reference)
+  where duitku_reference is not null;
 
 -- ── keep campaigns.current_amount in sync (optional) ────────
 create or replace function public.sync_campaign_current_amount()
@@ -160,9 +194,12 @@ drop policy if exists "donations readable" on public.donations;
 create policy "donations readable"
   on public.donations for select using (true);
 
--- No UPDATE policy on purpose: nothing in the app updates a donation.
--- Confirming a payment is done from the Supabase dashboard (or any
--- service-role client), both of which bypass RLS.
+-- No UPDATE policy on purpose. Everything that writes to an existing donation
+-- runs server-side with SUPABASE_SERVICE_ROLE_KEY, which bypasses RLS:
+-- /api/duitku/transaction stores the gateway transaction, and
+-- /api/duitku/callback settles payment_status. Keeping the policy absent is
+-- what stops a browser holding the anon key from marking its own donation
+-- paid.
 
 -- ============================================================
 -- Storage: transfer proofs (src/app/api/donations/proof/route.ts)

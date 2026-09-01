@@ -28,8 +28,11 @@ export async function GET(request: Request) {
       );
     }
 
-    // Payments are verified manually from the uploaded transfer proof,
-    // so the stored status is the only source of truth.
+    // The stored status is the only source of truth. It is written either by
+    // /api/duitku/callback or, on the manual flow, by an admin who checked the
+    // transfer proof. Deliberately never asks Duitku directly: this is polled
+    // every few seconds by the support page, and Duitku's transactionStatus
+    // endpoint blocks the caller for about an hour once its rate limit is hit.
     return NextResponse.json({
       status: donation.payment_status || "pending",
       amount: donation.amount,

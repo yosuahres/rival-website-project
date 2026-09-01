@@ -143,8 +143,10 @@ export async function POST(request: Request) {
       );
     }
 
-    // Donors pay via the static QRIS code and upload a transfer proof;
-    // an admin confirms the payment afterwards.
+    // The row starts `pending`. What settles it depends on how the deployment
+    // is configured: with Duitku keys the donor picks a channel and
+    // /api/duitku/callback flips the status; without them they scan the static
+    // QRIS code, upload a transfer proof, and an admin confirms it by hand.
     return NextResponse.json(
       {
         message: "Donation created successfully.",

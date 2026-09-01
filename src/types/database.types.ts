@@ -23,6 +23,13 @@ export interface Database {
           invoice_number: string;
           package_id: string | null;
           created_at: string | null;
+          duitku_reference: string | null;
+          duitku_payment_method: string | null;
+          duitku_va_number: string | null;
+          duitku_payment_url: string | null;
+          duitku_qr_string: string | null;
+          duitku_expires_at: string | null;
+          duitku_checked_at: string | null;
         };
         Insert: {
           id?: string;
@@ -37,6 +44,13 @@ export interface Database {
           invoice_number: string;
           package_id?: string | null;
           created_at?: string | null;
+          duitku_reference?: string | null;
+          duitku_payment_method?: string | null;
+          duitku_va_number?: string | null;
+          duitku_payment_url?: string | null;
+          duitku_qr_string?: string | null;
+          duitku_expires_at?: string | null;
+          duitku_checked_at?: string | null;
         };
         Update: {
           id?: string;
@@ -51,6 +65,13 @@ export interface Database {
           invoice_number?: string;
           package_id?: string | null;
           created_at?: string | null;
+          duitku_reference?: string | null;
+          duitku_payment_method?: string | null;
+          duitku_va_number?: string | null;
+          duitku_payment_url?: string | null;
+          duitku_qr_string?: string | null;
+          duitku_expires_at?: string | null;
+          duitku_checked_at?: string | null;
         };
         Relationships: [
           {
