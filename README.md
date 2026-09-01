@@ -43,14 +43,91 @@ site navbar. It was merged in from the standalone `rival-crowdfunding` app:
 | Path | What it is |
 | --- | --- |
 | `/crowdfunding` | Progress bar + carousel. Reads `public.site_settings`, so it is `force-dynamic`. |
-| `/crowdfunding/support` | The donation form: details, package or custom amount, QRIS payment, transfer-proof upload. |
+| `/crowdfunding/support` | The donation form: details, package or custom amount, then payment. |
+| `/crowdfunding/payment` | Where Duitku redirects the donor back to. Polls until the callback settles the donation. |
 | `/crowdfunding/admin` | Staff view of donations, with the progress-bar figures editable inline. **No authentication — see below.** |
 | `/api/*` | Route handlers backing the above. |
 | `supabase/schema.sql` | Tables, RLS policies, and the seed row. Run once in the Supabase SQL editor. |
 
 `SUPABASE_SERVICE_ROLE_KEY` is required on the server for the operations that
-bypass RLS — deleting a donation, and reading/writing transfer proofs in
-Storage. See `.env.example`.
+bypass RLS — deleting a donation, reading/writing transfer proofs in Storage,
+and settling a donation from the payment callback. See `.env.example`.
+
+### Payments (Duitku)
+
+Set `DUITKU_MERCHANT_CODE` and `DUITKU_API_KEY` and the support page switches
+from the manual flow to the gateway. Leave them blank and it keeps the old
+behaviour — static QRIS image plus a transfer-proof upload an admin verifies by
+hand — so a checkout with no keys still works.
+
+| Route | What it does |
+| --- | --- |
+| `GET /api/duitku/payment-methods?amount=` | The channels enabled on the project for that amount, with fees. Answers `{ enabled: false }` when no keys are set, which is what triggers the fallback. |
+| `POST /api/duitku/transaction` | Turns a pending donation into a Duitku transaction (`v2/inquiry`) and returns the VA number / QR string / payment URL. |
+| `POST /api/duitku/callback/` | Duitku's server-to-server notification. The primary way a donation is settled. |
+| `POST /api/duitku/check` | Asks Duitku's `transactionStatus` directly, for when the callback never arrives. Manual and throttled — see below. |
+
+The flow: the donor submits the form, `POST /api/donations` writes a `pending`
+row with an `invoice_number`, the picker calls `/api/duitku/transaction` with
+the channel they clicked, and the VA number comes back. Duitku then notifies
+the callback, which flips `payment_status`, and the page — which has been
+polling `/api/donations/status` all along — updates itself.
+
+The checkout UI is split out of the page: `PaymentMethodPicker` (short list on
+the card, full set grouped behind a modal), `PaymentInstructions` (virtual
+account number, copy button, per-bank "Cara Membayar" steps),
+`PaymentCountdown`, and `OrderSummary`. Which channels land in which group, and
+how long each stays payable, are both in
+`src/lib/crowdfunding/payment-methods.ts`; the per-bank instruction copy is in
+`payment-instructions.ts`. Neither needs the gateway to edit.
+
+The **amount is never taken from the browser** at the gateway step: the
+transaction route reads it off the donation row that `/api/donations` already
+validated against the selected package.
+
+`invoice_number` doubles as Duitku's `merchantOrderId`, which may not be
+reused. A donor who wants a different channel has to start a new donation; the
+route returns 409 rather than silently failing at the gateway.
+
+Register this in the Duitku merchant portal (**the trailing slash matters** —
+`trailingSlash: true` makes Next answer the slashless path with a 308 that
+Duitku's sender does not follow):
+
+```
+Callback: https://<your-domain>/api/duitku/callback/
+Return:   https://<your-domain>/crowdfunding/payment/
+```
+
+Both default to `NEXT_PUBLIC_SITE_URL`, so they only need
+`DUITKU_CALLBACK_URL` / `DUITKU_RETURN_URL` if the public origin differs from
+what the app resolves. `DUITKU_ENV=sandbox` (the default) points at
+`sandbox.duitku.com`; `production` points at `passport.duitku.com`. The two
+environments have different credentials.
+
+`/api/duitku/check` is the escape hatch for a callback that cannot reach the
+site — a firewall in front of it, a host that cannot take server-to-server
+POSTs, or an outage that burned Duitku's five retries. A donor triggers it from
+the payment screen ("Saya sudah bayar"), and the countdown fires it once on
+expiry so an abandoned donation is written off rather than left `pending`
+forever.
+
+It is deliberately **not** on the status poll. `transactionStatus` is rate
+limited per merchant and blocks the caller for roughly an hour once the ceiling
+is hit — which would break confirmation for every donor, not just the impatient
+one. So it runs only on demand, and `donations.duitku_checked_at` enforces a
+30-second cooldown per invoice, stamped *before* the call so a hung request
+cannot be retried into a flood.
+
+Both it and the callback settle through `settleDonation` in
+`src/lib/crowdfunding/settle.ts`, so the guards are shared rather than
+reimplemented: the amount must match the recorded donation, a settled donation
+is never touched again, and `pending` is written as nothing at all.
+
+Callbacks are authenticated with Duitku's HMAC-SHA256 signature over
+`merchantCode + amount + merchantOrderId`, keyed by the API key, and the amount
+is re-checked against the stored donation before anything settles. Handling is
+idempotent — Duitku retries up to five times on any non-200, and a dashboard
+resend lands on the same route.
 
 There is no sign-in: the login/signup shells, the OAuth callback, and the
 session-refreshing middleware were removed as unused. `/crowdfunding/admin` is
@@ -72,10 +149,10 @@ therefore behind `STATIC_EXPORT=true` in `next.config.ts` and off by default —
 turning it on will fail the build while `/crowdfunding` is present.
 
 `pnpm build:static` (`scripts/build-static.mjs`) still produces `dist/` for
-cPanel. It stages the server-only paths — `src/app/api`, `src/app/auth`,
-`src/app/crowdfunding`, `src/middleware.ts` — out of the tree for the duration
-of the build, then puts them back, so the export is the marketing site exactly
-as it shipped before the merge:
+cPanel. It stages the server-only paths — `src/app/api` and
+`src/app/crowdfunding` — out of the tree for the duration of the build, then
+puts them back, so the export is the marketing site exactly as it shipped
+before the merge:
 
 ```bash
 NEXT_PUBLIC_SITE_URL=https://arek.its.ac.id/rival \
