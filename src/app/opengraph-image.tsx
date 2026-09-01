@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { ImageResponse } from "next/og";
-import { PARENT_ORGANIZATION, SITE_TAGLINE } from "@/lib/site";
+import { SITE_TAGLINE } from "@/lib/site";
 
 // Applies to every route that does not define its own image, so one file
 // covers the whole site.
@@ -83,7 +83,7 @@ export default function OpenGraphImage() {
           height: size.height,
         }}
       />
-      {/* Flat scrim: drops the photo to a whisper so white type stays legible
+      {/* Flat scrim: drops the photo to a whisper so the logo reads clearly
           wherever it lands. */}
       {layer("rgba(13,15,18,0.7)")}
       {/* Top and bottom fade to solid, so the card has no visible photo edge. */}
@@ -101,52 +101,18 @@ export default function OpenGraphImage() {
         "linear-gradient(135deg, rgba(57,133,97,0.5) 0%, rgba(57,133,97,0) 42%)",
       )}
 
-      <div
-        style={{
-          position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        {/* 2602x723 in the source; 640 wide keeps that ratio. */}
-        {/* biome-ignore lint/performance/noImgElement: satori rasterises this,
-            next/image has no meaning here */}
-        <img src={LOGO} alt="RIVAL ITS" width={640} height={178} />
-        <div
-          style={{
-            display: "flex",
-            marginTop: 34,
-            fontSize: 46,
-            color: "rgba(255,255,255,0.92)",
-            letterSpacing: "-0.01em",
-            lineHeight: 1.2,
-          }}
-        >
-          {SITE_TAGLINE}
-        </div>
-        <div
-          style={{
-            display: "flex",
-            marginTop: 30,
-            alignItems: "center",
-            fontSize: 28,
-            color: "#5fbf8d",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              width: 12,
-              height: 12,
-              borderRadius: 999,
-              background: "#398561",
-              marginRight: 18,
-            }}
-          />
-          {PARENT_ORGANIZATION}
-        </div>
-      </div>
+      {/* The logo is the whole card — no type beside it, so it can sit
+          larger and dead centre. 2602x723 in the source; 760 wide keeps
+          that ratio. */}
+      {/* biome-ignore lint/performance/noImgElement: satori rasterises this,
+          next/image has no meaning here */}
+      <img
+        src={LOGO}
+        alt="RIVAL ITS"
+        width={760}
+        height={211}
+        style={{ position: "relative" }}
+      />
     </div>,
     size,
   );
