@@ -3,5 +3,5 @@ Allow: /
 Disallow: /api/
 Disallow: /crowdfunding/admin/
 
-Host: https://rivalits.vercel.app/
-Sitemap: https://rivalits.vercel.app/sitemap.xml
+Host: https://arek.its.ac.id/rival/
+Sitemap: https://arek.its.ac.id/rival/sitemap.xml
