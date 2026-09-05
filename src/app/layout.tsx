@@ -123,7 +123,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="id"
+      lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} ${robotoFlex.variable}`}
     >
       <body className="antialiased">

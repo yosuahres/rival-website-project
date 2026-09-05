@@ -171,8 +171,7 @@
       "divisions": "Divisions",
       "documents": "Required Documents",
       "specialTask": "Special Task",
-      "apply": "Apply Now",
-      "faq": "FAQ"
+      "apply": "Apply Now"
     },
     "requirementsTitle": "GENERAL REQUIREMENTS",
     "requirements": {
@@ -303,7 +302,7 @@
     },
     "specialTaskTitle": "Special Task",
     "specialTask": {
-      "linkLabel": "Open the task brief",
+      "linkLabel": "Click here",
       "linkPending": "To Be Announced",
       "technicalTitle": "Technical Special Task",
       "mechanical": "Mechanical",
@@ -327,31 +326,7 @@
     },
     "applyTitle": "Join the RIVAL ITS Robotics Team and be part of building the future",
     "applyBody": "Take your first step with the RIVAL ITS Robotics Team. Choose your preferred division, submit your documents, and let’s collaborate to bring your ideas to life and build a real competition robot. Registration closes on September 24, 2026.",
-    "applyCta": "Apply Now",
-    "faqTitle": "Frequently Asked Questions",
-    "faqToggle": "Toggle answer",
-    "faq": {
-      "q1": {
-        "q": "Can I register for more than one division?",
-        "a": "No. Each applicant may only choose one division so that the assessment stays focused. Choose the division that best matches your interest and skills."
-      },
-      "q2": {
-        "q": "Do I need previous robotics experience?",
-        "a": "Not at all. Most of our members started with zero competition experience. What matters is your willingness to learn, your commitment, and your consistency during the internship period."
-      },
-      "q3": {
-        "q": "Will I get to join the competition directly?",
-        "a": "Accepted members start as interns. Those who show strong performance and commitment during the internship will be selected for the competition roster of KRI or the Australian Rover Challenge."
-      },
-      "q4": {
-        "q": "How intense are the activities?",
-        "a": "It varies by period. Outside the competition season there are weekly meetings and division work. Approaching a competition, the intensity increases significantly, including work in the lab on weekends."
-      },
-      "q5": {
-        "q": "What do I get from this internship?",
-        "a": "Hands-on experience building a real competition robot, mentoring from senior members, an active team member certificate, a strong portfolio, and a network across ITS and our industry partners."
-      }
-    }
+    "applyCta": "Apply Now"
   },
   "notFound": {
     "message": "Page not found!",

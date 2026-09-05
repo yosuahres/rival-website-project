@@ -171,8 +171,7 @@
       "divisions": "Divisi",
       "documents": "Required Documents",
       "specialTask": "Special Task",
-      "apply": "Daftar Sekarang",
-      "faq": "FAQ"
+      "apply": "Daftar Sekarang"
     },
     "requirementsTitle": "PERSYARATAN UMUM",
     "requirements": {
@@ -303,7 +302,7 @@
     },
     "specialTaskTitle": "Special Task",
     "specialTask": {
-      "linkLabel": "Buka ketentuan tugas",
+      "linkLabel": "Klik di sini",
       "linkPending": "To Be Announced",
       "technicalTitle": "Technical Special Task",
       "mechanical": "Mekanik",
@@ -327,31 +326,7 @@
     },
     "applyTitle": "Join the RIVAL ITS Robotics Team and be part of building the future",
     "applyBody": "Take your first step with the RIVAL ITS Robotics Team. Choose your preferred division, submit your documents, and let’s collaborate to bring your ideas to life and build a real competition robot. Registration closes on September 24, 2026.",
-    "applyCta": "Apply Now",
-    "faqTitle": "Pertanyaan yang Sering Diajukan",
-    "faqToggle": "Buka/tutup jawaban",
-    "faq": {
-      "q1": {
-        "q": "Bolehkah saya mendaftar lebih dari satu divisi?",
-        "a": "Tidak. Setiap pendaftar hanya boleh memilih satu divisi agar penilaian tetap terfokus. Pilihlah divisi yang paling sesuai dengan minat dan kemampuanmu."
-      },
-      "q2": {
-        "q": "Apakah saya perlu pengalaman robotika sebelumnya?",
-        "a": "Sama sekali tidak. Sebagian besar anggota kami memulai tanpa pengalaman kompetisi. Yang terpenting adalah kemauan belajar, komitmen, dan konsistensimu selama masa magang."
-      },
-      "q3": {
-        "q": "Apakah saya langsung ikut kompetisi?",
-        "a": "Anggota yang diterima memulai sebagai peserta magang. Mereka yang menunjukkan performa dan komitmen kuat selama magang akan dipilih untuk masuk skuad kompetisi KRI atau Australian Rover Challenge."
-      },
-      "q4": {
-        "q": "Seberapa padat kegiatannya?",
-        "a": "Bergantung pada periodenya. Di luar musim kompetisi ada pertemuan mingguan dan kerja divisi. Menjelang kompetisi, intensitasnya meningkat signifikan, termasuk kerja di laboratorium pada akhir pekan."
-      },
-      "q5": {
-        "q": "Apa yang saya dapatkan dari magang ini?",
-        "a": "Pengalaman langsung membangun robot kompetisi sungguhan, bimbingan dari anggota senior, sertifikat anggota aktif, portofolio yang kuat, serta jejaring di lingkungan ITS dan mitra industri kami."
-      }
-    }
+    "applyCta": "Apply Now"
   },
   "notFound": {
     "message": "Halaman tidak ditemukan!",

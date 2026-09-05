@@ -1,22 +1,22 @@
 import en from "./locales/en.json";
 import id from "./locales/id.json";
 
-// Indonesian is what a first-time visitor sees: this is an ITS team site and
-// its primary audience reads Bahasa Indonesia.
-export const DEFAULT_LOCALE = "id" as const;
+// English is what a first-time visitor sees: the site also speaks to overseas
+// competitions and partners, and Bahasa Indonesia is one switch away.
+export const DEFAULT_LOCALE = "en" as const;
 
-// English remains the source of truth for the key set, so it is what a missing
-// translation falls back to rather than the default locale.
+// English is also the source of truth for the key set, so it is what a missing
+// translation falls back to.
 export const FALLBACK_LOCALE = "en" as const;
 
 // Display order only — the default and the fallback are set above.
 export const LOCALES = [
+  { code: "en", label: "English", flag: "https://flagcdn.com/w40/us.webp" },
   {
     code: "id",
     label: "Bahasa Indonesia",
     flag: "https://flagcdn.com/w40/id.webp",
   },
-  { code: "en", label: "English", flag: "https://flagcdn.com/w40/us.webp" },
 ] as const;
 
 export type Locale = (typeof LOCALES)[number]["code"];

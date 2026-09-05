@@ -26,7 +26,7 @@ const persist = (locale: Locale) => {
 
 export const useLocaleStore = create<LocaleState>((set) => ({
   // The server has no cookie to read, so it always renders the default locale
-  // (Indonesian) and the client corrects on mount from the cookie. Keeps the
+  // (English) and the client corrects on mount from the cookie. Keeps the
   // markup identical across hydration.
   locale: DEFAULT_LOCALE,
   hydrated: false,

@@ -7,7 +7,8 @@ import { type TranslationKey, useTranslation } from "@/i18n";
 import { BUTTON_PRIMARY } from "@/lib/button";
 import { clsxm } from "@/lib/clsxm";
 
-const APPLY_FORM_URL = "https://forms.gle/";
+// Registration lives on the team portal, not this site.
+const APPLY_URL = "https://its-robotics.com/";
 
 const GENERAL_REQUIREMENTS = [
   "recruitment.requirements.r1",
@@ -202,7 +203,7 @@ type SpecialTaskBlock = {
     label: TranslationKey;
     items: readonly TranslationKey[];
   }[];
-  /** Brief hosted elsewhere. Empty until the link is handed over. */
+  /** Brief hosted elsewhere (Drive). Empty until a link is handed over. */
   href?: string;
 };
 
@@ -219,17 +220,17 @@ const SPECIAL_TASKS: readonly {
       {
         id: "mechanical",
         heading: "recruitment.specialTask.mechanical",
-        href: "",
+        href: "https://drive.google.com/drive/folders/1-1KwljmE_qLbaKUM1qZtUVdS7hi0Mzgx?usp=drive_link",
       },
       {
         id: "electrical",
         heading: "recruitment.specialTask.electrical",
-        href: "",
+        href: "https://drive.google.com/drive/folders/15sE3BnvzNHuO5rIrfJrgKqz6f2Hi7IWa?usp=drive_link",
       },
       {
         id: "programming",
         heading: "recruitment.specialTask.programming",
-        href: "",
+        href: "https://drive.google.com/drive/folders/10aYONXGefbEoIBc1ztDUrKmwXbprU7gi?usp=drive_link",
       },
     ],
   },
@@ -278,14 +279,6 @@ const SPECIAL_TASKS: readonly {
   },
 ];
 
-const FAQS = [
-  "recruitment.faq.q1",
-  "recruitment.faq.q2",
-  "recruitment.faq.q3",
-  "recruitment.faq.q4",
-  "recruitment.faq.q5",
-] as const;
-
 // Section anchors surfaced as jump links in the hero. The id is what the URL
 // fragment and the scroll spy work on, so it stays put across locales.
 const sections = [
@@ -295,7 +288,6 @@ const sections = [
   { id: "documents", label: "recruitment.nav.documents" },
   { id: "special-task", label: "recruitment.nav.specialTask" },
   { id: "apply", label: "recruitment.nav.apply" },
-  { id: "faq", label: "recruitment.nav.faq" },
 ] as const satisfies readonly { id: string; label: TranslationKey }[];
 
 const DIVISION_LABEL =
@@ -436,7 +428,6 @@ const NAV_FADE = "2rem";
 
 export default function Recruitment() {
   const { t } = useTranslation();
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [navEdges, setNavEdges] = useState({ start: false, end: false });
   const [siteNavHeight, setSiteNavHeight] = useState(0);
@@ -641,6 +632,17 @@ export default function Recruitment() {
           <h1 className="text-5xl md:text-7xl font-bold text-white">
             {t("recruitment.title")}
           </h1>
+
+          {/* The same action the page closes on, offered up front for anyone
+              who arrives already decided. */}
+          <a
+            href={APPLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={clsxm(BUTTON_PRIMARY, "mt-8 px-8 py-4 text-base")}
+          >
+            {t("recruitment.applyCta")}
+          </a>
         </div>
       </section>
 
@@ -902,9 +904,36 @@ export default function Recruitment() {
                     <div className="mt-8 space-y-8">
                       {task.blocks.map((block) => (
                         <div key={block.id}>
-                          <h4 className="text-white font-bold text-lg md:text-xl">
-                            {t(block.heading)}
-                          </h4>
+                          {/* The brief button rides alongside its division
+                              name, wrapping under it only when the row runs
+                              out of room. Technical briefs live off-site;
+                              until a link is handed over the row says so
+                              rather than 404ing. */}
+                          <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+                            <h4 className="text-white font-bold text-lg md:text-xl">
+                              {t(block.heading)}
+                            </h4>
+
+                            {"href" in block &&
+                              (block.href ? (
+                                <a
+                                  href={block.href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  // Three identical "click here" pills read as
+                                  // one link out of context, so the division
+                                  // name travels with the label.
+                                  aria-label={`${t(block.heading)}: ${t("recruitment.specialTask.linkLabel")}`}
+                                  className={BUTTON_PRIMARY}
+                                >
+                                  {t("recruitment.specialTask.linkLabel")}
+                                </a>
+                              ) : (
+                                <p className="text-gray-400 text-base md:text-lg">
+                                  {t("recruitment.specialTask.linkPending")}
+                                </p>
+                              ))}
+                          </div>
 
                           {block.paragraphs?.map((paragraph) => (
                             <p
@@ -958,24 +987,6 @@ export default function Recruitment() {
                               </ul>
                             </div>
                           ))}
-
-                          {/* Technical briefs live off-site; until a link is
-                              handed over the row says so rather than 404ing. */}
-                          {"href" in block &&
-                            (block.href ? (
-                              <a
-                                href={block.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="mt-3 inline-block text-[#398561] font-medium text-base md:text-lg underline underline-offset-4 hover:text-white transition-colors"
-                              >
-                                {t("recruitment.specialTask.linkLabel")}
-                              </a>
-                            ) : (
-                              <p className="mt-3 text-gray-400 text-base md:text-lg">
-                                {t("recruitment.specialTask.linkPending")}
-                              </p>
-                            ))}
                         </div>
                       ))}
                     </div>
@@ -1019,7 +1030,7 @@ export default function Recruitment() {
 
                 <div className="mt-12 flex md:justify-end">
                   <a
-                    href={APPLY_FORM_URL}
+                    href={APPLY_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     // The closing CTA is the one action this whole page is
@@ -1044,73 +1055,6 @@ export default function Recruitment() {
               </div>
             </div>
           </FadeIn>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section
-        id="faq"
-        className="py-16 md:py-24 scroll-mt-[var(--jump-offset,6rem)]"
-      >
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)] gap-10 md:gap-16">
-          <FadeIn>
-            <h2 className="text-4xl md:text-5xl font-bold text-white md:max-w-[8em] leading-tight md:sticky md:top-28">
-              {t("recruitment.faqTitle")}
-            </h2>
-          </FadeIn>
-
-          <div className="border-t border-white/15">
-            {FAQS.map((faq, index) => {
-              const isOpen = openFaq === index;
-              return (
-                <div key={faq} className="border-b border-white/15">
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(isOpen ? null : index)}
-                    aria-expanded={isOpen}
-                    className="w-full flex items-center justify-between gap-6 text-left py-6"
-                  >
-                    <span className="text-white text-lg md:text-xl">
-                      {t(`${faq}.q` as const)}
-                    </span>
-                    <svg
-                      className={`w-5 h-5 flex-shrink-0 text-white/60 transition-transform ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={1.5}
-                      viewBox="0 0 24 24"
-                      role="img"
-                      aria-labelledby={`faq-icon-${index}`}
-                    >
-                      <title id={`faq-icon-${index}`}>
-                        {t("recruitment.faqToggle")}
-                      </title>
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </button>
-                  <div
-                    className={`grid transition-all duration-300 ease-out ${
-                      isOpen
-                        ? "grid-rows-[1fr] opacity-100"
-                        : "grid-rows-[0fr] opacity-0"
-                    }`}
-                  >
-                    <div className="overflow-hidden">
-                      <p className="text-gray-300 text-base md:text-lg leading-relaxed pb-6 pr-10">
-                        {t(`${faq}.a` as const)}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </section>
     </div>
